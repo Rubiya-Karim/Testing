@@ -7,7 +7,552 @@
     background-image: linear-gradient(0deg, #284952 100%, #284952);
     line-height: 30px;
     transition: 0.9s;
+    top: 0px;   /* sidebar.component.scss */
+  @import "../../styles.scss";
+
+  .sidebar {
+    position: sticky;
+    width: 100px;
+    height: 100%;
+    z-index: 1;
+    flex-shrink: 0;
+    background-image: linear-gradient(0deg, #284952 100%, #284952);
+    line-height: 30px;
+    transition: 0.9s;
     top: 0px; 
+    left: 0;
+  }
+
+  .logo-container {
+    display: flex;
+    width: 100px;
+    height: 75px;
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+    gap: 56px;
+    justify-content: center;
+  }
+
+  .logo {
+    background: url('../../assets/images/logo-with-name.png');
+    width: 84px;
+    height: 39.48px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .logo-title {
+    background: url('../../assets/images/logo-title.svg');
+    width: 82.48px;
+    height: 14.8px;
+    flex-shrink: 0;
+  }
+.nav{
+    padding-left: 0px;
+    padding-right: 5px;
+}
+  .navbar-icon {
+    background: url('../../assets/images/chevron-right-white.svg');
+    height: 20px;
+    width: 20px;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    position: absolute;
+    right: 2px;
+    top: 18px;
+    &:hover:not(.restrict-hover) {
+      background: url('../../assets/images/chevron-left.svg');
+    }
+  }
+
+  li.image-container:hover:not(.restrict-hover) .navbar-icon, li.image-container.shaded-bg .navbar-icon {
+    background: url('../../assets/images/chevron-left.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+
+  .dashboard-image {
+    background: url('../../assets/images/dashboard-white.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    &:hover:not(.restrict-hover) {
+      background: url('../../assets/images/dashboard_orange.svg');
+      background-repeat: no-repeat;
+    }
+
+    &.expanded {
+      position: absolute;
+    }
+  }
+
+  .dashboard-metric-image {
+    background: url('../../assets/images/presentation-chart-bar-white.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    &:hover:not(.restrict-hover) {
+      background: url('../../assets/images/presentation-chart-bar-orange.svg');
+      background-repeat: no-repeat;
+    }
+
+    &.expanded {
+      position: absolute;
+    }
+  }
+
+  
+  .appln-config-image {
+    background: url('../../assets/images/application-config-white.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    &:hover:not(.restrict-hover), :active:not(.restrict-hover) {
+      background: url('../../assets/images/application-config-orange.svg');
+      background-repeat: no-repeat;
+    }
+
+    &.expanded {
+      position: absolute;
+    }
+  }
+
+  .operations-image {
+    background: url('../../assets/images/operation-white.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    &:hover:not(.restrict-hover) {
+      background: url('../../assets/images/operation-orange.svg');
+      background-repeat: no-repeat;
+    }
+
+    &.expanded {
+      position: absolute;
+    }
+  }
+
+  .ECEoperations-image {
+    background: url('../../assets/images/ece-operations-white.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    &:hover:not(.restrict-hover) {
+      background: url('../../assets/images/ece-operations-hover.svg');
+      background-repeat: no-repeat;
+    }
+
+    &.expanded {
+      position: absolute;
+    }
+  }
+
+  .customer-image {
+    background: url('../../assets/images/customer-white.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    &:hover:not(.restrict-hover) {
+      background: url('../../assets/images/customer-orange.svg');
+      background-repeat: no-repeat;
+    }
+
+    &.expanded {
+      position: absolute;
+    }
+  }
+
+  .config-image {
+    background: url('../../assets/images/config-white.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    &:hover:not(.restrict-hover) {
+      background: url('../../assets/images/config-orange.svg');
+      background-repeat: no-repeat;
+    }
+
+    &.expanded {
+      position: absolute;
+    }
+  }
+  .connection-image {
+    background: url('../../assets/images/connection manager nav icon.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    &:hover:not(.restrict-hover) {
+      background: url('../../assets/images/connection manager nav icon.svg');
+      background-repeat: no-repeat;
+    }
+
+    &.expanded {
+      position: absolute;
+    }
+  }
+  .logs-image {
+    background: url('../../assets/images/activity-logs.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    &:hover:not(.restrict-hover) {
+      background: url('../../assets/images/activity-logs_orange.svg');
+      background-repeat: no-repeat;
+    }
+
+    &.expanded {
+      position: absolute;
+    }
+  }
+  .nav-text {
+    text-decoration: none;
+    color: $text-color-white;
+    font-size: 11px;
+    height: 20px;
+  }
+
+  .nav-text:hover {
+    color: black;
+  }
+
+  .sectxt {
+    color: #ffffff;
+  }
+
+  .sectxt:hover {
+    color: black;
+  }
+
+  .nav-li {
+    text-align: center;
+    margin-bottom: -13px;
+    position: relative;
+    display: inline-block;
+    left: 5px;
+    width: 86px;
+    line-height: 1;
+    height: 53px;
+  }
+
+  .span-envinstall {
+    line-height: 1.3;
+    margin-left: 0;
+    margin-top: 3px;
+    overflow: hidden;
+    clear: both;
+  }
+
+  .icon-text-container {
+    display: flex;
+    padding: 0px 11px;
+    margin-left: 33px;
+  }
+
+  .active-link .icon-text-container {
+    display: inline-block;
+  }
+
+  .onhover {
+    display: none;
+  }
+
+  .icon-text-container:hover .nav-text {
+    color: black;
+
+    .unhover {
+      display: none;
+    }
+
+    .onhover {
+      display: inline;
+
+      &.expanded {
+        display: none;
+      }
+    }
+  }
+
+  :not(.active-link,.restrict-hover).nav-li:hover, .shaded-bg {
+    // align-items: center;
+    border-radius: 8px;
+    background: rgba(238, 231, 223, 0.4);
+  }
+
+
+ 
+  .active-link {
+    display: flex;
+    width: 88px;
+    height: 76px;
+    padding: 8px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+    border-radius: 8px;
+    background: var(--brand-300, #FBD3B7);
+  }
+
+  .active-link .nav-text {
+    color: black;
+    font-weight: bold;
+  }
+
+  .active-link .navbar-icon {
+    background: url('../../assets/images/chevron-right.svg');
+    height: 20px;
+    width: 20px;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    &:hover:not(.restrict-hover) {
+      background: url('../../assets/images/chevron-left.svg');
+    }
+  }
+.active-link .dashboard-image, 
+li.image-container:hover:not(.restrict-hover) .dashboard-image,
+li.image-container.shaded-bg .dashboard-image {
+    background: url('../../assets/images/dashboard_orange.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .active-link .dashboard-metric-image, 
+li.image-container:hover:not(.restrict-hover) .dashboard-metric-image,
+li.image-container.shaded-bg .dashboard-metric-image {
+    background: url('../../assets/images/presentation-chart-bar-orange.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .active-link .appln-config-image, 
+  li.image-container:hover:not(.restrict-hover) .appln-config-image,
+  li.image-container.shaded-bg .appln-config-image {
+      background: url('/assets/images/application-config-orange.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+  
+
+  .active-link .config-image, li.image-container:hover:not(.restrict-hover) .config-image, li.image-container.shaded-bg .config-image {
+    background: url('../../assets/images/config-orange.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .active-link .operations-image, li.image-container:hover:not(.restrict-hover) .operations-image, li.image-container.shaded-bg .operations-image {
+    background: url('../../assets/images/operation-orange.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .active-link .ECEoperations-image, li.image-container:hover:not(.restrict-hover) .ECEoperations-image, li.image-container.shaded-bg .ECEoperations-image {
+    background: url('../../assets/images/ece-operations-hover.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .active-link .customer-image, li.image-container:hover:not(.restrict-hover) .customer-image, li.image-container.shaded-bg .customer-image {
+    background: url('../../assets/images/customer-orange.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  span {
+    margin-left: 30px;
+  }
+
+  .nav-li ul {
+    list-style: none;
+    display: none;
+
+  }
+
+
+  .nav-li ul:hover {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #FBD3B7;
+
+  }
+
+  ul {
+    list-style-type: none;
+  }
+.ngtemp{
+    width: 100%;
+}
+
+  .template {
+    display: flex;
+    width: 244px;
+    padding: 4px;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    border-radius: 8px;
+    background: var(--brand-50, #EEE7DF);
+
+    /* Elevation / Level 3 */
+    box-shadow: 0px 10px 22px 0px rgba(45, 77, 108, 0.15);
+  }
+
+  .submenu-li {
+    display: flex;
+    height: 36px;
+    padding: 9px 20px 9px 16px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 8px;
+    background: var(--basic-white, #FFF);
+
+    &:hover {
+      border-radius: 8px;
+      background: var(--neutral-100, #F1F5F9);
+      .scheduleimg{
+        content: url('../../assets/images/Job_mgmt_orange.png');
+      }
+    
+      .processimg{
+        content: url('../../assets/images/process_mgmt_orange.png');
+      }
+    
+      .mbeanimg{
+        content: url('../../assets/images/mbean-orange.png');
+      }
+    
+      .trialbillimg{
+        content: url('../../assets/images/mbean-orange.png');
+      }
+    
+      .securityimg{
+        content: url('../../assets/images/general_orange.png');
+      }
+    
+      .notifyimg{
+        content: url('../../assets/images/notification_orange.png');
+      }
+    
+      .rolesimg{
+        content: url('../../assets/images/roles_orange.png');
+      }
+    
+      .usersimg{
+        content: url('../../assets/images/users_orange.png');
+      }
+    
+      .privilegesimg{
+        content: url('../../assets/images/star_hover.png');
+      }
+    
+      .clusterimg{
+        content: url('../../assets/images/env_orange.png');
+      }
+    
+      .zero-padding {
+        padding: 0px;
+      }
+    
+      .enable-hover {
+        pointer-events: none;
+      }
+    }
+    
+  
+  
+  }
+
+  .submenu-text {
+    color: var(--neutral-900, #0F172A);
+    @include text-small-normal;
+  }
+
+  .active-link .sidebar-menu-text,  li.image-container.shaded-bg .sidebar-menu-text {
+    color: #000;
+  }
+
+  .sidebar-menu-text {
+    color: var(--basic-white, var(--Color, #FFF));
+    @include text-xs-semibold;
+  }
+
+  li.image-container:hover:not(.restrict-hover) .sidebar-menu-text {
+    color: black;
+  }
+
+  .sidebar-submenu {
+    color: var(--neutral-300, #CBD5E1);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    /* 153.846% */
+    padding-left: 5px;
+    margin-left: 20px;
+    width: 100%;
+    &:hover{
+      color: black;
+      width:152px;
+    }
+  }
+
+  .submenu-icon-align {
+    margin-top: 6px;
+    position: absolute;
+  }
+
+  .imageclass {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    // flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+  }
+
+  .image-align {
+    width: 40px;
+    height: 40px;
+  }
+
+  .image-submenu {
+    height: 18px;
+    width: 20px;
+  }
+
+  .image-container {
+    display: flex;
+    width: 88px;
+    height: 76px;
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .BRM-image-container {
+    display: flex;
+    width: 88px;
+    height: 90px;
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+  }
+  
     left: 0;
   }
 
