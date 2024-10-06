@@ -1,0 +1,24 @@
+<nav class="sidebar">
+    <div class="logo-container">
+        <div class="logo">
+            <div class="logo-title"></div>
+        </div>
+    </div>
+    <ul class="nav flex-column">
+        <ng-container *ngFor="let menu of menus">
+            <li class="nav-li" [popover]="menu.submenu ? popover : ' '" placement="right">
+                <label class="sidebar-menu-text">{{menu.name}}</label>
+            </li>
+            <ng-template #popover >
+            <ul class="template" >
+                <ng-container *ngFor="let aSubmenu of menu.submenu;let i = index">
+                    <li >
+                    
+                    <label class="submenu-text">{{aSubmenu.name}}</label></li>
+                </ng-container>
+            </ul>
+            </ng-template>
+        </ng-container>
+    </ul>
+  
+</nav>
