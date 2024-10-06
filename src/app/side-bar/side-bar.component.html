@@ -1,24 +1,40 @@
-<nav class="sidebar">
-    <div class="logo-container">
-        <div class="logo">
-            <div class="logo-title"></div>
-        </div>
-    </div>
-    <ul class="nav flex-column">
-        <ng-container *ngFor="let menu of menus">
-            <li class="nav-li" [popover]="menu.submenu ? popover : ' '" placement="right">
-                <label class="sidebar-menu-text">{{menu.name}}</label>
-            </li>
-            <ng-template #popover >
-            <ul class="template" >
-                <ng-container *ngFor="let aSubmenu of menu.submenu;let i = index">
-                    <li >
-                    
-                    <label class="submenu-text">{{aSubmenu.name}}</label></li>
-                </ng-container>
-            </ul>
-            </ng-template>
-        </ng-container>
-    </ul>
-  
+<nav class="sidebar" #sidebar *ngIf="showSideBar">
+  <div class="logo-container">
+    <div class="logo"><div class="logo-title"></div></div>
+    
+  </div>
+ 
+  <ul class="nav">
+    <ng-container *ngFor="let menu of menus">
+      <li [popover]="menu.submenu && menu.expanded ? popover : ''" placement="right" triggers="mouseenter:focus" (mouseenter)="toggleMenu(menu , true)"
+      [outsideClick]="true"  class="nav-li" [ngClass]="[menu.name === 'BRM Operations' || menu.name === 'ECE Operations' ? 'BRM-image-container' : 'image-container', menu.submenu && menu.expanded ? 'shaded-bg' : ' ', expandedMenuId && menu.id != expandedMenuId ? 'restrict-hover':'']" routerLinkActive="active-link" (click)="toggleMenu(menu)" (onHidden)="hidePopover($event)"
+        [isOpen]="menu.expanded && menu.id == expandedMenuId">
+          <a class="imageclass" [routerLink]=menu.routerLink (click)="menu?.submenu ? clickRouterLink(menu.submenu,'submenu') : clickRouterLink(menu.routerLink,'menu')"  >
+            <div class="image-align" [ngClass]="[menu.cssclass ? menu.cssclass : ' ', expandedMenuId && menu.id != expandedMenuId ? 'restrict-hover':'']"><div class="navbar-icon" [ngClass]="[expandedMenuId && menu.id != expandedMenuId ? 'restrict-hover':'']" *ngIf="menu.submenu"></div></div>
+            <!-- <img class="navbar-icon" [ngClass]="[expandedMenuId && menu.id != expandedMenuId ? 'restrict-hover':'']" *ngIf="menu.submenu"> -->
+            <label class="sidebar-menu-text">{{ menu.name }}</label>
+          </a>
+
+        <!-- <div class="imageclass">
+          <a class="nav-text" [routerLink]=menu.routerLink>
+            <div class="imageclass" [ngClass]="[menu.cssclass ? menu.cssclass : ' ']"></div>
+            <img class="navbar-icon" *ngIf="menu.submenu">
+            <p class="sidebar-menu">{{ menu.name }}</p>
+          </a>
+        </div> -->
+      </li>
+      <ng-template #popover >
+             
+        <ul class="template" (mouseleave)="hidePopover($event)">
+          <ng-container *ngFor="let aSubmenu of menu.submenu;let i = index">
+              <li class="ngtemp" (mouseenter)="onSubMenuMouseEnter(i)" (mouseleave)="onSubMenuMouseLeave()">
+                <a class="submenu-li" [routerLink]="aSubmenu.routerLink" (click)="clickRouterLink(aSubmenu.routerLink,'menu')"  style="color:#0F172A;" (click)="subMenuItemClicked(menu)">
+              <img [src]="isHovered && isHoveredIndex == i ?  aSubmenu.imgPath : aSubmenu.imgPopoverPath" width="18px" height="18px"> 
+              <label class="submenu-text">{{aSubmenu.name}}</label></a></li>
+          </ng-container>
+      </ul>
+       </ng-template>
+      <br>
+   </ng-container>
+  </ul>
 </nav>
