@@ -1,0 +1,162 @@
+@import "../../../styles.scss";
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin: 40px 108px 0px 108px; 
+    padding: 16px;   
+    border-radius: 16px;
+    background: var(--Neutral-100, #F1F5F9);
+}
+
+.input-area {
+    display: flex;
+    width: 842px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.input-with-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+}
+  
+.label-text {
+    color: var(--Neutral-900, #0F172A);
+    @include text-xs-semibold;
+    text-align: left;
+}
+
+.submit-btn {
+    @include primary-button;
+    margin-left: 8px;
+    display: flex;
+    height: 40px;
+    padding: 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.title {
+    @include text-headline-h4-2xl;
+    text-align: center;
+    margin-right: 20%;
+    color: var(--Headline-Purple-600, #9D7DE2);
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-btn-gp {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    justify-content: center;
+}
+
+.cancelBtn {
+    border-radius: 4px;
+    background: var(--neutral-100, #F1F5F9);
+    display: flex;
+    width: 100px;
+    height: 40px;
+    padding: 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    color: var(--neutral-900, #0F172A);
+    border-color: transparent;
+  
+    /* Body/text-base/font-semibold */
+    font-size: $font-size-base;
+    font-style: normal;
+    font-weight: $font-weight-bold;
+    line-height: 24px; /* 150% */
+}
+  
+
+input, textarea {
+    border-radius: 4px;
+    border: 1px solid var(--neutral-400, #94A3B8);
+    background: var(--basic-white, #FFF);
+    color: var(--Neutral-900, #0F172A);
+    @include text-small-normal;
+}
+
+input {
+    height: 36px;
+}
+
+.invalid{
+    color: #DC3545;
+    font-size: .875rem;
+}
+
+.okay-btn {
+    @include primary-button;
+    display: flex;
+    width: 100px;
+    height: 40px;
+    padding: 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.red-bg-btn {
+    background: var(--Status-Danger-600, #981B1B);
+}
+
+.input-height {
+    height: 86px;
+}
+
+.custom-radio .form-check-input:checked {
+    background-color: var(--brand-500, #D68422);
+    border-color: var(--brand-500, #D68422);
+}
+
+.subgroup-text {
+    @include text-small-normal;
+    color: var(--neutral-900, #0F172A);
+  }
+
+  .select-div {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    justify-content: space-evenly;
+  }
+
+  .select-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 79px;
+  }
+
+  .dropdown-custom {
+    border-radius: 4px;
+    border: 1px solid var(--neutral-400, #94A3B8);
+    background: var(--Color, #FFF);
+    color: var(--neutral-900, #0F172A);
+    @include text-small-normal;
+    color: var(--neutral-900, #0F172A);
+    height: 36px;
+    padding: 8px 8px 8px 10px;
+  }
+
+  input:disabled, input[readonly], textarea:disabled  {
+    color: var(--Neutral-900, #0F172A);
+    background: var(--Neutral-200, #E2E8F0);
+  }

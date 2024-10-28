@@ -1,0 +1,65 @@
+<div class="row-value row-value-gap">
+  <div class="top-section w-100">
+      <button class="btn back-button back-button-text" (click)="back()"><img src="assets/images/arrow-sm-left.png">Back</button>
+      <div class="title w-100">{{cluster?.clusterName}}
+        <span *ngIf="cluster?.isPrimary" class="custom-bgColor-text color-code status-align active">Primary</span>
+      </div>
+  </div>
+  <div class="top-section w-100">
+    <div class="image-container">
+      <img class="image" src="../../../../assets/images/Group datafix icon.svg">
+    </div>
+    <div class="row-value">
+      <div class="card-container">
+        <app-info-card *ngIf="cluster?.siteDetails?.siteName" class="detail-div" [title]="'Site Name'" [subTitle]="cluster?.siteDetails?.siteName"
+        [imageIcon]="'assets/images/site1.svg'"></app-info-card>
+  
+        <app-info-card *ngIf="cluster?.clusterType" class="detail-div" [title]="'Cluster Type'" [subTitle]="cluster?.clusterType"
+        [imageIcon]="'assets/images/site1.svg'"></app-info-card>
+  
+        <app-info-card *ngIf="cluster?.deploymentType" class="detail-div" [title]="'Deployment Type'" [subTitle]="getDeploymentType()"
+        [imageIcon]="'assets/images/test-execution icon.svg'"></app-info-card>
+  
+        <app-info-card *ngIf="cluster?.clusterGroup" class="detail-div" [title]="'Cluster Group'" [subTitle]="getClusterGroup()"
+        [imageIcon]="'assets/images/test-execution icon.svg'"></app-info-card>
+  
+        <app-info-card *ngIf="cluster?.namespace" class="detail-div" [title]="'Namespace'" [subTitle]="cluster?.nameSpace"
+        [imageIcon]="'assets/images/test-execution icon.svg'"></app-info-card>
+  
+        <app-info-card *ngIf="cluster?.coherence" class="detail-div" [title]="'Coherence'" [subTitle]="cluster?.coherence"
+        [imageIcon]="'assets/images/test-execution icon.svg'"></app-info-card>
+      </div>
+      <app-info-card *ngIf="cluster?.kubeConfigFile" class="detail-div" [title]="'Kube Config File'" [multilineSubTitle]="cluster?.kubeConfigFile"
+      [imageIcon]="'assets/images/test-execution icon.svg'"></app-info-card>
+    </div>
+  </div>
+  <div *ngIf="cluster?.customFields?.length > 0" class="margin" >
+    <h4>Custom Fields :</h4>
+    <table>
+      <thead>
+        <tr class="text-size">
+          <th>Keys</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody class="text-size">
+        <tr *ngFor="let field of cluster?.customFields">
+          <td>{{ field.key }}</td>
+          <td>{{ field.value }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-container *ngIf="tableData">
+    <label class="section-header-title text-color w-100">{{isCNE() ? "Deployment" : "Application"}} Details:</label>
+    <app-shared-table [isDatasourcePaginator]="true" [tableData]="tableData" 
+        [showCheckAll]="false" [isSearch]="false" [isAddEnabled]="false" [showFilterLabel]="false" [isSearchFilter]="false"
+        [sortListBy]="sortCategory" 
+        [sortDirec]="sortDirec"
+        [totalRecords]="totalRecords" 
+        [pageSize]="pageSize" 
+        [pageIndex]="pageIndex" 
+        [noDataFoundMessage]="noDataMsg">
+      </app-shared-table>
+    </ng-container>
+</div>

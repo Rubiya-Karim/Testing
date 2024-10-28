@@ -1,0 +1,108 @@
+<ng-container *ngIf="hasAccess; else noAccess">
+    <div class="privileges-container mb-3" [ngClass]="{'sub-page': !navigatedFromRoles}">
+        <ng-container *ngIf="isRedirectedFromRoles()">
+            <button class="btn back-button back-button-text" (click)="back()"><img src="../../../../assets/images/arrow-sm-left.png">Back</button>
+        </ng-container>
+        <div class="privileges-card">
+          <div class="image-container" *ngIf="!navigatedFromRoles">
+            <img src="../../../../assets/images/config-privileges-vector.svg">
+          </div>
+            <div [ngClass]="navigatedFromRoles ? 'w-75' : 'privileges-accordion'">
+                <label class="privileges-right-title" *ngIf="!navigatedFromRoles">Module Operations Management Framework</label>
+                <div class="privileges-main-content">
+                    <div class="column-content" *ngIf="!navigatedFromRoles && selectedRole">
+                        <label class="filter-label">Role</label>
+                        <select class="custom-select mb-3" (change)="changeRole($event)">
+                            <option *ngFor="let role of roles" [value]="role.roleId" [selected]="selectedRoleId === role.roleId">
+                                {{ role.roleName }}
+                            </option>
+                        </select>
+                    </div>
+                    <ng-container *ngFor="let module of modules; let i = index">
+                        <div class="acc-container" [ngClass]="isRowExpanded(i) ? 'expanded' : 'collapsed'">
+                            <div class="acc-main" [ngClass]="isRowExpanded(i) ? 'expanded' : 'collapsed'">
+                                <div class="acc-main-header" [ngClass]="isRowExpanded(i) ? 'expanded' : 'collapsed'">
+                                <div class="acc-title-left">
+                                    <img [src]="getImagePath(module)" width="24px" height="24px">
+                                    <label class="w-100 acc-title" (click)="toggleRow(i)">{{module}}</label>
+                                </div>
+                                <button class="btn icon-button" (click)="toggleRow(i)">
+                                    <img class="icon-button" src="../../../assets/images/chevron-down.svg" alt="Toggle"
+                                    [@rotate]="isRowExpanded(i) ? 'expanded' : 'collapsed'" />
+                                </button>
+                                </div>                
+                            </div>
+                            <ng-container *ngIf="isRowExpanded(i)">
+                                <div class="acc-body w-100">
+                                    <div class="acc-body-header">
+                                        <div class="acc-body-section-align">
+                                            <p class="acc-body-header-title"></p>
+                                        </div>
+                                        <div class="acc-body-header-chkbox-section">
+                                            <span>
+                                                <label class="crudText create-text">Create</label>
+                                            </span>
+                                            <span>
+                                                <label class="crudText read-text">Read</label>
+                                            </span>
+                                            <span>
+                                                <label class="crudText update-text">Update</label>
+                                            </span>
+                                            <span>
+                                                <label class="crudText delete-text">Delete</label>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <ng-container *ngFor="let activityData of data[module]; let j = index;">
+                                        <div class="acc-body-header acc-body-header-bg">
+                                            <div class="acc-body-header-align">
+                                                <p class="acc-body-header-title">{{activityData.activity}}</p>
+                                            </div>
+                                            <div class="acc-body-header-chkbox-section">
+                                                <span>
+                                                    <label class="custom_checkbox">
+                                                        <input type="checkbox" name="chkChildItems" [checked]="activityData.createPrivilage"
+                                                        id=createPrivilage_{{activityData.id}} (change)="checkboxClicked($event, activityData)" [disabled]="isReadOnly"><p></p>
+                                                    </label>
+                                                </span>
+                                                <span>
+                                                    <label class="custom_checkbox">
+                                                        <input type="checkbox" name="chkChildItems" [checked]="activityData.viewPrivilage"
+                                                        id=viewPrivilage_{{activityData.id}} (change)="checkboxClicked($event, activityData)" [disabled]="isReadOnly"><p></p>
+                                                    </label>
+                                                </span>
+                                                <span>
+                                                    <label class="custom_checkbox">
+                                                        <input type="checkbox" name="chkChildItems" [checked]="activityData.modifyPrivilage"
+                                                        id=modifyPrivilage_{{activityData.id}} (change)="checkboxClicked($event, activityData)" [disabled]="isReadOnly"><p></p>
+                                                    </label>
+                                                </span>
+                                                <span>
+                                                    <label class="custom_checkbox">
+                                                        <input type="checkbox" name="chkChildItems" [checked]="activityData.deletePrivilage"
+                                                        id=deletePrivilage_{{activityData.id}} (change)="checkboxClicked($event, activityData)" [disabled]="isReadOnly"><p></p>
+                                                    </label>
+                                                </span>
+                                            </div>            
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="d-flex justify-content-center alignment-baseline">
+                    <button class="cancelBtn" *ngIf="navigatedFromRoles" (click)="cancel()">Back</button>
+                    <button class="save-btn" (click)="onSubmit()">{{isReadOnly ? "Edit" : (navigatedFromRoles && shouldUpdate) ? "Update" : "Assign Privileges"}}</button>
+                </div>
+                
+            </div>
+    </div>
+</div>
+</ng-container>
+<ng-template #noAccess>
+    <div class="access-denied-layout">
+        <p>User dont have the access to view the Module Operations data</p>
+    </div>
+</ng-template>

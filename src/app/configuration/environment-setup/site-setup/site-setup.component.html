@@ -1,0 +1,45 @@
+<div  class="table-size">
+    <ng-container *ngIf="hasAccess; else noAccess">
+        <div class="formcontainer" style="margin-top:50px" layout="fill">
+        <div class="col-md-12">
+            <div class="toolbar">
+                <div class="row">
+                    <div class="search-div">
+                        <span class="tableheading">
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive table-design">
+                    <app-shared-table [tableData]="tableDataforSite" 
+                    [showCheckAll]="false"
+                        (onEditRowEmit)="onEditSite($event)" 
+                        (onHeaderButtonEmit)="buttonEventSite($event)" 
+                        (onDeleteRowEmit)="onDeleteSite($event)"
+                        [isSearch]="true"
+                        [sortListBy]="sortCategory" 
+                        [sortDirec]="sortDirec"
+                        [headerButtonTitle]=headerButtonTitleforSite
+                        (emitPaginationEmit)="refreshData($event)" 
+                        [totalRecords]="totalRecords" 
+                        [selectedFilterCategory]="selectedFilterCategory"
+                         [filterCategoryList]="filterCategory" 
+                        [pageSize]="pageSize" 
+                        [pageIndex]="pageIndex"
+                        [isServerSearch]="true" 
+                        (onServerSearchEmit)="onServerSearch($event)"
+                        [noDataFoundMessage]="noDataMsg">
+                    </app-shared-table>
+            </div>
+        </div>
+    </div>
+    </ng-container>
+    <ng-template #noAccess>
+        <div class="access-denied-layout">
+          <p>User dont have the access to view the Cluster setup data</p>
+        </div>
+      </ng-template>
+      <div class="vector-img">
+        <img src="../../../../assets/images/Group 316.png">
+      </div>
+  </div>

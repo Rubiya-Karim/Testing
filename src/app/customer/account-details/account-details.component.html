@@ -1,0 +1,97 @@
+<div class="config-container">
+    <div class="config-card">
+        <div class="image-container">
+            <img class="image" src="../../../../assets/images/cust-acct-vector.svg ">
+        </div>
+        <div class="div-heading">
+            <div *ngIf="!isSingleAccount">
+                <label class="heading">Account Details</label>
+                <img class="hierarchy-icon" src="../../../../assets/images/hierarchy.svg " (click)="moveDown()">
+                <hr class="line">
+                </div>
+                <div class="row">
+                <div class="column">
+                    <tbody>
+                        <tr>
+                            <td class="mt-3">
+                                <app-info-card [title]="'Account Number'" [subTitle]=data?.accountNo [imageIcon]="'../../../../assets/images/acc_no icon.svg'"></app-info-card>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-data">
+                                <app-info-card [title]="'Phone Number'" [multilineSubTitle]=getPhoneNumberListValue(data?.nameInfo?.phones) [imageIcon]="'../../../../assets/images/phone icon.svg'"></app-info-card>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-data">
+                                <app-info-card [title]="'Company'" [subTitle]=data?.nameInfo?.company [imageIcon]="'../../../../assets/images/office-building icon.svg'"></app-info-card>
+                            </td>
+                        </tr>
+                      <tr>
+                            <td class="label-data">
+                                <app-info-card [title]="'Address'" [multilineSubTitle]="data?.nameInfo?.city +'<br>'+ data?.nameInfo?.state +'<br>'+ data?.nameInfo?.country" [imageIcon]="'../../../../assets/images/location-marker icon.svg'"></app-info-card>
+                            </td>
+                        </tr>
+                    </div>
+                
+                    <div class="div-col-2">
+                        <tr>
+                            <td>
+                                <app-info-card [title]="'Status'" [isStatusType]="true" [subTitle]=data?.statusString [imageIcon]="'../../../../assets/images/status icon.svg'"></app-info-card>
+                            </td>
+                            </tr>
+                        <tr>
+                            <td class="label-data">
+                                <app-info-card [title]="'Email'" [subTitle]=data?.nameInfo?.emailAddress [imageIcon]="'../../../../assets/images/mail icon.svg'"></app-info-card>
+                            </td>
+                            </tr>
+                           <tr>
+                                <td class="label-data">
+                                    <app-info-card [title]="'Customer Segment'" [subTitle]= "data?.customerSegmentList === '' ? 'Individual' : data?.customerSegmentList" [imageIcon]="'../../../../assets/images/tag icon.svg'"></app-info-card>
+                                </td>
+                             </tr>
+                        </div>
+                     </div>
+                    </div>
+                </div>
+            
+        <div class="row">
+    <div class="heading" style="margin:3%;">Profile details</div>
+    <app-profile-details></app-profile-details>
+
+</div>
+<div class="w-100" *ngIf="!isSingleAccount">
+  <div class="toggle-container w-100">
+    <p class="chart-heading w-100">Hierarchy</p>
+    <div class="view-toggle-container">
+        <mat-button-toggle-group [(ngModel)]="selectedView" (change)="toggleView($event)">
+            <mat-button-toggle value="chart">
+                <img src="assets/images/hierarchy.svg" class="custom-icon" />
+            </mat-button-toggle>
+            <mat-button-toggle value="table">
+                <img src="assets/images/table.svg" class="custom-icon" />
+            </mat-button-toggle>
+        </mat-button-toggle-group>    
+    </div>
+  </div>
+  <div *ngIf="selectedView === 'chart'">
+    <div class="ngx-container" style="background: var(--neutral-100, #F1F5F9);border-radius: 16px;padding:15px">
+        <ngx-org-chart [nodes]="formattedChartData" direction="horizontal" (itemClick)="test($event)" id="chartSection"></ngx-org-chart>  
+    </div>  
+  </div>
+  
+  <div *ngIf="selectedView === 'table'">
+    <div class="breadcrumb">
+        <span *ngFor="let table of breadcrumb; let i = index">
+          <a (click)="goToTable(i)">{{ table.name }}</a>
+          <span *ngIf="i < breadcrumb.length - 1"> >> </span>
+        </span>
+      </div>
+      <app-shared-table class="w-100" [isDatasourcePaginator]="true" [isAddEnabled]="false" [tableData]="currentTableData" [sortListBy]="sortCategory" [sortDirec]="sortDirec" [disable]="true" [showCheckAll]="false"
+[isSearchFilter]="true" [isSearch]="true" [filterCategoryList]="filterCategory" (onRowClickActionEmit)="onRowClick($event)" [selectedFilterCategory]="selectedFilterCategory" [noDataFoundMessage]="noDataMsg"></app-shared-table>
+</div>
+  </div>
+
+
+  
+</div>

@@ -1,0 +1,263 @@
+@import '../../../../styles';
+
+.privileges-container {
+  border-radius: 16px 0px 0px 0px;
+  background: var(--Color, #FFF);
+}
+
+.sub-page {
+  padding: 24px 58px;
+}
+
+.privileges-card {
+  display: flex;
+  padding: 24px 0px;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 24px;
+  border-radius: 16px;
+  background: var(--neutral-100, #F1F5F9);
+}
+
+.privileges-card .image-container {
+  flex: 1;
+  order: 1;
+}
+
+.privileges-card .privileges-accordion {
+  flex: 2;
+  order: 2;
+  padding-inline-end: 2%;
+}
+
+.privileges-main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* image.component.css */
+.image-container {
+  width: 100%;
+  max-width: 245px;
+  max-height: 230px;
+  flex-shrink: 0;
+  /* Adjust the max-width as needed */
+  overflow: hidden;
+  margin-top: auto;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+}
+
+.privileges-right-title {
+  @include text-headline-h5-xl;
+  text-align: center;
+  width: 100%;
+}
+
+.acc-main {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
+  border-radius: 7px;
+  background: var(--Color, #FFF);
+  flex-direction: column;
+  width: 100%;
+}
+
+.acc-main.collapsed:hover {
+  background: var(--neutral-400, #94A3B8);
+}
+
+.acc-container {
+  display: flex;
+  padding-bottom: 16px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.acc-container.expanded {
+  border-radius: 8px;
+  border: 1px solid var(--neutral-400, #94A3B8);
+}
+
+.acc-main-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.acc-main.expanded {
+  border-radius: 7px;
+  background: var(--neutral-300, #CBD5E1);
+}
+
+.acc-title {
+  @include text-small-semibold;
+  color: #000;
+}
+
+.acc-title-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.acc-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-inline-end: 2%;
+  padding-inline-start: 2%;
+  background: var(--neutral-100, #F1F5F9);
+}
+
+.acc-section-labels {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 40px;
+  background-color: transparent;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.icon-button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  padding: 0px;
+}
+
+
+.acc-body-header {
+  display: flex;
+  justify-content: flex-start;
+  height: 32px;
+  padding: 7px 10px 10px 24px;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1 0 0;
+}
+
+.acc-body-header-bg {
+  border-radius: 4px;
+  background: var(--Color, #FFF);
+}
+
+.acc-body-header-title {
+  color: #000;
+  @include text-xs-semibold;
+}
+
+.acc-body-header-align {
+  display: flex;
+  width: 10%;
+}
+
+.acc-body-section-align {
+  display: flex;
+  width: 70%;
+}
+
+
+.column-content {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    width: 260px;
+    height: 44px;
+}
+
+.custom-select {
+    display: flex;
+    height: 36px;
+    padding: 6px 8px 6px 12px;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 74px;
+    flex: 1 0 0;
+
+    border-radius: 4px;
+    border: 1px solid var(--neutral-400, #94A3B8);
+    background: var(--basic-white, #FFF);
+    color: var(--neutral-900, #0F172A);
+    @include text-base-normal;
+  }
+
+  .filter-label {
+    color: var(--neutral-600, #475569);
+    @include text-small-semibold;
+  }
+
+  .save-btn {
+    @include primary-button;
+    display: flex;
+    height: 36px;
+    padding: 6px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .acc-body-header-chkbox-section {
+    display: flex;
+    justify-content: flex-end;
+    width: 90%;
+    gap: 7%;
+  }
+
+
+  .crudText {
+    color: var(--neutral-700, #334155);
+    @include text-xs-semibold;
+  }
+
+
+  .custom-select{
+    margin: 3%;
+    appearance: none;
+    background-image: url(../../../../assets/images/chevron-down.svg);
+    background-size: $font-size-xmedium;
+    background-position: calc(100% - 12px) 50%;
+    background-repeat: no-repeat;
+    min-width: 120px;
+  
+  }
+
+    .checkbox-cell {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    .cancelBtn {
+      border-radius: 4px;
+      background: var(--neutral-100, #F1F5F9);
+      display: flex;
+      width: 100px;
+      height: 36px;
+      padding: 10px 16px;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      color: var(--neutral-900, #0F172A);
+      border-color: transparent;
+    
+      /* Body/text-base/font-semibold */
+      font-size: $font-size-base;
+      font-style: normal;
+      font-weight: $font-weight-bold;
+      line-height: 24px; /* 150% */
+    }

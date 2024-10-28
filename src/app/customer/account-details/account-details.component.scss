@@ -1,0 +1,339 @@
+@import "../../../../styles.scss";
+
+.config-container {
+    flex: 1 0 0;
+    align-self: stretch;
+    padding: 40px 58px 40px 58px;
+    border-radius: 16px;
+  }
+
+.config-card {
+    display: flex;
+    padding-right: 0px;
+    padding-top: 24px;
+    border-radius: 16px;
+    background: var(--neutral-100, #F1F5F9);
+    gap: 87px;
+  }
+
+.image-container {
+  max-width: 324px;
+  margin-top: auto;
+  padding-bottom: 24px;
+
+  width: 100%; /* Set the width of the container */
+  max-width: 800px; /* Optionally set a maximum width */
+  margin: 0 auto; /* Center the container horizontally */
+  overflow: hidden; /* Hide any content that overflows */
+}
+.image-container img {
+    width: 100%; /* Ensure the image fills the container width */
+    height: auto; /* Maintain the original aspect ratio */
+    display: block; /* Ensure the image behaves as a block element */
+  }
+.acc_image{
+    image-orientation: initial ;
+    width: 23.48px;
+    height: 23px;
+}
+.row{
+  width:721px;
+  // height: 340px;
+  gap: 24px;
+}
+.heading {
+    @include text-headline-h5-xl;
+    color: var(--Headline-Orange-600, #FA7A55);
+}
+.line{
+    border: 1px solid #CBD5E1;
+    width: 100%;
+}
+.img_div{
+    display:flex;
+    align-items: center;
+    gap: 25px;  
+}
+.row{
+    display: table;
+}
+.column {
+    float: left;
+    width: 50%;
+    height: 300px; 
+    gap:50px;
+
+  }
+  .div-col-2 {
+    float: right;
+    width: 50%;
+    height: 300px; 
+    gap: 60px;
+  }
+  .data-div{
+    width: 100%;
+    display: grid;
+  }
+.label-text {
+    @include form-label-color;
+    width: 120px;
+    gap: 4px;
+}
+.value-text-bold {
+    color: $base-text-color;
+    @include text-small-semibold;
+}
+
+.value-text-normal {
+    color: $base-text-color;
+    @include text-sm-normal;
+}
+.label-data{
+    padding-top: 24px;;
+}
+.card-style {
+    border-radius: 16px;
+    padding-top: 3%;
+    padding-left: 3%;
+    padding-right: 4%;
+}
+
+.card-large {
+    width: 100%;
+}
+
+.card-small {
+    margin-left: 1%;
+    width: 40%;
+}
+
+
+
+.status-badge {
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+    background: var(--neutral-300, #CBD5E1);
+
+}
+
+.status-badge.inactive::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%; /* Create a circular shape */
+    
+}
+
+.status-badge.closed::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%; /* Create a circular shape */
+    background: var(--status-danger-400, #EF4343);
+}
+
+.status-badge.no-colour {    
+    content: "";
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%; /* Create a circular shape */
+    background: transparent;
+}
+
+.status-badge.active::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 5px;
+    height: 5px;
+    background-color: var(--status-lime-400, #82CB15); /* Match the badge background color */
+    border-radius: 50%; /* Create a circular shape */
+}
+
+.list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.list-item {
+    
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    @include text-base-normal;
+}
+
+.profile-card-style {
+    border-radius: 16px;
+    background: var(--basic-white, #FFF);
+    width:90%;
+    margin:2%;
+}
+
+
+.flex-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+  }
+
+  .grid-container {
+    display: grid;
+    gap: 50px 10px;
+    grid-template-columns: auto auto auto auto;
+    padding: 10px;
+  }
+  
+  .grid-container.single-column {
+    grid-template-columns: auto;
+   }
+
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: left;
+  }
+  ::ng-deep .ngx-org-image {
+    padding-right: 45px ;
+    padding-bottom: 48px ;
+    border: none;
+    background: var(--neutral-100, #F1F5F9)
+}
+::ng-deep.ngx-org-box{
+    border: none;
+    box-shadow:none;
+}
+::ng-deep.ngx-org-name{
+  @include text-base-normal;  
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .has-icon .ngx-org-name::after {
+    content: url('../../../../assets/images/currency-dollar-green.svg');
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    margin-right: 5px;
+    margin-bottom: 5px;    
+    vertical-align: middle;
+  }
+  ::ng-deep .no-icon .ngx-org-name::after {
+    content: none;
+  }
+
+  ::ng-deep .ngx-org-title::after {
+    content: var(--dynamicTitleName);
+    @include text-xs-semibold;
+    padding: 0px 4px;
+    border-radius: 360px;
+  }
+
+  ::ng-deep .active .ngx-org-title::after {
+    background: var(--status-lime-50, #D9F99F);
+    color: var(--status-lime-600, #4C7B0F);
+  }
+  
+  ::ng-deep .inactive .ngx-org-title::after {
+    color: var(--Neutral-700, #334155);
+    background: var(--Neutral-200, #E2E8F0);
+  }
+  
+  ::ng-deep .locked .ngx-org-title::after {
+    color: var(--Neutral-500, #64748B);
+    background: var(--Neutral-300, #CBD5E1);
+  }
+
+::ng-deep .ngx-org-title{
+    @include text-small-semibold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+.hierarchy-icon{
+    float: right;
+    background-color: #E2E8F0;
+    border-radius: 4px;
+    padding: 6px 8px 6px 8px;
+    border-radius: 8px;
+}
+
+.chart-container {
+    margin-left: 48%;
+  }
+.chart-heading{
+    font-size: 20px;
+    font-weight: 600;
+    color: #FA7A55;
+    display: flex;
+    justify-content: center;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 15px;
+  padding: 10px 0;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+  color: #1e88e5; /* Primary link color */
+  font-weight: 500;
+  padding: 0 5px;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+  color: #1565c0; /* Darker color on hover */
+}
+
+.breadcrumb span {
+  color: #757575; /* Arrow color */
+  padding: 0 5px;
+  font-weight: 600;
+}
+
+.toggle-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.view-toggle-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+  mat-button-toggle-group {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+
+    mat-button-toggle {
+      border: none;
+
+      &.mat-button-toggle-checked {
+        background-color: $disabled-button-background;
+      }
+
+      img.custom-icon {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+      }
+    }
+  }
+}

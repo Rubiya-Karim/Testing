@@ -1,0 +1,410 @@
+<form *ngIf="connectionForm && show" [formGroup]="connectionForm" class="editForm">
+    <div class="site-container">
+        <div class="cluster-header">
+            <button (click)="back()" class="btn back-button back-button-text"><img
+                    src="../../../../assets/images/arrow-sm-left.png">Back</button>
+            <p class="heading-btn">{{ data.isEditMode ? 'Modify Connection' : 'Add Connection' }}</p>
+        </div>
+        <div class="row site-form">
+            <p class="site-sub-heading">{{ isEditMode ? 'Modify Connection' : 'Add Connection' }}</p>
+            <div class="col-md-6">
+                <label>Config Name</label>
+                <input type="text" class="form-control" formControlName="conName" placeholder="Connection Name"
+                    required />
+                <div class="invalid" *ngIf="f['conName'].errors?.['required'] && f['conName'].touched">
+                    <small>Config Name is required.</small>
+                </div>
+                <label>Config Type</label>
+                <select id="type" class="form-select" formControlName="conType" required>
+                    <option value="">Select</option>
+                    <option value="1">1- BRM Master Database</option>
+                    <option disabled value="2">2- Master CM Production</option>
+                    <option disabled value="3">3- OMF Mbean client Production</option>
+                    <option disabled value="4">4- ECE Database</option>
+
+                </select>
+                <div class="invalid" *ngIf="f['conType'].errors?.['required'] && f['conType'].touched">
+                    <small>Config Type is required.</small>
+                </div>
+                <label>DB Host</label>
+                <input type="text" class="form-control" formControlName="dbHostUrl" placeholder="Database Host"
+                    required>
+                <div class="invalid" *ngIf="f['dbHostUrl'].errors?.['required'] && f['dbHostUrl'].touched"><small>DB
+                        host is required.</small></div>
+
+                <label>DB User</label>
+                <input type="text" class="form-control" formControlName="dbUserName" placeholder="Database User"
+                    required>
+                <div class="invalid" *ngIf="f['dbUserName'].errors?.['required'] && f['dbUserName'].touched">
+                    <small>DB User is required.</small>
+                </div>
+
+                <label>DB Driver Class</label>
+                <input type="text" class="form-control" formControlName="dbDriverClass" placeholder="Database Driver"
+                    required>
+                <div class="invalid" *ngIf="f['dbDriverClass'].errors?.['required'] && f['dbDriverClass'].touched">
+                    <small>DB Driver Class is required.</small>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <label>Cluster Name</label>
+                <select id="category" class="form-select" formControlName="clusterName" required>
+                    <option value="">Select</option>
+                    <option *ngFor="let clust of Cluster" [ngValue]="clust.clusterName">
+                        {{ clust.clusterName }}
+                    </option>
+                </select>
+                <div class="invalid" *ngIf="f['clusterName'].errors?.['required'] && f['clusterName'].touched">
+                    <small>Cluster Name is required.</small>
+                </div>
+                <div class="chk-box">
+                    <input type="checkbox" formControlName="masterDB"  >
+                    <label > Master Connection </label>
+
+                 </div>
+                <!-- <input type="text" class="form-control" formControlName="masterDB" placeholder="Master Database" id="Master-DB" (keyup)="validateBoolean($event)"
+                    required> -->
+                <div class="invalid" *ngIf="f['masterDB'].errors?.['required'] && f['masterDB'].touched"><small>Master
+                        Cpnnection is required.</small></div>
+                <div class="invalid" *ngIf="!booleanValue">
+                    <small>Master Connection flag should be boolean</small>
+                </div>
+                <label>DB Password</label>
+                <input type="password" class="form-control" formControlName="dbPassword" placeholder="Database Password"
+                    required>
+                <div class="invalid" *ngIf="f['dbPassword'].errors?.['required'] && f['dbPassword'].touched"><small>DB
+                        password is required.</small></div>
+                <label>Database Id</label>
+                <input type="text" (input)="checkval($event)" class="form-control" formControlName="dataBaseNo"
+                    placeholder="Database No." required>
+                <div class="invalid" *ngIf="f['dataBaseNo'].errors?.['required'] && f['dataBaseNo'].touched">
+                    <small>Database Id is required.</small>
+                </div>
+                <div class="invalid" *ngIf="f['dataBaseNo'].errors?.['pattern']">
+                    <small>Database Id should be in numbers</small>
+                </div>
+            </div>
+        </div>
+        <div class="add-btn">
+            <button class="cancel-btn" (click)="cancelConnection()">Cancel</button>
+            <button class="test-site-btn" *ngIf="testdb" (click)="testbrmConnection()">Test</button>
+            <button class="add-site-btn" (click)="addConnection()" [disabled]="!disableSubmitButton">{{data.isEditMode ?
+                'Update':'Add'}}</button>
+        </div>
+    </div>
+</form>
+
+<!-------------------------2nd form-------------------------------->
+<form *ngIf="CMconnectionForm && cmShowi" [formGroup]="CMconnectionForm" class="editForm">
+    <div class="site-container">
+        <div class="cluster-header">
+            <button (click)="back()" class="btn back-button back-button-text"><img
+                    src="../../../../assets/images/arrow-sm-left.png">Back</button>
+            <p class="heading-btn">{{ data.editMode ? 'Modify Connection' : 'Add Connection' }}</p>
+        </div>
+        <div class="row site-form">
+            <p class="site-sub-heading">{{ editMode ? 'Modify Connection' : 'Add Connection' }}</p>
+            <div class="col-md-6">
+                <label>Config Name</label>
+                <input type="text" class="form-control" formControlName="conName" placeholder="Connection Name"
+                    required>
+                <div class="invalid" *ngIf="g['conName'].errors?.['required'] && g['conName'].touched"><small>Config
+                        Name is required.</small></div>
+                <label>Config Type</label>
+                <select id="type" class="form-select" formControlName="conType" required>
+                    <option value="">Select</option>
+                    <!-- <option *ngFor="let contype of connectionType" [value]="contype.conType">
+                              {{ contype.conName }}
+                            </option>    -->
+                    <option disabled value="1">1- BRM Master Database</option>
+                    <option value="2">2- Master CM Production</option>
+                    <option disabled value="3">3- OMF Mbean client Production</option>
+                    <option disabled value="4">4 - ECE Database</option>
+                </select>
+                <div class="invalid" *ngIf="g['conType'].errors?.['required'] && g['conType'].touched"><small>Config
+                        Type is required.</small></div>
+
+                <label>CM Host</label>
+                <input type="text" class="form-control" formControlName="cmHost" placeholder="CM Host" required>
+                <div class="invalid" *ngIf="g['cmHost'].errors?.['required'] && g['cmHost'].touched"><small>CM Host is
+                        required.</small></div>
+                <label>CM User</label>
+                <input type="text" class="form-control" formControlName="cmlogin" placeholder="CM User" required>
+                <div class="invalid" *ngIf="g['cmlogin'].errors?.['required'] && g['cmlogin'].touched"><small>CM login
+                        name is required.</small></div>
+                <label>SSL Enabled</label>
+                <input type="text" class="form-control" formControlName="sslEnabled" placeholder="SSL Enabled" required>
+                <div class="invalid" *ngIf="g['sslEnabled'].errors?.['required'] && g['sslEnabled'].touched"><small>SSL
+                        Enabled is required.</small></div>
+                <div class="invalid" *ngIf="g['sslEnabled'].touched && g['sslEnabled'].errors?.['invalidBooleanValue']">
+                    <small>Only 0, 1, true, or false are allowed.</small>
+                </div>
+                <label>Database Id</label>
+                <input type="text" (input)="checkval($event)" class="form-control" formControlName="dataBaseNo"
+                    placeholder="Database No." required>
+                <div class="invalid" *ngIf="f['dataBaseNo'].errors?.['required'] && f['dataBaseNo'].touched">
+                    <small>Database Id is required.</small>
+                </div>
+                <div class="invalid" *ngIf="f['dataBaseNo'].errors?.['pattern']">
+                    <small>Database Id should be in numbers</small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label>Cluster Name</label>
+                <select id="category" class="form-select" formControlName="clusterName" required>
+                    <option value="">Select</option>
+                    <option *ngFor="let clust of Cluster" [ngValue]="clust.clusterName">
+                        {{ clust.clusterName }}
+                    </option>
+                </select>
+                <div class="invalid" *ngIf="g['clusterName'].errors?.['required'] && g['clusterName'].touched">
+                    <small>Cluster Name is required.</small>
+                </div>
+                <label>CM Flag</label>
+                <input type="text" class="form-control" formControlName="masterCM" placeholder="Master CM" required>
+                <div class="invalid" *ngIf="g['masterCM'].errors?.['required'] && g['masterCM'].touched"><small>
+                        CM Flag is required.</small></div>
+                <div class="invalid" *ngIf="g['masterCM'].errors?.['pattern']">
+                    <small>CM flag should be boolean</small>
+                </div>
+                <label>CM Port</label>
+                <input type="text" class="form-control" formControlName="cmPort" placeholder="CM Port" required>
+                <div class="invalid" *ngIf="g['cmPort'].errors?.['required'] && g['cmPort'].touched"><small>CM Port is
+                        required.</small></div>
+                <div class="invalid" *ngIf="g['cmPort'].errors?.['pattern']">
+                    <small>CM Port should be in numbers</small>
+                </div>
+                <label>CM Password</label>
+                <input type="password" class="form-control" formControlName="cmPassword" placeholder="CM Password"
+                    required>
+                <div class="invalid" *ngIf="g['cmPassword'].errors?.['required'] && g['cmPassword'].touched"><small>CM
+                        Password is required.</small></div>
+                <label>SSL Wallet</label>
+                <input type="text" class="form-control" formControlName="sslWallet" placeholder="SSL Wallet" required>
+                <div class="invalid" *ngIf="g['sslWallet'].errors?.['required'] && g['sslWallet'].touched"><small>SSL
+                        Enabled is required.</small></div>
+                <div class="invalid" *ngIf="g['sslWallet'].errors?.['pattern']">
+                    <small>SSL Wallet flag should be boolean</small>
+                </div>
+            </div>
+        </div>
+        <div class="add-btn">
+            <button class="cancel-btn" (click)="cancelConnection()">Cancel</button>
+            <button class="test-site-btn" *ngIf="testcm" (click)="testcmConnection()">Test</button>
+            <button class="add-site-btn" (click)="addCMConnection()" [disabled]="!disableCMSubmitButton">{{data.editMode
+                ? 'Update':'Add'}}</button>
+        </div>
+    </div>
+</form>
+
+<!------------------------3rd Form---------------------------------->
+<form *ngIf="JMXconnectionForm && jmxShow" [formGroup]="JMXconnectionForm" class="editForm">
+    <div class="site-container">
+        <div class="cluster-header">
+            <button (click)="back()" class="btn back-button back-button-text"><img
+                    src="../../../../assets/images/arrow-sm-left.png">Back</button>
+            <p class="heading-btn">{{ data.EditMode ? 'Modify Connection' : 'Add Connection' }}</p>
+        </div>
+        <div class="row site-form">
+            <p class="site-sub-heading">{{ EditMode ? 'Modify Connection' : 'Add Connection' }}</p>
+            <div class="col-md-6">
+                <label>Config Name</label>
+                <input type="text" class="form-control" formControlName="conName" value="conName"
+                    placeholder="Connection Name" required>
+                <div class="invalid" *ngIf="h['conName'].errors?.['required'] && h['conName'].touched"><small>Config
+                        Name is required.</small></div>
+                <label>Config Type</label>
+                <select id="type" class="form-select" formControlName="conType" required>
+                    <option value="">Select</option>
+                    <!-- <option *ngFor="let contype of connectionType" [value]="contype.conType">
+                              {{ contype.conName }}
+                            </option>    -->
+                    <option disabled value="1">1- BRM Master Database</option>
+                    <option disabled value="2">2- Master CM Production</option>
+                    <option value="3">3- OMF Mbean client Production</option>
+                    <option disabled value="4">4 - ECE Database</option>
+
+                </select>
+                <div class="invalid" *ngIf="h['conType'].errors?.['required'] && h['conType'].touched"><small>Config
+                        Type is required.</small></div>
+
+                        <label> Moniter Agent Service Name</label>
+                        <input type="text" class="form-control" formControlName="monitorAgentHost"
+                            placeholder="monitorAgentHost" required>
+                        <div class="invalid"
+                            *ngIf="h['monitorAgentHost'].errors?.['required'] && h['monitorAgentHost'].touched">
+                            <small>Moniter Agent Service Name is required.</small>
+                        </div>
+
+
+                <label>ECE Admin JMX Host</label>
+                <input type="text" class="form-control" formControlName="JMXHostIP" placeholder="JMXHostIP" required>
+                <div class="invalid" *ngIf="h['JMXHostIP'].errors?.['required'] && h['JMXHostIP'].touched">
+                    <small>ECE Admin JMX Host is required.</small>
+                </div>
+                <div class="invalid" *ngIf="h['JMXHostIP'].errors?.['pattern']">
+                    <small>ECE Admin JMX Host should be in numbers</small>
+                </div>
+                <label>ECE Admin JMX Port</label>
+                <input type="text" class="form-control" formControlName="JMXHostPort" placeholder="JMXHostPort"
+                    required>
+                <div class="invalid" *ngIf="h['JMXHostPort'].errors?.['required'] && h['JMXHostPort'].touched">
+                    <small>ECE Admin JMX Port is required.</small>
+                </div>
+                <div class="invalid" *ngIf="h['JMXHostPort'].errors?.['pattern']">
+                    <small>ECE Admin JMX Port should be in numbers</small>
+                </div>
+                <label>ECE Admin Namespace</label>
+                <input type="text" class="form-control" formControlName="pinConfNameSpace"
+                    placeholder="pinConfNameSpace" required>
+                <div class="invalid"
+                    *ngIf="h['pinConfNameSpace'].errors?.['required'] && h['pinConfNameSpace'].touched"><small>ECE Admin
+                        Namespace
+                        is required.</small></div>
+            </div>
+            <div class="col-md-6">
+                <label>Cluster Name</label>
+                <select id="category" class="form-select" formControlName="clusterName" required>
+                    <option>Select</option>
+
+                    <option *ngFor="let clust of Cluster" [ngValue]="clust.clusterName">
+                        {{ clust.clusterName }}
+                    </option>
+                </select>
+                <div class="invalid" *ngIf="h['clusterName'].errors?.['required'] && h['clusterName'].touched">
+                    <small>Cluster Name is required.</small>
+                </div>
+
+                <label> Moniter Agent Service Port</label>
+                <input type="text" class="form-control" formControlName="monitorAgentPort"
+                    placeholder="monitorAgentPort" required>
+                <div class="invalid"
+                    *ngIf="h['monitorAgentPort'].errors?.['required'] && h['monitorAgentPort'].touched">
+                    <small>Moniter Agent Service Port is required.</small>
+                </div>
+
+
+                <label>ECE Admin REST Token</label>
+                <input type="text" class="form-control" formControlName="pinConfUpdateToken"
+                    placeholder="pinConfUpdateToken" required>
+                <div class="invalid"
+                    *ngIf="h['pinConfUpdateToken'].errors?.['required'] && h['pinConfUpdateToken'].touched">
+                    <small>ECE Admin REST Token is required.</small>
+                </div>
+                <label>ECE Admin REST URL</label>
+                <input type="text" class="form-control" formControlName="pinConfUpdateUrl"
+                    placeholder="pinConfUpdateUrl" required>
+                <div class="invalid"
+                    *ngIf="h['pinConfUpdateUrl'].errors?.['required'] && h['pinConfUpdateUrl'].touched"><small>ECE Admin
+                        REST URL is required.</small></div>
+            </div>
+        </div>
+        <div class="add-btn">
+            <button class="cancel-btn" (click)="cancelConnection()">Cancel</button>
+            <button class="test-site-btn" *ngIf="testjmx" (click)="testjmxConnection()">Test</button>
+            <button class="add-site-btn" (click)="addJMXConnection()"
+                [disabled]="!disableJMXSubmitButton">{{data.EditMode ? 'Update':'Add'}}</button>
+        </div>
+    </div>
+</form>
+
+<!----------------------------  4th Form ---------------------->
+
+<form *ngIf="connectionEceForm && eceShow" [formGroup]="connectionEceForm" class="editForm">
+    <div class="site-container">
+        <div class="cluster-header">
+            <button (click)="back()" class="btn back-button back-button-text"><img
+                    src="../../../../assets/images/arrow-sm-left.png">Back</button>
+            <p class="heading-btn">{{ data.eceEditMode ? 'Modify ECE Connection' : 'Add ECE Connection' }}</p>
+        </div>
+        <div class="row site-form">
+            <p class="site-sub-heading">{{ eceEditMode ? 'Modify ECE Connection' : 'Add ECE Connection' }}</p>
+            <div class="col-md-6">
+                <label>Config Name</label>
+                <input type="text" class="form-control" formControlName="conName" placeholder="Connection Name"
+                    required />
+                <div class="invalid" *ngIf="f['conName'].errors?.['required'] && f['conName'].touched">
+                    <small>Config Name is required.</small>
+                </div>
+                <label>Config Type</label>
+                <select id="type" class="form-select" formControlName="conType" required>
+                    <option value="">Select</option>
+                    <option disabled value="1">1- BRM Master Database</option>
+                    <option disabled value="2">2- Master CM Production</option>
+                    <option disabled value="3">3- OMF Mbean client Production</option>
+                    <option  value="4">4- ECE Database</option>
+
+                </select>
+                <div class="invalid" *ngIf="f['conType'].errors?.['required'] && f['conType'].touched">
+                    <small>Config Type is required.</small>
+                </div>
+                <label>DB Host</label>
+                <input type="text" class="form-control" formControlName="dbHostUrl" placeholder="Database Host"
+                    required>
+                <div class="invalid" *ngIf="f['dbHostUrl'].errors?.['required'] && f['dbHostUrl'].touched"><small>DB
+                        host is required.</small></div>
+
+                <label>DB User</label>
+                <input type="text" class="form-control" formControlName="dbUserName" placeholder="Database User"
+                    required>
+                <div class="invalid" *ngIf="f['dbUserName'].errors?.['required'] && f['dbUserName'].touched">
+                    <small>DB User is required.</small>
+                </div>
+
+                <label>DB Driver Class</label>
+                <input type="text" class="form-control" formControlName="dbDriverClass" placeholder="Database Driver"
+                    required>
+                <div class="invalid" *ngIf="f['dbDriverClass'].errors?.['required'] && f['dbDriverClass'].touched">
+                    <small>DB Driver Class is required.</small>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <label>Cluster Name</label>
+                <select id="category" class="form-select" formControlName="clusterName" required>
+                    <option value="">Select</option>
+                    <option *ngFor="let clust of Cluster" [ngValue]="clust.clusterName">
+                        {{ clust.clusterName }}
+                    </option>
+                </select>
+                <div class="invalid" *ngIf="f['clusterName'].errors?.['required'] && f['clusterName'].touched">
+                    <small>Cluster Name is required.</small>
+                </div>
+                <!-- <label>Master DB</label>
+                <input type="text" class="form-control" formControlName="masterDB" placeholder="Master Database" id="Master-DB" (keyup)="validateBoolean($event)"
+                    required> -->
+                    <div class="chk-box">
+                        <input type="checkbox" formControlName="masterDB"  >
+                        <label > Master Connection </label>
+    
+                    </div>
+                <div class="invalid" *ngIf="f['masterDB'].errors?.['required'] && f['masterDB'].touched"><small>Master
+                        DB is required.</small></div>
+                <div class="invalid" *ngIf="!booleanValue">
+                    <small>Master Connection flag should be boolean</small>
+                </div>
+                <label>DB Password</label>
+                <input type="password" class="form-control" formControlName="dbPassword" placeholder="Database Password"
+                    required>
+                <div class="invalid" *ngIf="f['dbPassword'].errors?.['required'] && f['dbPassword'].touched"><small>DB
+                        password is required.</small></div>
+                <label>Database Id</label>
+                <input type="text" (input)="checkval($event)" class="form-control" formControlName="dataBaseNo"
+                    placeholder="Database No." required>
+                <div class="invalid" *ngIf="f['dataBaseNo'].errors?.['required'] && f['dataBaseNo'].touched">
+                    <small>Database Id is required.</small>
+                </div>
+                <div class="invalid" *ngIf="f['dataBaseNo'].errors?.['pattern']">
+                    <small>Database Id should be in numbers</small>
+                </div>
+            </div>
+        </div>
+        <div class="add-btn">
+            <button class="cancel-btn" (click)="cancelConnection()">Cancel</button>
+            <button class="test-site-btn" *ngIf="testdb" (click)="testEceConnection()">Test</button>
+            <button class="add-site-btn" (click)="addEceConnection()" [disabled]="!disableEceSubmitButton">{{data.eceEditMode ?
+                'Update':'Add'}}</button>
+        </div>
+    </div>
+</form>

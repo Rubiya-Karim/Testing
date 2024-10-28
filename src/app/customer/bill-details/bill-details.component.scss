@@ -1,0 +1,28 @@
+@import "../../../../styles.scss";
+.header-text {
+    @include text-headline-h4-2xl;
+    width: 100%;
+}
+
+.background-container{
+    background: var(--neutral-100, #F1F5F9);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 35px;
+}
+.outer-container{
+    padding: 30px 40px 0px 0px;
+    margin: 0px 20px 0px 0px;
+}
+.value-text-bold {
+    //padding: 20px;
+    color: #FA7A55;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+::ng-deep th.ng-tns-c135-1.small-font.ng-star-inserted {
+    padding-left : 15px !important ;
+    padding-right: 15px !important;
+}

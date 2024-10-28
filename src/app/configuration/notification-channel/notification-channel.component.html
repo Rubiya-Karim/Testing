@@ -1,0 +1,393 @@
+<ng-container *ngIf="hasAccess; else noAccess">
+  <!-- <div class="container"> -->
+    <div class="config-container">
+      <div class="config-card">
+        <div class="image-container">
+          <img src="../../../../assets/images/Group 333.svg">
+         </div>
+         <div class="accordion-group">
+          <p>Choose one or more channels that you wish to setup as notification channel and provide details</p>
+        <div class="config-accordion mb-3" [ngClass]="isRowExpanded(1,i) ? 'expanded_main' : 'collapsed_main'">
+          <div class="acc-main " [ngClass]="isRowExpanded(1,i) ? 'expanded' : 'collapsed'">
+                <div class="acc-title-left">
+                  <img src="../../../../assets/images/chat.svg">
+                  <label class="w-100 acc-title" (click)="toggleRow(1,i)">SMS</label>
+                  <label *ngIf="successMessage" class="success-message w-100">
+                    {{ successMessage }}
+                  </label>
+                </div>
+                <button class="btn icon-button" (click)="toggleRow(1,i)">
+                  <img class="icon-button" src="../../../assets/images/chevron-down.svg" alt="Toggle"
+                    [@rotate]="isRowExpanded(1,i) ? 'expanded' : 'collapsed'" />
+                </button>
+              </div>
+              <div class="w-100 p-3" *ngIf="isRowExpanded(1,i)">
+                <ng-container>
+                  <div class="forms">
+                    <!-- edit sms table -->
+                    <div *ngIf="showTableAndForm">
+                      <form [formGroup]="formSms">
+                        <ng-container>
+                          <div class="sms">
+                                  <h2>SMS</h2>
+                                  <div class="row">
+                                    <div class="col-sm-4">
+                                      <label>Host URL</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                      <input type="text" class="form-control" placeholder="Host URL" formControlName="smsHost" required>
+                                    </div>
+                                  </div>
+                                  <div class="method">
+                                    <label class="col-sm-4">Method</label>
+                  
+                      <!-------------------custom Radio button ------------------------>
+              
+                                    <div class="custom-radio form-check form-check-inline type-align" >
+                                      <input class="form-check-input"  type="radio" name="smsRequesType" value="GET" formControlName="smsRequesType" >
+                                      <label class="form-check-label" > Get
+                                      </label>
+                                    </div>
+                                    <div class="custom-radio form-check form-check-inline type-align" >
+                                      <input class="form-check-input"  type="radio" name="smsRequesType" value="POST" formControlName="smsRequesType" >
+                                      <label class="form-check-label" > Post
+                                      </label>
+                                    </div>
+              
+              
+                                  </div>
+                  
+                                  <p class="parameters">Parameters</p>
+                                  <div formArrayName="smsParameter">
+                                    <div *ngFor="let parameter of parametersFormArray.controls; let i = index" class="row">
+                                      <div [formGroupName]="i">
+                                        <div class="row mb-3">
+                                          <div class="col-sm-4 " style="height: 28px;">
+                                            <div class="d-flex" *ngIf="formSms.value.smsRequesType === 'GET'">
+                                            
+                                            <label>Type</label>
+                                            <select class="form-control typeFormControl" formControlName="paramType" required>
+                                              <option *ngFor="let getParameter of smsGETParameters" [selected]="parameter.value.paramType === getParameter">
+                                                  {{ getParameter }}
+                                              </option>
+                                          </select>
+                                            </div>
+                                            
+                                            <div class="d-flex" *ngIf="formSms.value.smsRequesType === 'POST'">
+                                            
+                                            <label>Type</label>
+                                            <select class="form-control typeFormControl" formControlName="paramType" required>
+                                              <option *ngFor="let postParameter of smsPOSTParameters" [selected]="parameter.value.paramType === postParameter">
+                                                  {{ postParameter }}
+                                              </option>
+                                          </select>
+                                            </div>
+                                            </div>
+              
+                                          <div class="col-sm-4 param-label">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" placeholder="Parameter Name" formControlName="paramName" required>
+                                          </div>
+                                          <div class="col-sm-4 param-label">
+                                            <label>Value</label>
+                                            <input type="text" class="form-control" placeholder="Parameter Value" formControlName="paramValue" required>
+                                            <img src="../../../../assets/images/x.png" class="x-image" (click)="removeParameter(i)">
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <button class="add-btn" (click)="addParameter()"><img src="../../../../assets/images/add-Icon.png">
+                                    Add Values</button>
+                                    <div class="save-button">
+                                      <button class="save-btn" (click)="saveSms()">{{ editMode ? 'Update' : 'Save' }}</button>
+                                      <button class="close-btn" (click)="cancelEdit()">Cancel</button>
+                                      
+                                    </div>
+                                    
+                                  
+                                </div>
+                             
+                          </ng-container>
+                      </form>
+                    </div>
+                  </div>
+                </ng-container>
+                <div *ngIf="!showTableAndForm">
+                  <!-- <ng-container *ngFor="let aSMSConfig of rows"> -->
+                    <div class="sms-detail">
+                      <app-info-card [title]="'Host URL'" [subTitle]="smsData.smsHost" [imageIcon]="'../../../../assets/images/link.svg'"></app-info-card>
+                      <app-info-card [title]="'Method'" [subTitle]="smsData.smsRequesType" [imageIcon]="'../../../../assets/images/paper-airplane.svg'"></app-info-card>
+                    </div>
+                    <app-shared-table [tableData]="smsDataConfig" [disable]="true" [showCheckAll]="false" [isAddEnabled] = "false"
+                     [isSearchFilter] = "false">
+                  </app-shared-table>
+                
+                  <div class="content-div">  
+                  <button class="del-btn" type="button" (click)="deleteSms()"><img src="../../../../assets/images/trash-red.svg">Remove Configuration
+                  </button>
+                  <button class="test-btn" type="button" (click)="sendTestSms()"><img src="../../../../assets/images/Test.svg">Test SMS
+                  </button>
+                  <button class="update-btn" type="button" (click)="updateSms()"><img src="../../../../assets/images/plus-icon.svg">Edit
+                  </button>
+                  </div>
+                    <!-- </ng-container> -->
+                </div>
+              
+              </div>
+             
+            </div>
+                   
+        <!-- </div> -->
+        <div class="config-accordion mb-3" [ngClass]="isRowExpanded(2,i) ? 'expanded_main' : 'collapsed_main'">
+          <div class="acc-main email_teams" [ngClass]="isRowExpanded(2,i) ? 'expanded' : 'collapsed'">
+            <div class="acc-main-header">
+              <div class="acc-title-left">
+                <img src="../../../../assets/images/mail.svg">
+                <label class="w-100 acc-title" (click)="toggleRow(2,i)">Email</label>
+              </div>
+              <button class="btn icon-button" (click)="toggleRow(2,i)">
+                <img class="icon-button" src="../../../assets/images/chevron-down.svg" alt="Toggle"
+                  [@rotate]="isRowExpanded(2,i) ? 'expanded' : 'collapsed'" />
+              </button>
+            </div>
+          </div>
+            <div class="w-100 p-3" *ngIf="isRowExpanded(2,i)">
+              <ng-container>
+                <div *ngIf="emailSuccessMessage" class="success-message">
+                  {{ emailSuccessMessage }}
+                </div>
+                <div *ngIf="showEmailTableAndForm">
+                  <form [formGroup]="formEmail">
+                    <ng-container>
+                    <div class="email">
+                            <div class="smtp">
+                              <!-- <h2>EMAIL</h2> -->
+            
+                              <label class="radio-label">
+                                <input type="radio" name="emailMethod" value="SMTP" formControlName="emailMethod" required>
+                                SMTP
+                              </label>
+                              <label class="radio-label">
+                                <input type="radio" name="emailMethod" value="Auth" formControlName="emailMethod" required>
+                                Auth
+                              </label>
+                            </div>
+                            <div class="row email-fields">
+                              <div class="col-sm-4">
+                                <label>Host URL</label>
+                              </div>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" placeholder="Host URL" formGroupName="url"
+                                  formControlName="url" required>
+                                  
+                                  
+                              </div>
+                            </div>
+                            <div class="row email-fields">
+                              <div class="col-sm-4">
+                                <label>Port</label>
+                              </div>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" placeholder="Port" formControlName="port" required>
+                              </div>
+                            </div>
+                            <div class="row email-fields">
+                              <div class="col-sm-4">
+                                <label>User Name</label>
+                              </div>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" placeholder="User Name" formControlName="userName"
+                                  name="userName" required>
+                              </div>
+                            </div>
+                            <div class="row email-fields">
+                              <div class="col-sm-4">
+                                <label>Password</label>
+                              </div>
+                              <div class="col-sm-8">
+                                <input type="password" placeholder="Password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid':  (f['password'].dirty &&  f['password'].touched && f['password'].errors) || (submitted && f['password'].errors)}" 
+                                         (blur)="validateFormControl()" required/>
+                                        <div *ngIf="f['password'].invalid && (f['password'].dirty && f['password'].touched || submitted) && f['password'].errors?.['required']"  class="invalid-feedback">
+                                        <small>Password is required.</small>  
+                                      </div>
+                              </div>
+                            </div>
+            
+                            <div class="save-email">
+                              
+                              <button class="save-btn" (click)="saveEmail()" [disabled]="!formEmail.valid">Save</button>
+            
+                            </div>
+                          </div>
+                        </ng-container>
+                      </form>
+                        </div>
+                         <!-- edit email table  -->
+                        <div *ngIf="isEditMode">
+                          <form [formGroup]="formEmail">
+                            <ng-container>
+                            <div class="email">
+                                    <div class="smtp">
+                                      <!-- <h2>EMAIL</h2> -->
+                    
+                                      <label class="radio-label">
+                                        <input type="radio" name="emailMethod" value="SMTP" formControlName="emailMethod" required>
+                                        SMTP
+                                      </label>
+                                      <label class="radio-label">
+                                        <input type="radio" name="emailMethod" value="Auth" formControlName="emailMethod" required>
+                                        Auth
+                                      </label>
+                                    </div>
+                                    <div class="row email-fields">
+                                      <div class="col-sm-4">
+                                        <label>Host URL</label>
+                                      </div>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Host URL" formGroupName="url"
+                                          formControlName="url" required>
+                                      </div>
+                                    </div>
+                                    <div class="row email-fields">
+                                      <div class="col-sm-4">
+                                        <label>Port</label>
+                                      </div>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Port" formControlName="port" required>
+                                      </div>
+                                    </div>
+                                    <div class="row email-fields">
+                                      <div class="col-sm-4">
+                                        <label>User Name</label>
+                                      </div>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="User Name" formControlName="userName"
+                                          name="userName" required>
+                                      </div>
+                                    </div>
+                                    <div class="row email-fields">
+                                      <div class="col-sm-4">
+                                        <label>Password</label>
+                                      </div>
+                                      <div class="col-sm-8">
+            
+                                        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid':  (f['password'].dirty &&  f['password'].touched && f['password'].errors) || (submitted && f['password'].errors)}" 
+                                         (blur)="validateFormControl()" required/>
+                                        <div *ngIf="f['password'].invalid && (f['password'].dirty && f['password'].touched || submitted) && f['password'].errors?.['required']"  class="invalid-feedback">
+                                        <small>Password is required.</small>  
+                                      </div>
+            
+                                      </div>
+                                    </div>
+                    
+                                    <div class="save-email">
+                                      
+                                      <button class="save-btn" (click)="saveEmail()">Update</button>
+                                      <button class="close-btn" (click)="cancelEditEmail()">Cancel</button>
+                                      
+                                    </div>
+                                  </div>
+                                </ng-container>
+                              </form>
+                        </div>
+                        <div *ngIf="showEmaillable " class="email-detail">
+                          <app-info-card [title]="'Host URL'" [subTitle]="hosturl" [imageIcon]="'../../../../assets/images/link.svg'"></app-info-card>
+
+                          <app-info-card [title]="'Port'" [subTitle]="port" [imageIcon]="'../../../../assets/images/tag.svg'"></app-info-card>
+    
+
+                        <!-- <img src="../../../../assets/images/link.svg">
+                        <label class="label-content">Host URL {{hosturl}}</label>
+                        
+                        <img src="../../../../assets/images/tag.svg">
+                        <label class="label-content">Port {{port}}</label> -->
+                      </div>
+                      <div class="content-div" *ngIf="showEmaillable ">
+                        <button class="del-btn" type="button" (click)="deleteEmail()"><img src="../../../../assets/images/trash-red.svg">Remove Configuration
+                        </button>
+                        <button class="test-btn" type="button" (click)="sendTestEmail($event)"><img src="../../../../assets/images/email.svg">Test Email
+                        </button>
+                        <button class="update-btn" type="button" (click)="updateEmail()"><img src="../../../../assets/images/plus-icon.svg">Edit
+                        </button>
+                        </div>
+                </ng-container> 
+            </div>
+          </div>
+         
+        <div class="config-accordion mb-3" [ngClass]="isRowExpanded(3,i) ? 'expanded_main' : 'collapsed_main'">
+          <div class="acc-main email_teams" [ngClass]="isRowExpanded(3,i) ? 'expanded' : 'collapsed'">
+             <div class="acc-main-header">
+               <div class="acc-title-left">
+                <img src="../../../../assets/images/ms-teams.svg">
+                 <label class="w-100 acc-title" (click)="toggleRow(3,i)">Teams</label>
+               </div>
+               <button class="btn icon-button" (click)="toggleRow(3,i)">
+                 <img class="icon-button" src="../../../assets/images/chevron-down.svg" alt="Toggle"
+                   [@rotate]="isRowExpanded(3,i) ? 'expanded' : 'collapsed'" />
+               </button>
+             </div>
+          </div>
+             <div class="w-100 p-3" *ngIf="isRowExpanded(3,i)">
+              <div class="forms">
+                <form [formGroup]="formTeams">
+                  <ng-container>
+                   
+                      <div *ngIf="teamsSuccessMessage" class="success-message">
+                        {{ teamsSuccessMessage }}
+                      </div>
+                     
+                        
+                        <div class="row email-fields">
+          
+                          <div class="col-sm-4">
+                            <label>Teams Name</label>
+                          </div>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Teams Name" formControlName="TeamsName"
+                            [readonly]="editingRowKey" required>
+                          </div>
+                        </div>
+                        <div class="row email-fields">
+                          <div class="col-sm-4">
+                            <label>URL</label>
+                          </div>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Username" formControlName="urlhost" required>
+                           
+                          </div>
+                        </div>
+                        <div class="save-email"></div>
+                        <div class="save-button">
+                          <button class="save-btn" (click)="addTeams()" [disabled]="!formTeams.valid">{{editingRowKey && tableData ? "Update" : "Save"}}</button>
+                          <button *ngIf="editingRowKey && tableData" class="close-btn" (click)="cancelTeamsEdit()">Cancel</button>
+                        </div>
+                      
+          
+                        <div>
+                          <app-shared-table [tableData]="tableData" [disable]="false" [showCheckAll]="false" [isAddEnabled] = "false"
+                                  (onDeleteRowEmit)="handleDeleteRow($event)" (onEditRowEmit)="handleEditRow($event)" [isSearchFilter] = "false" (onTestTeamsRowEmit)="sendTestTeams($event)"(emitPaginationEmit)="refreshData($event)" [totalRecords]="totalRecords" [pageSize]="pageSize"
+                                  [pageIndex]="pageIndex" [sortDirec]="sortDirec" [sortListBy]="sortCategory">
+                          </app-shared-table>
+                        </div>
+                     
+                  </ng-container>
+                </form>
+                    </div>
+            </div>
+             <!-- </div> -->
+            
+           </div>
+        </div>
+         </div>
+      </div>
+    <!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+</ng-container>
+<ng-template #noAccess>
+  <div class="access-denied-layout">
+    <p>User dont have the access to view the Notification Channel data</p>
+  </div>
+</ng-template>
+

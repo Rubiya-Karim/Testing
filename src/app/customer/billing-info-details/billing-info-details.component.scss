@@ -1,0 +1,165 @@
+@import "../../../../styles.scss";
+
+.config-container {
+    flex: 1 0 0;
+    align-self: stretch;
+    padding: 40px 58px 40px 58px;
+    border-radius: 16px;
+  }
+.config-col-container{
+    align-self: stretch;
+    padding: 40px 0px 40px 0px;
+    border-radius: 16px;
+    background-color: #FFF;
+}
+.config-card {
+    display: flex;
+    padding-right: 0px;
+    padding-top: 24px;
+    border-radius: 16px;
+    background: var(--neutral-100, #F1F5F9);
+    gap: 150px;
+  }
+.pay-config-card {
+    display: flex;
+    border-radius: 16px;
+    //background: var(--neutral-100, #F1F5F9);
+    gap: 80px;
+    padding-left: 20px;
+  }
+.image-container {
+  max-width: 324px;
+  margin-top: auto;
+  padding-bottom: 24px;
+  padding-left: 16px;
+}
+.image{
+  position: relative;
+  background-color: #FFF;
+}
+.heading {
+    @include text-headline-h5-xl;
+    color: var(--Headline-Orange-600, #FA7A55);
+}
+.info-card {
+    border-radius: 16px;
+    background: var(--neutral-100, #F1F5F9);
+    //width: 40%;
+    padding: 24px 16px 24px 16px;
+
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background-color:var(--neutral-100, #F1F5F9);
+    border: none;
+}
+.custom-padding{
+    border: none;
+    background-color: var(--neutral-100, #F1F5F9);
+}
+.subheading {
+    @include text-base-normal; 
+    text-align: center;
+    color: $border-color;
+ }
+
+.title {
+    @include text-xs-normal; 
+    color: $text-form-label-color;
+}
+
+.subtitle {
+    @include text-small-semibold;
+    color: $base-text-color;
+}
+
+.labels {
+   @include text-xs-normal; 
+   color: $text-form-label-color;
+}
+td{
+    padding: 10px;
+}
+.payinfo-details{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.labels-contents {
+    @include text-small-normal;
+    color: $base-text-color;
+}
+
+.bold-text {
+    @include text-small-semibold;
+}
+
+.bill-tab {
+    width: 100%
+}
+
+.bill-tab-data{
+    @include text-xs-normal; 
+    width: 60%;
+    flex-shrink: 0;
+    border: 1px solid #CBD5E1;
+    color: $base-text-color;
+}
+
+.bill-tab-value {
+    border: 1px solid #CBD5E1;
+    color: $base-text-color;
+    @include text-small-normal;
+    flex-shrink: 0;
+    width: 40%
+}
+
+.bill-tab-info {
+    border: 1px solid #CBD5E1;
+    color: $base-text-color;
+    @include text-small-light;
+    flex-shrink: 0;
+    width: 80%
+}
+
+.div-bill-row{
+    @include text-sm-normal;
+}
+
+.div-bill-column{
+    @include text-sm-normal;
+    float: left;
+    width: 25%;
+    padding: 5px;
+    text-align: center; 
+}
+
+.div-bill-column.large{
+    width: 50%; 
+}
+
+
+.billing-info-card-style {
+    border-radius: 16px;
+    border: 1px solid $border-color;
+    background: var(--basic-white, #FFF);
+    width:90%;
+    margin:2%;
+    padding: 2%;
+}
+
+
+.column-segment {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.no_data_found {
+    color: #004475;
+    margin-top: 35%;
+}

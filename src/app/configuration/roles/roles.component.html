@@ -1,0 +1,19 @@
+<ng-container *ngIf="hasAccess; else noAccess">
+  <div class="view-container" layout="fill">
+    <app-shared-table [tableData]="tableData" [showCheckAll]="false" (onEditRowEmit)="onEdit($event)"
+    (onDeleteRowEmit)="onDelete($event)" (onViewRowEmit)="onView($event)" [isSearch]="true" [selectedFilterCategory]="selectedFilterCategory"
+    [sortListBy]="sortCategory" (onHeaderButtonEmit)="buttonEvent($event)" [sortDirec]="sortDirec"
+    [headerButtonTitle]="headerButtonTitle" [filterCategoryList]="filterCategory" [filterCategoryDropdownData]="statusFilterList"  [filterCategoryCalendarType]="calendarTypeKeys" (emitPaginationEmit)="refreshData($event)" [totalRecords]="totalRecords" [pageSize]="pageSize"
+    [pageIndex]="pageIndex" [isServerSearch]="true" (onServerSearchEmit)="onServerSearch($event)" [noDataFoundMessage]="noDataMsg" (onClickCustomIconEmit)="assignPrivilege($event)">
+    </app-shared-table>
+  </div>
+
+  <div class="vector-img">
+    <img src="../../../../assets/images/config-roles-vector.svg">
+  </div>
+</ng-container>
+<ng-template #noAccess>
+  <div class="access-denied-layout">
+    <p>User dont have the privileges to view the Role data</p>
+  </div>
+</ng-template>

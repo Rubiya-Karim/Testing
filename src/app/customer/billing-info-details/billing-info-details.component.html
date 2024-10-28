@@ -1,0 +1,216 @@
+<ng-container>
+    
+<div class="row mb-2" *ngFor="let billInfo of billInfoList; let i = index">
+<div class="config-container">
+        
+    <div class="config-card">
+        <div class="image-container">
+            <img src="../../../../assets/images/Group 340.svg ">
+        </div>
+        <div *ngIf="isDataAvailable" class="d-flex justify-content-center align-items-center flex-column">
+            <h5 class="no_data_found">{{noDataMsg}}</h5>
+        </div>
+            <div class="card info-card first-card-align">
+                <div class="heading">Billing Info Details</div>
+                <hr>
+                <table class="table table-sm table-borderless">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <app-info-card [title]="'Billing Day Of the Month'" [subTitle]=billInfo?.cycleDom [imageIcon]="'../../../../assets/images/BDOM icon.svg'"></app-info-card>
+                            </td>
+                            <td style="width: 80px;"></td>
+                            <td>
+                                <app-info-card [title]="'Currency'" [subTitle]=billInfo?.resourceCode [imageIcon]="'../../../../assets/images/Layer_1.svg'"></app-info-card>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <app-info-card [title]="'Billing Cycle'" [subTitle]=getBillingCycle(billInfo) [imageIcon]="'../../../../assets/images/Billing cycle icon.svg'"></app-info-card>
+                            </td>
+                            <td style="width: 80px;"></td>
+                            <td>
+                                <app-info-card [title]="'Billing Segment'" [subTitle]=billInfo?.billingSegment?.description [imageIcon]="'../../../../assets/images/Layer_1 (1).svg'"></app-info-card>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <app-info-card [title]="'Last Bill Date'" [isDateValue]="true" [subTitle]=billInfo?.lastBillTime [imageIcon]="'../../../../assets/images/Layer_1 (2).svg'"></app-info-card>
+                            </td>
+                            <td style="width: 80px;"></td>
+                            <td>
+                                <app-info-card [title]="'Next Bill Date'" [isDateValue]="true" [subTitle]=billInfo?.nextBillTime [imageIcon]="'../../../../assets/images/Layer_1 (3).svg'"></app-info-card>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <app-info-card [title]="'Total Billed Due'" [subTitle]=getDisplayDueAmount(billInfo) [imageIcon]="'../../../../assets/images/Layer_1 (5).svg'"></app-info-card>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+        <hr>
+
+        <table class="table table-sm table-borderless">
+            <tbody>
+                <tr>
+                    <td>
+                        <app-info-card [title]="'Status'" [subTitle]=billInfo?.statusString [isStatusType]="true" [imageIcon]="'../../../../assets/images/Layer_1 (4).svg'"></app-info-card>
+                    </td>
+                    <td style="width: 80px;"></td>
+                    <td>
+                        <app-info-card [title]="'Billing Status'" [subTitle]=getBillingStatus(billInfo) [imageIcon]="'../../../../assets/images/Layer_1 (4).svg'"></app-info-card>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <app-info-card *ngIf="billInfo?.statusString !== 'ACTIVE'" [title]="'Status Reason'" [subTitle]=getStatusReason(billInfo) [imageIcon]="'../../../../assets/images/Layer_1 (4).svg'"></app-info-card>
+                    </td>
+                    <td style="width: 80px;"></td>
+                    <td>
+                        <app-info-card *ngIf="billInfo?.billingStatusFlag != 0" [title]="'Billing Status Reason'" [subTitle]=getBillingStatusReason(billInfo) [imageIcon]="'../../../../assets/images/Layer_1 (4).svg'"></app-info-card>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <app-info-card [title]="'Suppression Status'" [subTitle]=getDisplaySuppStatus(billInfo) [imageIcon]="'../../../../assets/images/Layer_1 (4).svg'"></app-info-card>
+                    </td>
+                    <td style="width: 80px;"></td>
+                    <td>
+                        <app-info-card [title]="'Current Collection Status'" [subTitle]=getDisplayCurrentCollectionStatus(billInfo) [imageIcon]="'../../../../assets/images/Layer_1 (4).svg'"></app-info-card>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <app-info-card *ngIf="billInfo?.acctSuppressed != 0" [title]="'Suppression Cycles Left'" [subTitle]=getSuppressionCycle(billInfo) [imageIcon]="'../../../../assets/images/Layer_1 (4).svg'"></app-info-card>
+                    </td>
+                    <td style="width: 80px;"></td>
+                    <td>
+                        <app-info-card [title]="'Exempted From Collection'" [subTitle]=isExempted(billInfo) [imageIcon]="'../../../../assets/images/Layer_1 (4).svg'"></app-info-card>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        </div>
+    <!-- </div> -->
+
+    <div class="config-col-container">
+        <div class="pay-config-card"> 
+           <div class="image">
+             <img src="../../../../assets/images/Group 320.svg ">
+          </div>
+          <div *ngIf="isDataAvailable" class="d-flex justify-content-center align-items-center flex-column">
+            <h5 class="no_data_found">{{noData}}</h5>
+        </div>
+     <div class="card info-card first-card-align">
+          <div class="heading">Pay Details</div>
+         <hr>
+          <div class="payinfo-details" *ngIf="billInfo?.payinfoOutput; else noPayInfoData">
+            <app-info-card [title]="'Pay Type'" [subTitle]=getPayType(billInfo) [imageIcon]="'../../../../assets/images/currency-dollar.svg'"></app-info-card>
+            <app-info-card [title]="'Name'" [subTitle]=billInfo?.payinfoOutput?.name [imageIcon]="'../../../../assets/images/user icon.svg'"></app-info-card>
+    
+            <app-info-card [title]="'Payment Term'" [subTitle]=billInfo?.payinfoOutput?.paymentTerm?.description [imageIcon]="'../../../../assets/images/payment-term.svg'"></app-info-card>
+            <hr>
+            <div class="subheading">
+                <img src="../../../../assets/images/invoice icon.svg"> {{payInfoSubHeader(billInfo?.payinfoOutput)}}</div>
+            <table class="table table-sm table-borderless">
+                <tbody>
+                    <tr>
+                        <td>
+                            <app-info-card [title]="'Name'" [subTitle]=billInfo?.payinfoOutput?.invInfo?.name [imageIcon]="'../../../../assets/images/user icon.svg'"></app-info-card>
+                        </td>
+                        <td>
+                            <app-info-card [title]="'Delivery Preference'" [subTitle]=getDeliveryPreference(billInfo?.payinfoOutput) [imageIcon]="'../../../../assets/images/save-as.svg'"></app-info-card>
+                        </td>
+                    </tr>
+                    <tr *ngIf="billInfo?.payinfoOutput?.deliveryDescr">
+                        <app-info-card [title]="'Delivery Description'" [subTitle]=billInfo?.payinfoOutput?.invInfo?.deliveryDescr></app-info-card>
+                    </tr>
+                    <tr>
+                        <app-info-card [imageIcon]="'../../../../assets/images/location-marker.png'" [title]="'Address'" [multilineSubTitle]=getAddress(billInfo?.payinfoOutput?.invInfo) [imageIcon]="'../../../../assets/images/location-marker.svg'"></app-info-card>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <table class="table table-sm table-borderless" *ngIf="billInfo?.payinfoOutput?.ccInfo">
+                <tbody>
+                    <tr>
+                        <td>
+                            <app-info-card [title]="'Name'" [subTitle]=billInfo?.payinfoOutput?.ccInfo?.name ></app-info-card>
+                        </td>
+                        <td>
+                            <app-info-card [title]="'Card Type'" [subTitle]=getCardType(billInfo?.payinfoOutput)></app-info-card>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <app-info-card [title]="'Debit Expiry'" [subTitle]=billInfo?.payinfoOutput?.ccInfo?.debitExp></app-info-card>
+                        </td>
+                        <td>
+                            <app-info-card [title]="'Debit Number'" [multilineSubTitle]=billInfo?.payinfoOutput?.ccInfo?.debitNum></app-info-card>
+                        </td>
+                    </tr>
+                    <tr>
+                        <app-info-card [imageIcon]="'../../../../assets/images/location-marker.png'" [title]="'Address'" [multilineSubTitle]=getAddress(billInfo?.payinfoOutput?.ccInfo)></app-info-card>
+                    </tr>
+    
+                </tbody>
+            </table>    
+    
+            <table class="table table-sm table-borderless" *ngIf="billInfo?.payinfoOutput?.ddInfo">
+                <tbody>
+                    <tr>
+                        <td>
+                            <app-info-card [title]="'Name'" [subTitle]=billInfo?.payinfoOutput?.ddInfo?.name ></app-info-card>
+                        </td>
+                        <td>
+                            <app-info-card  *ngIf="!chkForNull(billInfo?.payinfoOutput?.ddInfo?.fiasId)" [title]="'FIAS ID'" [subTitle]=billInfo?.payinfoOutput?.ddInfo?.fiasId></app-info-card>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <app-info-card [title]="'Bank Number'" [subTitle]=billInfo?.payinfoOutput?.ddInfo?.bankno></app-info-card>
+                        </td>
+                        <td>
+                            <app-info-card [title]="'Bank Account Type'" [subTitle]=getBankAccountType(billInfo?.payinfoOutput)></app-info-card>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <app-info-card [title]="'Debit Number'" [subTitle]=billInfo?.payinfoOutput?.ddInfo?.debitNum></app-info-card>
+                        </td>
+                         <!-- <td>
+                            <app-info-card [title]="'Mandate Status'" [subTitle]=getMandateStatus()></app-info-card>
+                            <app-info-card [title]="'Mandate Status'" [subTitle]=billInfo?.payinfoOutput?.ddInfo?.mandateStatus></app-info-card>
+                        </td> -->
+                    </tr>
+                    <tr>
+                        <td>
+                            <app-info-card [title]="'Mandate Received Date'" [subTitle]=billInfo?.payinfoOutput?.ddInfo?.manreceivedDate></app-info-card>
+                        </td>
+                        <td>
+                            <app-info-card [title]="'DD Activation Date'" [subTitle]=billInfo?.payinfoOutput?.ddInfo?.ddactivationDate></app-info-card>
+                        </td>
+                    </tr>
+                    <tr>
+                        <app-info-card [imageIcon]="'../../../../assets/images/location-marker.png'" [title]="'Address'" [multilineSubTitle]=getAddress(billInfo?.payinfoOutput?.ddInfo)></app-info-card>
+                    </tr>
+    
+                </tbody>
+            </table>    
+        </div>
+<ng-template #noPayInfoData>
+    <div class="d-flex justify-content-center align-items-center flex-column">
+        <h5 class="no_data_found">"No Pay Details Available"</h5>
+    </div>    
+</ng-template>
+</div>
+        </div>
+    </div>
+</div>
+</div>
+</ng-container>

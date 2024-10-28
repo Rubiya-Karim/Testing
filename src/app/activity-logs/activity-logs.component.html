@@ -1,0 +1,76 @@
+<div class="container w-100">
+    <form [formGroup]="activityForm">
+        <div class="top-section w-100">
+            <div class="filter-input-section w-100">
+                <div class="section-row w-100">
+                    <div class="input-with-label control" *ngIf="isAdmin()"> 
+                        <label class="label-text">Role</label>
+                        <select class="w-100 dropdown-custom" formControlName="roleName" (change)="onRoleChange($event)">
+                            <option value="">Select Role</option>
+                            <option *ngFor="let role of roles" [ngValue]="role">{{ role }}</option>
+                        </select>
+                    </div>
+    
+                    <div class="input-with-label control" *ngIf="isAdmin()"> 
+                        <label class="label-text">User Name</label>
+                        <select class="w-100 dropdown-custom" formControlName="userName">
+                            <option value="">Select User</option>
+                            <option *ngFor="let user of users" [ngValue]="user.userId">{{ user.userName }}</option>
+                        </select>
+                    </div>
+    
+                    <div class="input-with-label" [ngClass]="isAdmin() ? 'control' : ''"> 
+                        <label class="label-text">Operation</label>
+                        <select class="w-100 dropdown-custom fix-width" [ngClass]="isAdmin() ? '' : 'control-width'" formControlName="operationDesc">
+                            <option value="">Select Operation</option>
+                            <option *ngFor="let operation of operations" [ngValue]="operation">{{ operation }}</option>
+                        </select>
+                    </div>
+    
+                    <div class="input-with-label" [ngClass]="isAdmin() ? 'control' : ''"> 
+                        <label class="label-text">Activity</label>
+                        <select class="w-100 dropdown-custom fix-width" [ngClass]="isAdmin() ? '' : 'control-width'" formControlName="service">
+                            <option value="">Select Activity</option>
+                            <option *ngFor="let activity of activities" [ngValue]="activity">{{ activity }}</option>
+                        </select>
+                    </div>
+                    <ng-container *ngIf="!isAdmin()">
+                        <div class="input-with-label" > 
+                            <label class="label-text">From</label>
+                            <input type="date" class="form-control control-width" placeholder="Date" formControlName="logFromDate"/>
+                        </div>
+                        <div class="input-with-label"> 
+                            <label class="label-text">To</label>
+                            <input type="date" class="form-control control-width" placeholder="Date" formControlName="logToDate"/>
+                        </div>    
+                    </ng-container>
+            
+                </div>
+                <div class="section-row w-100" *ngIf="isAdmin()">
+                    <div class="input-with-label"> 
+                        <label class="label-text">From</label>
+                        <input type="date" class="form-control control-width" placeholder="Date" formControlName="logFromDate"/>
+                    </div>
+                    <div class="input-with-label"> 
+                        <label class="label-text">To</label>
+                        <input type="date" class="form-control control-width" placeholder="Date" formControlName="logToDate"/>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="isFormEmpty" class="validation-msg">
+                Please select at least one filter category.
+            </div>                            
+            <div class="filter-action-btn-group">
+                <button class="cancel-btn" (click)="clearForm()">Clear</button>
+                <button class="apply-btn" (click)="ApplyFilter()">Apply Filter</button>    
+                <!-- <button *ngIf="disablePurge" class="cancel-btn"><img src="../../../assets/images/x-circle-disabled.svg">Purge Records</button>     -->
+            </div>    
+        </div>
+    </form>
+    <div class="acc-body w-100">
+        <app-shared-table class="w-100" [tableData]="tableData" [disable]="true"
+            [showCheckAll]="false" [isSearchFilter]="false" [isAddEnabled]="false" (emitPaginationEmit)="refreshData($event)" [totalRecords]="totalRecords" [pageSize]="pageSize"
+            [pageIndex]="pageIndex" [sortListBy]="sortCategory" [sortDirec]="sortDirec">
+        </app-shared-table>
+    </div>
+</div>

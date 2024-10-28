@@ -1,0 +1,78 @@
+@import "../../../../../styles.scss";
+
+.row-value {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-value-gap {
+  gap: 30px;
+}
+
+.top-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.title {
+  @include text-headline-h4-2xl;
+  text-align: center;
+  color: var(--Headline-Purple-600, #9D7DE2);
+}
+
+.section-header-title {
+  @include text-base-semibold;
+  padding:0px 10px 0px 10px;
+}
+
+.text-color {
+  color: var(--Headline-Orange-600, #FA7A55);
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.detail-div {
+  flex: 1 1 40%;
+  margin: 10px;
+  padding: 20px;
+}
+
+.text-size {
+  font-size:$font-size-small;
+}
+
+.margin {
+  margin-right: 20px
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+}
+
+th, td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+thead th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}

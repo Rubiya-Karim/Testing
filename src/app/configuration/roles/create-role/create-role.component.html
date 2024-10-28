@@ -1,0 +1,43 @@
+<div class="main">
+    <div class="main-container w-100">
+        <div class="section w-100">
+            <div class="header w-100">
+                <button class="btn back-button back-button-text" (click)="back()"><img src="../../../../../../assets/images/arrow-sm-left.png">Back</button>
+                <div class="title text-color w-100">{{isNew ? 'Create New Role' : isView ? 'View Role' : 'Edit Role'}}</div>
+            </div>
+        </div>
+        <form [formGroup]="form">
+            <div class="role-form-main">
+                <div class="role-form-input">
+                    <div class="role-form-name">
+                        <label class="role-form-title">Role Name</label>
+                    </div>
+                    <div>
+                        <input type="text" formControlName="name" maxlength=24
+                        class="role-form-control" placeholder="Role Name"
+                        [ngClass]="{ 'is-invalid': submitted && f['name'] && f['name'].errors , 'role-form-control-disable': (isNew && showAssignPrivileges)}" [readonly]="isView"/>
+                        <div *ngIf="submitted && f['name'] && f['name'].errors" class="invalid-feedback">
+                            <div *ngIf="f['name'] && f['name'].errors['required']">Name is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="role-form-input">
+                    <div class="role-form-name">
+                        <label class="role-form-title">Description</label>
+                    </div>
+                    <div>
+                        <textarea type="text" formControlName="description" placeholder="Description" [maxlength]=150
+                        class="role-form-control role-form-desc" [ngClass]="{'role-form-control-disable': (isNew && showAssignPrivileges)}" [readonly]="isView"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="role-form-btn-gp" *ngIf="(isNew && !showAssignPrivileges )">
+            <button class="cancelBtn" (click)="cancel()">Cancel</button>
+            <button class="primaryActionBtn" (click)="onSubmit()">Create</button>
+        </div>
+    </div>
+
+    <app-privileges *ngIf="showAssignPrivileges && entity" class="w-100" [selectedRoleId]="entity.roleId" [navigatedFromRoles]="true" [shouldUpdate]="!isNew" [isReadOnly]="isView" (onClickEditEmit) = "editCicked()" (onClickUpdateEmit)="onSubmit()"></app-privileges>
+
+</div>

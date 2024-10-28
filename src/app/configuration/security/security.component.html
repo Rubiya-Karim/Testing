@@ -1,0 +1,41 @@
+<ng-container *ngIf="hasAccess; else noAccess">
+  <div class="config-container">
+    <div class="config-card">
+      <div class="image-container">
+        <img src="../../../../assets/images/config-security-vector.svg">
+      </div>
+      <div class="config-accordion">
+        <ng-container *ngFor="let aConfig of getAllConfigTitles(); let i = index">
+          <div class="acc-container w-100" [ngClass]="isRowExpanded(i) ? 'expanded' : 'collapsed'">
+            <div class="acc-main w-100" [ngClass]="isRowExpanded(i) ? 'expanded' : 'collapsed'">
+              <div class="acc-main-header w-100" [ngClass]="isRowExpanded(i) ? 'expanded' : 'collapsed'">
+                <div class="acc-title-left">
+                  <img [src]="getImagePath(aConfig)" width="24px" height="24px">
+                  <label class="acc-title" (click)="toggleRow(i)">{{aConfig}}</label>
+                </div>
+                <button class="btn icon-button" (click)="toggleRow(i)">
+                  <img class="icon-button" src="../../../assets/images/chevron-down.svg" alt="Toggle"
+                    [@rotate]="isRowExpanded(i) ? 'expanded' : 'collapsed'" />
+                </button>
+              </div>
+            </div>
+            <ng-container *ngIf="isRowExpanded(i)">
+              <div class="acc-body w-100">
+                <app-shared-table class="w-100" [isDatasourcePaginator]="true" [tableData]="displayData[aConfig]" [sortListBy]="sortCategory" [sortDirec]="sortDirec" [disable]="true" [showCheckAll]="false"
+                  [isSearchFilter]="false" [isAddEnabled]="false" (onEditRowEmit)="onEdit($event)"
+                  (onViewRowEmit)="onView($event)">
+                </app-shared-table>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>  
+</ng-container>
+
+<ng-template #noAccess>
+  <div class="access-denied-layout">
+    <p>User dont have the access to view the Security Configuration data</p>
+  </div>
+</ng-template>

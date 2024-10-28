@@ -1,0 +1,80 @@
+@import "../../../../../styles.scss";
+.editForm{
+    padding: 20px;
+}
+.add-site-btn{
+    @include primary-button;
+    padding: 6px 12px;
+  }
+  .cancel-btn{
+    background: var(--Neutral-100, #F1F5F9);  
+    padding: 6px 12px;
+    border: none;
+    color: var(--Neutral-900, $base-text-color);
+    @include text-small-semibold;
+  }
+  .add-btn{
+    margin:20px;
+    text-align: center;
+  }
+  .button{
+    outline: none;
+    border:none;
+    background-color: none;
+  }
+  .cluster-header{
+    display: flex;
+    font-size: $font-size-xmedium;
+    font-weight: $font-weight-bold;
+   color: $text-form-label-color;
+   justify-content: space-between;
+    margin-right: 43%;
+      }
+      label{
+        color:$base-text-color;
+        @include text-xs-normal;
+        font-weight: 600;
+      }
+
+      textarea{
+        height: 162px;
+      }
+      .site-container{
+        border-radius: 16px;
+        background: var(--neutral-100, #F1F5F9);
+        gap: 24px;
+        padding:  16px 0px 24px 0px;;
+        margin: 35px;
+
+      }
+      .btn:focus {
+        outline: none;
+        box-shadow: none;
+      }
+      .heading-btn{
+        text-align: center;
+        color: var(--Headline-Purple-600, #9D7DE2);
+        font-size: 24px;
+      }
+      .site-form{
+        margin: 0px 70px;
+        border-radius: 8px;
+        border: 1px solid var(--Neutral-400, #94A3B8);  
+        padding: 1px 0px 16px 0px;  
+      }
+      .site-sub-heading{
+        padding: 10px;
+        justify-content: center;
+        text-align: center;
+        gap: 10px;
+        background-color: #FBD3B7;
+        border-radius: 8px;
+        @include text-small-semibold;
+      }
+      ::placeholder, select{
+        color: var(--Neutral-400, #94A3B8);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+      }
+      

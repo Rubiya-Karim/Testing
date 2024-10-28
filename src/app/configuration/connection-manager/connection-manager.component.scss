@@ -1,0 +1,121 @@
+@import "../../../../styles";
+
+.config-container {
+  border-radius: 16px 0px 0px 0px;
+  background: var(--Color, #FFF);
+  padding: 24px 58px;
+}
+
+.config-card {
+  display: flex;
+  width: auto;
+  padding: 24px 0px;
+  justify-content: center;
+  gap: 34px;
+  border-radius: 16px;
+  background: var(--neutral-100, #F1F5F9);
+}
+.config-card .image-container {
+  order: 1;
+  padding-left: 24px;
+}
+.config-card .config-accordion {
+  flex-grow: 1;
+  order: 2;
+  padding-inline-end: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: calc(100% - 228.831px - 40px);
+}
+
+
+.image-container {
+  width: 228.831px;
+  height: 391.581px;
+
+}
+
+.image-container img {
+  // width: 100%;
+  // height: 100%;
+  object-fit: cover;
+}
+
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 20px !important;
+}
+
+
+.acc-main {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
+  border-radius: 7px;
+  background: var(--Color, #FFF);
+  flex-direction: row;
+}
+
+.acc-main.collapsed:hover {
+  background: var(--neutral-400, #94A3B8);
+}
+
+.acc-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto; 
+}
+
+.acc-container.expanded {
+  border-radius: 8px;
+  border: 1px solid var(--neutral-400, #94A3B8);
+}
+
+
+.acc-main-header {
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 228.831px);
+}
+
+.acc-main.expanded {
+  border-radius: 7px;
+  background: var(--neutral-300, #CBD5E1);
+}
+
+.acc-title {
+  @include text-small-semibold;
+  color: #000;
+}
+
+.acc-title-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.acc-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.icon-button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  padding: 0px;
+}
+
+.acc-body .app-shared-table .table-container {
+  padding-top: 0px;
+}

@@ -1,0 +1,47 @@
+<div class="table-size">
+    <ng-container *ngIf="hasAccess; else noAccess">
+        <div class="formcontainer" style="margin-top:50px" layout="fill">
+        <div class="col-md-12">
+            <div class="toolbar">
+                <div class="row">
+                    <div class="search-div">
+                        <span class="tableheading">
+                           
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive table-design">
+                    <app-shared-table [tableData]="tableData" 
+                    [showCheckAll]="false"
+                        (onEditRowEmit)="onEdit($event)" 
+                        (onHeaderButtonEmit)="buttonEvent($event)" 
+                        (onDeleteRowEmit)="onDelete($event)" [selectedFilterCategory]="selectedFilterCategory"
+                        [isSearch]="true" [filterCategoryList]="filterCategory" [filterCategoryCalendarType]="calendarTypeKeys" [filterCategoryDropdownData]="predefinedFilterList" (onServerSearchEmit)="onServerSearch($event)"
+                        [sortListBy]="sortCategory" 
+                        [sortDirec]="sortDirec"
+                        [headerButtonTitle]=headerButtonTitle
+                        [isServerSearch]="true"
+                        (emitPaginationEmit)="refreshData($event)" 
+                        [totalRecords]="totalRecords" 
+                        [pageSize]="pageSize" 
+                        [pageIndex]="pageIndex" 
+                        [noDataFoundMessage]="noDataMsg"
+                        (onViewRowEmit)="onView($event)">
+                        
+                    </app-shared-table>
+            </div>
+        </div>
+    </div>
+    </ng-container>
+    <ng-template #noAccess>
+        <div class="access-denied-layout">
+          <p>User dont have the access to view the Cluster setup data</p>
+        </div>
+        
+      </ng-template>
+      <div class="vector-img">
+        <img src="../../../../assets/images/Group 317.png">
+      </div>
+</div>
+

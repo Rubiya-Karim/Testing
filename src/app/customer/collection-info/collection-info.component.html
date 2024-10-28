@@ -1,0 +1,170 @@
+<div class="config-container">
+<ng-container >
+    <!-- <div class="d-flex justify-content-center align-items-center flex-column" *ngIf="!isDataAvailable">
+        <h5 class="no_data_found">{{noDataMsg}}</h5>
+    </div> -->
+    <div> 
+<div class="config-card">
+    <div style="display: flex;">
+    <div class="image-container">
+        <img class="image" src="../../../../assets/images/collection-info.svg ">
+    </div>
+    <div class="div-heading">
+
+<ng-container >
+   
+<div>
+    <h6 class="heading"><b>Summary</b></h6>
+    <hr class="line">
+    <h5 class="no_data_found" *ngIf="!isDataAvailable">{{noDataMsg}}</h5>
+</div>
+<div *ngFor="let data of collectionInfo">
+    <div class="row" >
+    <div class="column">
+    
+        <tr >
+            <td class="mt-3" class="no-margin">
+                <div class="img_div">
+                    <img src="../../../../assets/images/tag icon.svg ">   
+                    <div class="data-div">
+                        <label class="col-sm label-text">Scenario Name</label>
+                        {{data.scenarioName}}
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-data" class="no-margin">
+                <div class="img_div">
+                    <img src="../../../../assets/images/banknotes.svg ">
+                    <div class="data-div">
+                        <label class="col-sm label-text">Entry Amount</label>
+                        <label class="value-text-bold">
+                            {{data.entryAmount}} {{data.currencyCode}}
+                        </label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-data" class="no-margin">
+                <div class="img_div">
+                    <img src="../../../../assets/images/banknotes.svg ">
+                    <div class="data-div">
+                        <label class="col-sm label-text">Exit Amount</label>
+                        <label class="value-text-bold">
+                            {{data.exitAmount}} {{data.currencyCode}}
+                        </label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </div>
+    <div class="div-col-2">
+        <tr>
+            <td class="no-margin">
+                <div class="img_div">
+                    <img src="../../../../assets/images/clipboard-list.svg ">
+
+                    <div class="data-div">
+                        <label class="col-sm label-text">Description</label>
+                        <label class="value-text-bold"> 
+                            {{data.scenarioDesc}}
+                        </label>
+                    </div>
+               </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-data" class="no-margin">
+                <div class="img_div">
+                    <img src="../../../../assets/images/calendar.svg ">
+
+                    <div class="data-div">
+                        <label class="col-sm label-text">Entry Days</label>
+                        <label class="value-text-bold">
+                            {{data.entryDays}}
+                        </label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </div>
+</div>       
+</div>  
+</ng-container>
+
+</div>
+</div>
+<div class="container w-80" *ngIf="isDataAvailable">
+  <div style="text-align: center;">
+    <div class="main-tabs">
+        <button (click)="selectTemplate('Collection Action List')" class="button ActionList" [class.active]="selectedTemplate === 'Collection Action List'"><span class="ActionList-span">Collection Action List</span></button>
+        <button (click)="selectTemplate('Collection Pay List')" class="button payList" [class.active]="selectedTemplate === 'Collection Pay List'" ><span class="payList-span">Collection Promise to Pay</span>
+             </button>
+    </div>
+</div>
+<hr class="tab-line">
+        <div *ngIf="isDataAvailable && (selectedTemplate === 'Collection Action List')">
+            <ng-container >
+                    <div class="grid-container single-column">
+                            <table class="table table-lg " > 
+                                <thead class="table-header">
+                                    <th class="left-border">Action No.</th>
+                                    <th>Action Name</th>
+                                    <th>Status</th>
+                                    <th>Due Date</th>
+                                    <th class="no-margin">Collection Act poid</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let action of collinfoACCinfo">
+                                        <td>{{action.actionNo}}</td>
+                                        <td>{{action.actionName}}</td>
+                                        <td>
+                                            <span class="active" *ngIf="action.status === 'COMPLETED'">{{ action.status }}</span>
+                                            <span class="cancelled" *ngIf="action.status === 'CANCELLED'">{{ action.status }}</span>
+                                            <span class="error" *ngIf="(action.status === 'ERROR') || (action.status === 'PENDING') || (action.status === 'FAILED') || (action.status === 'NO_EXECUTE')">{{ action.status }}</span>
+                                        </td>
+                                        <td>{{action.dueDate | date: 'dd/MM/yyyy HH:mm'}}</td>
+                                        <td class="no-margin">{{action.actPoid}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+            </ng-container> 
+           </div>
+        <div *ngIf="isDataAvailable && (selectedTemplate === 'Collection Pay List')">
+            <ng-container >
+                <!-- TODO: Temp fix from UI. THe data structure need s to be changed in the backend. -->
+                    <div *ngIf="collinfoProinfo?.length" class="table-header-card">
+                        <app-info-card [title]="'Promised Amount'" [subTitle]="collinfoProinfo[0]?.promisedAmt" [imageIcon]="'../../../../assets/images/Receivable.svg'"></app-info-card>
+                        <app-info-card [title]="'Promised Date'" [subTitle]="getPromiseToPayDate(collinfoProinfo[0]?.promisedDate)" [imageIcon]="'../../../../assets/images/purple-calendar.svg'"></app-info-card>
+                        <app-info-card [title]="'No. of Milestones'" [subTitle]="collinfoProinfo[0]?.milestones" [imageIcon]="'../../../../assets/images/hashtag.svg'"></app-info-card>
+                        <app-info-card [title]="'Milestone Interval'" [subTitle]="collinfoProinfo[0]?.milestoneInterval" [imageIcon]="'../../../../assets/images/clock.svg'"></app-info-card>
+                    </div>
+
+                    <div class="grid-container single-column">
+                            <table class="table table-lg " > 
+                                <thead class="table-header-coll">
+                                    <th class="left-border">Scenario Poid</th>
+                                    <th>Milestone Amount</th>
+                                    <th>Due Date</th>
+                                    <th class="no-margin">Payment Type</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let promisepay of collinfoProinfo">
+                                        <td>{{promisepay.scenarioPoid}}</td>
+                                        <td>{{promisepay.milestoneAmt}}</td>
+                                        <td>{{promisepay.dueDate | date: 'dd/MM/yyyy HH:mm'}}</td>
+                                        <td class="no-margin">{{promisepay.paymentType}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+            </ng-container> 
+           </div>
+        </div>
+</div>
+</div>
+</ng-container>
+</div>

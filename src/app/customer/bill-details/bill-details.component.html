@@ -1,0 +1,15 @@
+<div class="row outer-container">
+    <div class="background-container">
+    <label class="value-text-bold">Bill Details (Last 12 Months)</label>
+    <app-collapsible-table [data]="billedData" [headers]="billedTableHeaders" [noDataFoundMessage]="'No Bill Details found.'"
+    [isExpandable]="true" [detailedData]="billedTableDetails" (loadDataFromServer)="loadData($event)" [subTableData]="billedItemData" [subTableHeaders]="billedItemTableHeaders" 
+    (emitPaginationEmit)="refreshData($event)" 
+    [totalRecords]="totalRecords" 
+    [pageSize]="pageSize" 
+    [pageIndex]="pageIndex"
+    [noDataFoundMessage]="noDataMsg" [sessionToggle]="true">
+    
+    </app-collapsible-table>
+</div>
+</div>
+   

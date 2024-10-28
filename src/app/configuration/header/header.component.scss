@@ -1,0 +1,105 @@
+@import "../../../../styles";
+.header-links{
+    margin-left: 30px;
+    color: $text-link-color;
+    font-weight: $font-weight-bold;
+    padding-bottom: 3px;
+}
+.config-list{
+    border-bottom: 1px solid $border-color;
+}
+.active-link{
+    border-bottom: 2px solid $base-text-color;
+    color: $text-color-black;
+    font-weight: $font-weight-bold;
+    padding-bottom: 12px;
+	border-bottom-style: solid;
+}
+.container{
+    display: flex;
+    margin:15px;
+    padding-left: 25px;
+}
+.config-heading{
+    line-height: 8px;
+    margin-top:12px;
+}
+.config-text{
+    font-size: $font-size-large ;
+    font-weight: $font-weight-bold;
+}
+.config-description{
+    font-size: $font-size-xsmall;
+}
+
+.config-list{
+    border-bottom: 1px solid $border-color;
+
+}
+.config-ulist{
+    margin-top: 15px;
+    margin-left: 15%;
+}
+.config-header-images{
+    height: 20px;
+    width: 20px;
+    padding-top: 2px;
+   
+}
+span{
+    margin-left:25px;
+}
+.security-img{
+    background: url('../../../../assets/images/General\ Config\ icon\ before.png');
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    margin-bottom:10px;
+}
+.security-img-acive{
+    background: url('../../../../assets/images/General\ Config\ icon.png');
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+}
+ .not-channel-img{
+    background: url('../../../../assets/images/bell.png');
+    background-repeat: no-repeat;
+ }
+ .not-channel-img-active{
+    background: url('../../../../assets/images/bell-solid.png');
+    background-repeat: no-repeat;
+ }
+ .roles-img{
+    background: url('../../../../assets/images/roles.png');
+    background-repeat: no-repeat;
+ }
+ .roles-img-active{
+    background: url('../../../../assets/images/roles-solid.png');
+    background-repeat: no-repeat;
+ }
+ .users-img{
+    background: url('../../../../assets/images/users.png');
+    background-repeat: no-repeat;
+ }
+ .users-img-active{
+    background: url('../../../../assets/images/users-solid.png');
+    background-repeat: no-repeat;
+ }
+ .privileges-img{
+    background: url('../../../../assets/images/star.png');
+    background-repeat: no-repeat;
+ }
+ .privileges-img-active{
+    background: url('../../../../assets/images/star-solid.png');
+    background-repeat: no-repeat;
+ }
+ .cluster-img{
+    background: url('../../../../assets/images/sun.png');
+    background-repeat: no-repeat;
+ }
+ .cluster-img-active{
+    background: url('../../../../assets/images/sun-solid.png');
+    background-repeat: no-repeat;
+ }
+li{
+    padding: 10px;
+}

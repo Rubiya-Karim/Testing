@@ -1,0 +1,21 @@
+<ng-container *ngIf="hasAccess; else noAccess">
+    <div class="view-container" layout="fill">
+        <app-shared-table [tableData]="tableData" [showCheckAll]="false" (onEditRowEmit)="onEdit($event)"
+        (onHeaderButtonEmit)="buttonEvent($event)" (onDeleteRowEmit)="onDelete($event)"
+        (onUnlockRowEmit)="onUnlock($event)" [isSearch]="true" [sortListBy]="sortCategory" [sortDirec]="sortDirec"
+        [selectedFilterCategory]="selectedFilterCategory" [filterCategoryList]="filterCategory" [filterCategoryDropdownData]="statusFilterList"
+        [headerButtonTitle]=headerButtonTitle [deleteTooltip]="'Delete/ Mark as Inactive'"
+        (emitPaginationEmit)="refreshData($event)" [totalRecords]="totalRecords" [pageSize]="pageSize" [pageIndex]="pageIndex"
+        [isServerSearch]="true"  (onServerSearchEmit)="onServerSearch($event)" [filterCategoryCalendarType]="calendarTypeKeys" [noDataFoundMessage]="noDataMsg">
+        </app-shared-table>
+    </div>
+    <div class="vector-img">
+        <img src="../../../../assets/images/Group 315.png">
+      </div>
+</ng-container>
+
+<ng-template #noAccess>
+    <div class="access-denied-layout">
+        <p>User dont have the access to view the User data</p>
+    </div>
+</ng-template>

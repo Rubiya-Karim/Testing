@@ -1,0 +1,55 @@
+<form [formGroup]="addSiteForm" class="editForm">
+  <div class="site-container">
+    <div class="cluster-header">
+      <button (click)="back()" class="btn back-button back-button-text"><img
+          src="../../../../assets/images/arrow-sm-left.png">Back</button>
+      <p class="heading-btn">{{ isEditMode ? 'Modify Site' : 'Add New Site' }}</p>
+    </div>
+    <div class="row site-form">
+      <p class="site-sub-heading">Site Details</p>
+      <div class="col-md-6">
+        <label>Site Name</label>
+        <input type="text" class="form-control" formControlName="siteName" placeholder="Site Name" required>
+        <label>Country</label>
+        <select id="country" class="form-control" formControlName="country" required>
+          <option>Select</option>
+          <option *ngFor="let country of countryList" [value]="country.name.common">
+            {{ country.name.common }}
+          </option>
+        </select>
+
+                <!-- <label>City</label>
+        <select id="city" class="form-control" formControlName="city" required>
+          <option>Select</option>
+          <option *ngFor="let locationOption of locationOptions" [value]="locationOption.value">
+            {{ locationOption.label }}
+          </option>
+        </select>
+        -->
+        <label>City</label>
+        <input type="text" class="form-control" formControlName="city" placeholder="City" required>
+
+
+        <label>Geo Coordinates</label>
+        <input type="text" class="form-control" formControlName="geoLoc" placeholder="71.4456,65.0985" required>
+        <label>Location</label>
+        <input type="text" class="form-control" formControlName="location" placeholder="Select" required>
+
+      </div>
+      <div class="col-md-6">
+        <label>Description</label>
+        <textarea type="text" class="form-control" formControlName="siteDesc" placeholder="Site Geo"
+          required></textarea>
+        <label>Network Bandwidth</label>
+        <input type="text" class="form-control" formControlName="bandwidth" placeholder="Doe Pvt Ltd" required>
+        <label>Latency within the site</label>
+        <input type="text" class="form-control" formControlName="latency" placeholder="3ms" required>
+      </div>
+    </div>
+    <div class="add-btn">
+      <button class="cancel-btn" (click)="cancelSite()">Cancel</button>
+      <button class="add-site-btn" (click)="addSite()" [disabled]="!addSiteForm.valid">{{ isEditMode ? 'Update' : 'Add'
+        }}</button>
+    </div>
+  </div>
+</form>

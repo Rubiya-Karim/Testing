@@ -1,0 +1,71 @@
+<app-shared-table *ngIf="mode === 'list'" class="w-100" [isDatasourcePaginator]="true" [tableData]="batchScriptList" [sortListBy]="sortCategory" [sortDirec]="sortDirec" [disable]="true" [showCheckAll]="false"
+[isSearchFilter]="true" [isSearch]="true" [isAddEnabled]="true" (onEditRowEmit)="onEdit($event)"
+(onViewRowEmit)="onView($event)" (onDeleteRowEmit)="onDelete($event)" [filterCategoryList]="filterCategory" [selectedFilterCategory]="selectedFilterCategory" [filterCategoryCalendarType]="calendarTypeKeys" (onHeaderButtonEmit)="onCreate()" [headerButtonTitle]="'Add New Batch Template'">
+</app-shared-table>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div *ngIf="mode === 'create' || mode === 'update' || mode === 'view'" class="form-container">
+        <div class="header w-100">
+            <button class="btn back-button back-button-text" (click)="back()"><img src="../../../../../../assets/images/arrow-sm-left.png">Back</button>
+            <div class="title text-color w-100">{{mode === 'view' ? selectedBatchScript.name : (mode === 'create' ? 'Add ' : 'Edit ') + 'Batch Template'}}</div>
+        </div>
+
+        <div class="input-area">
+            <div class="input-with-label w-100">
+                <label class="label-text" for="name">Batch Template Name</label>
+                <input id="name" class="w-50" formControlName="name" type="text" [readOnly]="mode === 'update'" required>
+                <div *ngIf="f['name']?.touched || submitted">
+                    <div class="invalid" *ngIf="f['name']?.errors?.['required']"><small>Name is required.</small></div>
+                 </div>
+             </div>
+             <div class="input-with-label w-100">
+                <label class="label-text" for="jmxPinConf">PIN Config</label>
+                <input id="jmxPinConf" class="w-50" formControlName="jmxPinConf" type="text" required>
+                <div *ngIf="f['jmxPinConf']?.touched || submitted">
+                    <div class="invalid" *ngIf="f['jmxPinConf']?.errors?.['required']"><small>PIN Config is required.</small></div>
+                 </div>
+             </div>
+             <div class="input-with-label w-100">
+                <div class="select-group">
+                    <div class="custom-radio form-check form-check-inline select-div" *ngFor="let type of envTypes; let j = index">
+                        <input class="form-check-input" type="radio"  formControlName="envType" [value]="type.value" (change)="onChangeEnvType()">
+                        <label class="form-check-label subgroup-text">
+                          {{type.name}}
+                        </label>
+                    </div>
+                </div>          
+            </div>
+            <div class="input-with-label w-50" *ngIf="isOnPrem(f['envType']?.value)">
+                <label class="label-text" for="applicationName">Application Name</label>
+                <select id="applicationName" class="w-100 dropdown-custom" formControlName="applicationName" >
+                  <option value="">Select...</option>
+                  <option *ngFor="let application of applications" [ngValue]="application.name">{{ application.name }}</option>
+                </select>
+                <div *ngIf="(f['applicationName']?.touched || submitted) && validateApplicationName()">
+                    <div class="invalid"><small>Application Name is required.</small></div>
+                 </div>
+    
+            </div>    
+
+             <div class="input-with-label w-100">
+                <label class="label-text" for="jmxPinConf">{{(f['envType'] && f['envType'].value === 'CNE') ? 'Kube Config map URL': 'PIN Config'}}</label>
+                <input id="jmxPinConf" class="w-100" formControlName="jmxPinConf" type="text" required>
+                <div *ngIf="f['jmxPinConf']?.touched || submitted">
+                    <div class="invalid" *ngIf="f['jmxPinConf']?.errors?.['required']"><small>PIN Config is required.</small></div>
+                 </div>
+             </div>
+             
+            <div class="input-with-label w-100">
+              <label class="label-text" for="script">Script</label>
+              <textarea id="script" class="input-height w-100" formControlName="script" required></textarea>
+              <div *ngIf="f['script']?.touched || submitted">
+                <div class="invalid" *ngIf="f['script']?.errors?.['required']"><small>Script is required.</small></div>
+             </div>
+            </div>
+        </div>
+        <div class="form-btn-gp w-100">
+            <button class="cancelBtn" (click)="cancel()">Cancel</button>
+            <button type="submit" class="submit-btn" *ngIf="mode === 'create' || mode === 'update'">{{mode === 'create' ? 'Add ' : 'Update '}} Batch Template</button>
+            <button *ngIf = "mode === 'view'" class="btn btn-block okay-btn red-bg-btn" (click)="onDelete(this.selectedBatchScript)">Delete</button>
+        </div>
+    </div>
+</form>

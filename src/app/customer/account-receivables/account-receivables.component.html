@@ -1,0 +1,64 @@
+<ng-container *ngIf="!isDataAvailable">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+        <h5 class="no_data_found">{{noDataMsg}}</h5>
+    </div>
+</ng-container>
+
+<ng-container *ngFor="let aSection of getSections()">
+        <div class="profile-content">
+            <div class="background-container">
+            <label class="value-text-bold">{{aSection}}</label>
+            <div>
+                <ng-container>
+                        <div class="grid-container single-column">
+                                <table class="table table-lg table-borderless" *ngIf="tableSectionData[aSection]?.length ;else no_data_found"  >
+                                     
+                                    <thead>
+                                        <!-- <th>Name</th> -->
+                                        <th>Item POID</th>
+                                        <th>Item No</th>
+                                        <th>Item Total</th>
+                                        <th>Status</th>
+                                        <th>Adjusted</th>
+                                        <th>Paid</th>
+                                        <th>Transferred</th>
+                                        <th>Due Amount</th>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let sectionData of tableSectionData[aSection]">
+                                            <!-- <td><img src="'../../../../assets/images/document.svg'">{{sectionData.name}}</td> -->
+                                            <td>{{sectionData.arPoid}}</td>
+                                            <td>{{sectionData.itemNo}}</td>
+                                            <td>{{sectionData.total}}</td>
+                                            <td>
+                                            <span class="color-code active" *ngIf="sectionData.state === 'Settled'">{{ sectionData.state }}</span>
+                                            <span class="color-code new" *ngIf="sectionData.state === 'New'">{{ sectionData.state }}</span>
+                                            </td>
+                                            <!-- <td>{{sectionData.state}}</td> -->
+                                            <td>{{sectionData.adjusted}}</td>
+                                            <td>{{sectionData.recvd}}</td>
+                                            <td>{{sectionData.transferred}}</td>
+                                            <td>{{sectionData.due}}</td> 
+                                         </tr>
+                                    </tbody>
+                                </table>
+                                <ng-template #no_data_found>
+                                    <div class="d-flex justify-content-center align-items-center flex-column">
+                                        <h5 class="no_data_found">No Data found</h5>
+                                    </div>
+                                </ng-template>
+                            </div>
+                </ng-container> 
+               </div>
+               </div>
+            </div>
+            </ng-container>
+
+    
+
+
+                
+                        
+       
+

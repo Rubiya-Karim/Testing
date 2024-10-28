@@ -1,0 +1,110 @@
+<ng-container *ngIf="hasAccess; else noAccess">
+  <div class="config-container">
+    <div class="config-card">
+      <div class="image-container">
+        <img src="../../../../assets/images/Connection manager.svg">
+      </div>
+      <div class="config-accordion">
+        <div class="acc-container w-100" [ngClass]="isRowExpanded(1, i) ? 'expanded' : 'collapsed'">
+          <div class="acc-main w-100" [ngClass]="isRowExpanded(1,i) ? 'expanded' : 'collapsed'">
+            <div class="acc-title-left">
+              <img src="../../../../assets/images/db icon.svg">
+              <label class="acc-title" (click)="toggleRow(1,i)">BRM Database Connection</label>
+              <label *ngIf="successMessage" class="success-message w-100">
+                {{ successMessage }}
+              </label>
+            </div>
+            <button class="btn icon-button" (click)="toggleRow(1,i)">
+              <img class="icon-button" src="../../../assets/images/chevron-down.svg" alt="Toggle"
+                [@rotate]="isRowExpanded(1,i) ? 'expanded' : 'collapsed'" />
+            </button>
+          </div>
+            <ng-container *ngIf="isRowExpanded(1,i)">
+              <div class="acc-body w-100">
+                <app-shared-table class="w-100" [isDatasourcePaginator]="true" [tableData]="displayData" [disable]="true" [showCheckAll]="false"
+                  [isSearchFilter]="false" [isAddEnabled]="false" [isAddConnection]="true" (onAddConnectionButtonEmit)="add()" (onDeleteRowEmit)="onDeleteRow($event)" (onEditRowEmit)="onEdit($event)">
+                </app-shared-table>
+              </div>
+            </ng-container>
+      </div>
+      <div class="acc-container w-100" [ngClass]="isRowExpanded(1, i) ? 'expanded' : 'collapsed'">
+        <div class="acc-main w-100" [ngClass]="isRowExpanded(2,i) ? 'expanded' : 'collapsed'">
+          <div class="acc-title-left">
+            <img src="../../../../assets/images/globe-alt icon.svg">
+            <label class="acc-title" (click)="toggleRow(2,i)">BRM CM Connection</label>
+            <label *ngIf="successMessage" class="success-message w-100">
+              {{ successMessage }}
+            </label>
+          </div>
+          <button class="btn icon-button" (click)="toggleRow(2,i)">
+            <img class="icon-button" src="../../../assets/images/chevron-down.svg" alt="Toggle"
+              [@rotate]="isRowExpanded(2,i) ? 'expanded' : 'collapsed'" />
+          </button>
+        </div>
+        <ng-container *ngIf="isRowExpanded(2,i)">
+          <div class="acc-body w-100">
+            <app-shared-table class="w-100" [isDatasourcePaginator]="true" [tableData]="Data" [disable]="true" [showCheckAll]="false"
+              [isSearchFilter]="false" [isAddEnabled]="false" [isAddConnection]="true" (onAddConnectionButtonEmit)="addCM()" (onDeleteRowEmit)="onDeleteRow($event)" (onEditRowEmit)="onEditCM($event)">
+            </app-shared-table>
+          </div>
+        </ng-container>
+    </div>
+    <div class="acc-container w-100" [ngClass]="isRowExpanded(1, i) ? 'expanded' : 'collapsed'">
+      <div class="acc-main w-100" [ngClass]="isRowExpanded(3,i) ? 'expanded' : 'collapsed'">
+        <div class="acc-title-left">
+          <img src="../../../../assets/images/check-circle icon.svg">
+          <label class="w-100 acc-title" (click)="toggleRow(3,i)">ECE Admin JMX Mbean Configurations</label>
+          <label *ngIf="successMessage" class="success-message w-100">
+            {{ successMessage }}
+          </label>
+        </div>
+        <button class="btn icon-button" (click)="toggleRow(3,i)">
+          <img class="icon-button" src="../../../assets/images/chevron-down.svg" alt="Toggle"
+            [@rotate]="isRowExpanded(3,i) ? 'expanded' : 'collapsed'" />
+        </button>
+      </div>
+      <ng-container *ngIf="isRowExpanded(3,i)">
+        <div class="acc-body w-100">
+          <app-shared-table class="w-100" [isDatasourcePaginator]="true" [tableData]="data" [disable]="true" [showCheckAll]="false"
+            [isSearchFilter]="false" [isAddEnabled]="false" [isAddConnection]="true" (onAddConnectionButtonEmit)="addJMX()" (onDeleteRowEmit)="onDeleteRow($event)" (onEditRowEmit)="onEditJMX($event)">
+          </app-shared-table>
+        </div>
+      </ng-container>
+  </div> 
+          <!-- Add new accordion -->
+
+          <div class="acc-container w-100" [ngClass]="isRowExpanded(1, i) ? 'expanded' : 'collapsed'">
+            <div class="acc-main w-100" [ngClass]="isRowExpanded(4,i) ? 'expanded' : 'collapsed'">
+              <div class="acc-title-left">
+                <img src="../../../../assets/images/db icon.svg">
+                <label class="acc-title" (click)="toggleRow(4,i)">ECE Database</label>
+                <label *ngIf="successMessage" class="success-message w-100">
+                  {{ successMessage }}
+                </label>
+              </div>
+              <button class="btn icon-button" (click)="toggleRow(4,i)">
+                <img class="icon-button" src="../../../assets/images/chevron-down.svg" alt="Toggle"
+                  [@rotate]="isRowExpanded(4,i) ? 'expanded' : 'collapsed'" />
+              </button>
+            </div>
+            <ng-container *ngIf="isRowExpanded(4,i)">
+              <div class="acc-body w-100">
+                <app-shared-table class="w-100" [isDatasourcePaginator]="true" [tableData]="eceData" [disable]="true" [showCheckAll]="false"
+                  [isSearchFilter]="false" [isAddEnabled]="false" [isAddConnection]="true" (onAddConnectionButtonEmit)="addEceDatabase()" (onDeleteRowEmit)="onDeleteRow($event)" (onEditRowEmit)="onEditEceDatabase($event)">
+                </app-shared-table>
+              </div>
+            </ng-container>
+        </div>
+
+      <!-- </div> -->
+
+      </div>
+    
+  </div>
+  </div>
+</ng-container>
+<ng-template #noAccess>
+  <div class="access-denied-layout">
+    <p>User dont have the access to view the Connection Configuration data</p>
+  </div>
+</ng-template>

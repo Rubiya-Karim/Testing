@@ -1,0 +1,450 @@
+<div style="margin: 35px;" *ngIf="viewApplicationScreen && !editApplicationScreen">
+  <div style="display: flex; flex-direction: row;">
+  <app-shared-table class="w-100" 
+  [filterCategoryList]="filterCategory" 
+   [selectedFilterCategory]="selectedFilterCategory"
+[isSearch]="true" (onDeleteRowEmit)="onDeleteApplication($event)" 
+(onEditRowEmit)="onEditApplication($event)" [tableData]="tableData" [disable]="true"
+  [showCheckAll]="false" 
+  [isSearchFilter]="false" 
+  [isAddEnabled]="false" (emitPaginationEmit)="refreshData($event)" 
+  [totalRecords]="totalRecords" 
+  [pageSize]="pageSize" 
+  [pageIndex]="pageIndex" 
+  [sortListBy]="sortCategory" 
+   [sortDirec]="sortDirec"
+  [noDataFoundMessage]="noDataMsg">
+  
+</app-shared-table>
+</div>
+<div style="display: flex; flex-direction: row; justify-content: center;">
+  <button *ngIf="viewApplication" class="add-clust-btn" (click)="backtoCluster()">
+    Back To Cluster
+    <img src="../../../../assets/images/rightarrow.png">
+  </button>
+  </div>
+</div>
+
+<!-- Application Edit Form -->
+ <div class="form-div" *ngIf="!addApplicationScreen && !viewApplicationScreen && editApplicationScreen">
+  <div class="main-heading">
+    <div class="mid-cluster">
+      <div class="head-cluster" *ngIf="!addApplicationScreen && !viewApplicationScreen && editApplicationScreen">
+        <button class="btn back-button back-button-text" (click)="backToApplication()"><img
+            src="../../../../../../assets/images/arrow-sm-left.png">Back</button>
+
+        <p class="heading-btn">Edit Application</p>
+      </div>
+      <form [formGroup]="editApplicationForm" (ngSubmit)="updateApplication()" style="width: 100%;">
+        <div class="acc-body w-100">
+          <div style="display: flex;
+      padding-top: 20px;justify-content: center;margin: 0 auto;">
+
+      <div style="flex-direction: column;">
+      <div style="display: flex; flex-direction: row; margin-left: -5%;">
+     <div>  <label>Application</label><br/> 
+      <select id="siteSelect" formControlName="Application" (change)="processNamebyApplication($event)" class="form-control2" required>
+        <option value="undefined" disabled selected>Select Application</option>
+        <option *ngFor="let appList of applicationList" [value]="appList.name">{{ appList.name }}</option>
+    </select>
+      </div>
+      <!-- <div style="margin-left:5%;">  <label>Processes</label><br/> 
+        <select id="siteSelect" formControlName="Processes" class="form-control2" required>
+          <option *ngFor="let proList of processList; let i = index" [value]="proList">{{ proList}}</option>
+        </select>
+      </div> -->
+
+      <div class="custom-mat-select" style="margin-left:5%;">
+        <label class="label-text" [for]="'Processes'">Processes</label>
+        <mat-form-field appearance="outline" style="width: 310px;">
+            <mat-select class="multi-select" formControlName="Processes" multiple [id]="'Processes'" placeholder="Processes">
+                <mat-option *ngFor="let proList of processList" [value]="proList">
+                    {{proList}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+     
+      <div style="margin-left:5%;">  <label>Server</label><br/> 
+        <input  type="text" class="form-control2" formControlName="Server"  placeholder="Server"
+        required  /></div>
+        
+          </div>
+          <div style="display: flex; flex-direction: row;margin-left: -5%;">
+          <div>  <label>HostName</label><br/> 
+            <input  type="text" class="form-control2" formControlName="HostName"  placeholder="HostName"
+            required  /></div>
+            <div style="margin-left:5%;">  <label>UserName</label><br/> 
+              <input  type="text" class="form-control2" formControlName="UserName"  placeholder="UserName"
+              required  /></div>
+     <div style="margin-left:5%;">  <label>Password</label><br/> 
+      <input type="password"   class="form-control2" formControlName="Password" placeholder="Password" /></div>
+    </div>
+    <div style="display: flex; flex-direction: row;margin-left: -5%;padding-bottom: 20px;">
+      <div style="margin-top: 5%;margin-right: 2%;"><button class="button"  style="background-color: #ffffff;color: #000001;" class="add-clust-btn">Cancel</button></div>
+    <div class="addInformationbtn"><button type="submit" class="add-clust-btn">Update</button></div>
+    </div>
+    </div>
+     
+</div>
+        </div></form>
+      </div>
+      </div>
+      </div>  
+
+<!-- Cluster Creation form -->
+<div class="form-div" *ngIf="!viewApplication">
+  <div class="main-heading">
+    <div class="mid-cluster">
+      <div class="head-cluster" *ngIf="!addApplicationScreen && !viewApplicationScreen && !editApplicationScreen">
+        <button class="btn back-button back-button-text" (click)="back()"><img
+            src="../../../../../../assets/images/arrow-sm-left.png">Back</button>
+
+        <p class="heading-btn">{{ isEditMode ? 'Modify Cluster' : 'Add Cluster' }}</p>
+      </div>
+      <div class="head-cluster" *ngIf="addApplicationScreen && !viewApplicationScreen && !editApplicationScreen">
+        <button class="btn back-button back-button-text" (click)="backToAddCluster()"><img
+            src="../../../../../../assets/images/arrow-sm-left.png">Back</button>
+
+        <p class="heading-btn">Add Applications</p>
+      </div>
+      <!-- <div *ngIf="addApplicationsData"  (click)="addAppclick()"><button   class="addApplication btnWithLeftIcon">Add Applications</button> </div> -->
+    </div>
+    
+    <div class="form-cluster" *ngIf="!addApplicationScreen && !viewApplicationScreen && !editApplicationScreen">
+      <div class="form-heading">Cluster Details</div>
+      <form [formGroup]="addClusterForm" class="editForm">
+        <div>
+          <div style="display: flex;">
+        <div style="margin-right: 20px;" class="col-md-6">
+          <!-- <div class="custom-mat-select">
+            <label class="label-text" [for]="'Processes'">Processes</label>
+            <mat-form-field appearance="outline">
+                <mat-select class="multi-select" formControlName="Processes" multiple [id]="'Processes'">
+                    <mat-option *ngFor="let proList of processList" [value]="proList">
+                        {{proList}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+          </div> -->
+          <label>Site Name</label>
+          <select id="siteSelect" formControlName="siteName" maxlength=24 class="form-control" required>
+            <!-- <img src="../../../../assets/images/arrow-sm-left.png"> -->
+            <option *ngFor="let site of sites" [value]="site.siteName">{{ site.siteName }}</option>
+          </select>
+          <label>Cluster Type</label>
+          <select class="form-control" formControlName="deploymentType" required >
+            <option value="">Select...</option>
+            <option value="1">Production</option>
+            <option value="2">Pre-Production</option>
+            <option value="3">Test Environment</option>
+
+            <!-- <option *ngFor="let ctype of clusterTypeList" [value]="ctype">
+              {{ ctype }}
+            </option> -->
+          </select>
+          
+          <!-- <label>Environment type</label><br/>
+          <div style="display: flex; margin-top: 10px;">
+          <div class="radio-label" style="display: flex;">
+            <input type="radio" name="environmentType" value="CNE" (change)="onSelectChange($event)" formControlName="environmentType" required >
+            <div style="padding-left: 15px;">Cloud Native (CNE)</div>
+          </div>
+          <div class="radio-label"  style=" display: flex; padding-left: 10px;">
+            <input type="radio" name="environmentType" value="Onprem" (change)="onSelectChange($event)" formControlName="environmentType" required>
+            <div style="padding-left: 15px;">On Prem</div>
+          </div>
+          </div> -->
+          <div>
+            <label>Environment Type</label><br />
+            
+            <div *ngIf="isEditMode; else radioButtons">
+              <div style="padding-left: 15px;">
+                {{ addClusterForm.get('environmentType')?.value === 'CNE' ? 'Cloud Native (CNE)' : 'On Prem' }}
+              </div>
+            </div>
+            
+            <ng-template #radioButtons>
+              <div style="display: flex; margin-top: 10px;">
+                <div class="radio-label" style="display: flex;">
+                  <input 
+                    type="radio" 
+                    name="environmentType" 
+                    value="CNE" 
+                    (change)="onSelectChange($event)" 
+                    formControlName="environmentType" 
+                    required
+                  >
+                  <div style="padding-left: 15px;">Cloud Native (CNE)</div>
+                </div>
+                <div class="radio-label" style="display: flex; padding-left: 10px;">
+                  <input 
+                    type="radio" 
+                    name="environmentType" 
+                    value="OnPrem" 
+                    (change)="onSelectChange($event)" 
+                    formControlName="environmentType" 
+                    required
+                  >
+                  <div style="padding-left: 15px;">On Prem</div>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+          
+          
+          <label *ngIf="!OnpremSelected">KubeConfig File</label>
+          <div *ngIf="!OnpremSelected" class="kube-file w-100">
+            <input type="file" class="form-control kube" [name]="myFileInput" #myFileInput
+              (change)="handleFileInput($event)" accept=".txt,.file" required style="display: none;" />
+            <input type="text" class="form-control kube" readonly placeholder="Choose file"
+              style="pointer-events: none;" [value]="uploadedFilePath">
+            <button class="custom-file-button" (click)="myFileInput.click()">
+              <img src="../../../../assets/images/file-icon.png"></button>
+          </div>
+          <label>Cluster Group</label>
+          <select class="form-control" formControlName="clusterGroup" (change)="cluster($event)"required>            
+          <option value="">Select...</option>
+            <option *ngFor="let cgroup of clusterGroupList" [value]="cgroup.id" [selected]= "cgroup.id == data?.clusterGroup">
+              {{ cgroup.desc }}
+            </option>
+          </select>
+          <!-- <label>BRM Helm Chart Name</label>
+          <input [readonly]="getpods" type="text" class="form-control" formControlName="brmHelmChartName" maxlength=24> -->
+        </div>
+        <div style="margin-left: 20px;" class="col-md-6">
+          <label>Cluster Name</label>
+          <input [readonly]="getpods" type="text" class="form-control" formControlName="clusterName" maxlength=24
+            required />
+          <input type="checkbox" formControlName="isPrimary" style="margin-top: 13%; border-radius: 2px;">
+          <label for="primary"> Is Primary</label><br>
+          <div style="margin-top: 1%;">
+          </div>
+          
+          
+          <label *ngIf="!OnpremSelected" style="margin-top: 19%;">NameSpace</label>
+          <input *ngIf="!OnpremSelected" [readonly]="getpods" type="text" class="form-control" formControlName="namespace" required />
+          <label *ngIf="!OnpremSelected" [ngClass]="OnpremSelected ? 'choerenceMarginTop' : ''">Coherence Cluster</label>
+          <input *ngIf="!OnpremSelected" [readonly]="getpods" type="text" class="form-control" formControlName="coherenceCluster" maxlength=24>        
+        </div>
+        </div>
+        <div *ngIf="OnpremSelected" style="display: flex;
+        padding-top: 20px;">
+         <div class="addAppBtn" *ngIf="!viewApplication && !isEditMode"><button [disabled]="validateAddappBtn" (click)="getOnpremClusterData()"  class="addInfoBtn">+ Add Applications</button></div>
+         <div class="addAppBtn" *ngIf="viewApplication"><button [disabled]="validateAddappBtn" (click)="viewApplicationData()"  class="addInfoBtn">View Applications</button></div>
+        </div>
+        <div style="display: flex;
+        padding-top: 40px;" *ngIf="!isEditMode">
+          <div style="background-color: #94A3B8;width: 37%; height: 1px;"></div>
+          <div class="addInfograyHeader" >Additional Information</div>
+          <div style="background-color: #94A3B8;width: 37%; height: 1px;"></div>
+        </div>
+        <div style="display: flex;
+        padding-top: 20px;justify-content: center;">
+        <form [formGroup]="addInformationForm" (ngSubmit)="submit()">
+          <div formArrayName="addInformationData">
+            <div style="display: flex;"
+              *ngFor="let addInformationGroup of addInformationData?.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <!-- <h3>passenger - {{i + 1}}</h3> -->
+             <div>  <label>Key</label><br/> 
+              <input  type="text" class="form-control" formControlName="key"  placeholder="key"
+              required  /></div>
+             <div style="margin-left:5%;">  <label>Value</label><br/> 
+              <input type="text"   class="form-control" formControlName="value" placeholder="value" /></div>
+              <div class="removeBtn" (click)="remove(i)"><img src='../../../../assets/images/removeBtn.svg'></div>
+            </div>
+           
+            
+          </div>
+
+        
+          <div *ngIf="!isEditMode" class="addInformationbtn"><button (click)="addInformation()" [disabled]="additionalInfoBtn" class="addInfoBtn">+ Additional Information</button></div>
+          <!-- <button type="submit"> Submit</button> -->
+        </form>
+        </div>
+        <div *ngIf="isEditMode && onPremApplication" style="display: flex;
+    justify-content: center;
+    margin-top: 20px;"><button class="add-clust-btn" (click)="getOnpremClusterData()">Update Cluster</button></div>
+        </div>
+        
+        
+      </form>
+    </div>
+    <!-- <div class="acc-body w-100" *ngIf="addApplicationsData && !addApplicationScreen">
+      <app-shared-table class="w-100"  [tableData]="tableData" [disable]="true"
+          [showCheckAll]="false" [isSearchFilter]="false" [isAddEnabled]="false">
+      </app-shared-table>
+    </div> -->
+    
+  
+    <div style="margin-top: 3%;"  *ngIf="addApplicationScreen && !viewApplicationScreen && !editApplicationScreen">
+      
+      
+        <ng-container >
+          <div >
+            <div class="config-card">
+        <div class="config-accordion">
+          <ng-container >
+            <form [formGroup]="addApplicationForm" (ngSubmit)="submit()" style="width: 100%;">
+          <div formArrayName="addApplicationData">
+                <div style="display: flex;"
+                  *ngFor="let addInformationGroup of addApplicationData?.controls; let i = index"
+                  [formGroupName]="i">
+            <div class="acc-container w-100" [ngClass]="isRowExpanded(i) ? 'expanded' : 'collapsed'">
+              <div class="acc-main w-100" [ngClass]="isRowExpanded(i) ? 'expanded' : 'collapsed'">
+                <div class="acc-main-header w-100" [ngClass]="isRowExpanded(i) ? 'expanded' : 'collapsed'">
+                  <div class="acc-title-left">
+                    
+                    <span style="padding: 7px;" class="acc-title" (click)="toggleRow(i)">#<span *ngIf="addApplicationData.length < 10">0</span>{{i+1}} <span style="padding-left: 20px;">Application {{i+1}} - Process {{i+1}}</span></span>
+                  </div>
+                  <div>
+                  <button class="btn icon-button" (click)="toggleRow(i)">
+                    <img class="icon-button" src="../../../../../assets/images/edit.png"/>
+                  </button>
+                  <button class="btn icon-button" (click)="removeApplication(i)">
+                    <img class="icon-button" src="../../../../../assets/images/trash-red.svg"/>
+                  </button>
+                  <button class="btn icon-button" (click)="toggleRow(i)">
+                    <img class="icon-button" src="../../../../../assets/images/chevron-down.svg" alt="Toggle"
+                      [@rotate]="isRowExpanded(i) ? 'expanded' : 'collapsed'" />
+                  </button>
+                  </div>
+                </div>
+              </div>
+              <ng-container *ngIf="isRowExpanded(i)">
+                <div class="acc-body w-100">
+                  <div style="display: flex;
+        padding-top: 20px;justify-content: center;margin: 0 auto;">
+    
+              <div style="flex-direction: column;">
+              <div style="display: flex; flex-direction: row; margin-left: -5%;">
+             <div>  <label>Application</label><br/> 
+              <select id="siteSelect" formControlName="Application" (change)="processNamebyApplication($event)" class="form-control2" required>
+                <option value="undefined" disabled selected>Select Application</option>
+                <option *ngFor="let appList of applicationList" [value]="appList.name">{{ appList.name }}</option>
+              </select>
+            </div>
+              <!-- <div style="margin-left:5%;">  <label>Processes</label><br/> 
+                <select id="siteSelect" formControlName="Processes" class="form-control2" required>
+                  <option *ngFor="let proList of processList; let i = index" [value]="proList">{{ proList}}</option>
+                </select>
+              </div> -->
+              <div class="custom-mat-select" style="margin-left: 5%;">
+                <label class="label-text" [for]="'Processes'">Processes</label>
+                <mat-form-field appearance="outline" style="width: 310px;">
+                    <mat-select class="multi-select" formControlName="Processes" multiple [id]="'Processes'" placeholder="Processes">
+                        <mat-option *ngFor="let proList of processList" [value]="proList">
+                            {{proList}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+              <div style="margin-left:5%;">  <label>Server</label><br/> 
+                <input  type="text" class="form-control2" formControlName="Server"  placeholder="Server"
+                required  /></div>
+                
+                  </div>
+                  <div style="display: flex; flex-direction: row;margin-left: -5%;">
+                  <div>  <label>HostName</label><br/> 
+                    <input  type="text" class="form-control2" formControlName="HostName"  placeholder="HostName"
+                    required  /></div>
+                    <div style="margin-left:5%;">  <label>UserName</label><br/> 
+                      <input  type="text" class="form-control2" formControlName="UserName"  placeholder="UserName"
+                      required  /></div>
+             <div style="margin-left:5%;">  <label>Password</label><br/> 
+              <input type="password"   class="form-control2" formControlName="Password" placeholder="Password" /></div>
+            </div>
+            <div style="display: flex; flex-direction: row;margin-left: -5%;padding-bottom: 20px;">
+              <div style="margin-top: 5%;margin-right: 2%;"><button class="button" (click)="removeApplication(i)" style="background-color: #ffffff;color: #000001;" class="add-clust-btn">Cancel</button></div>
+            <div class="addInformationbtn"><button (click)="addApplication(i)" class="add-clust-btn">Save & Add Another</button></div>
+            </div>
+            </div>
+             
+        </div>
+                </div>
+                
+              </ng-container>
+            </div>
+                </div></div></form>
+          </ng-container>
+        </div>
+        </div>
+        </div>
+        </ng-container>
+    </div>
+
+    &nbsp;
+    <div class="action-buttons" *ngIf="!getpods && !isEditMode && !viewApplication">
+      &nbsp;
+      <button class="button" (click)="cancel()">Cancel</button>
+      &nbsp;
+      <button *ngIf="!OnpremSelected && !viewApplication" class="add-clust-btn" (click)="getPods()">Get Pods
+        <img src="../../../../assets/images/rightarrow.png"></button>
+        <button *ngIf="OnpremSelected && !viewApplication && addClusterbtn" class="add-clust-btn" (click)="getOnpremClusterData()">Add Cluster
+          <img src="../../../../assets/images/rightarrow.png"></button>
+        <button *ngIf="OnpremSelected && !viewApplication && !addClusterbtn" class="add-clust-btn" (click)="addProcess()" [disabled]="addProcessEnbaled">Add Process
+          <img src="../../../../assets/images/rightarrow.png"></button>
+          <!-- <button *ngIf="viewApplication" class="add-clust-btn" (click)="backtoCluster()">
+            Back To Cluster
+            <img src="../../../../assets/images/rightarrow.png">
+          </button> -->
+    </div>
+  </div>
+</div>
+<!-------------Second form----------------->
+<div class="outline" *ngIf="(getpods || isEditMode) && !onPremApplication">
+  <div class="cluster-add">
+    <div class="left">
+      <img src="../../../assets/images/Group 335.svg">
+    </div>
+    <div class=" right">
+      <ng-container>
+        <div class="title">
+          <h2>Choose categories for each Entity below</h2>
+        </div>
+        <form [formGroup]="addPodsForm">
+          <table>
+            <tr>
+              <th>
+                name
+              </th>
+              <th>
+                Category
+              </th>
+            </tr>
+            <tr *ngFor="let pod of arrayClusterPods.controls; let i = index" formArrayName="arrayClusterPods">
+              <ng-container [formGroupName]="i">
+                <td>
+                  <!-- [disabled]="true" -->
+                  <input type="text" formControlName="podName" value="pod.arrayClusterPods" readonly />
+                </td>
+                <td>
+                  <select formControlName="podCategory">
+                    <option *ngFor="let podCategory of podCategoryList" [ngValue]="podCategory.categoryName">
+                      {{ podCategory?.categoryName }}
+                    </option>
+                  </select>
+                </td>
+              </ng-container>
+            </tr>
+          </table>
+        </form>
+
+      </ng-container>
+      <div class="btn-class">
+        <button  (click)="backGetPods()" class="btn back-button back-button-text mt-0 mb-0">Back</button>
+        <button  class="add-clust-btn" (click)="combinePods()">
+          {{ isEditMode ? 'Update Cluster' : 'Add Cluster' }}
+          <img src="../../../../assets/images/rightarrow.png">
+        </button>
+        <!-- {{viewApplication}} -->
+        
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
