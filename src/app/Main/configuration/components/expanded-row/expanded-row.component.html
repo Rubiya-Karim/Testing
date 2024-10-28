@@ -1,0 +1,152 @@
+
+<ng-container *ngIf="headerKey !== 'date' && headerKey !== 'opCodeName' && headerKey !== 'report'">
+    <div class="job-statistics">
+        <ng-container *ngFor="let body of chartData.body">
+            <div class="chart-division">
+              <div class="ct-chart" [id]="'chartDiv' + chartID + (body[headerKey] ? '_' + body[headerKey] : '')"></div>
+              <!-- <label class="stats-table-text"><b>{{body[headerKey]}}</b></label> -->
+            </div>
+            <div class="stats-table-card" *ngIf="chartData">
+                <div class="custom-table">
+                    <div class="row" *ngFor="let stat of getStatKeys(chartData.header)">
+                      <div class="cell" [ngClass]="stat">
+                        <span class="rounded-square" [ngClass]="stat"></span>
+                        <label class="stats-table-text">{{chartData.header[stat]}}</label>
+                      </div>
+                      <div class="cell">
+                        <label class="w-100 stats-table-text stat-value-text">{{body[stat]}}</label>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>
+<ng-container *ngIf="headerKey === 'opCodeName'">
+    <div class="job-statistics w-100">
+        <div class="stats-card-division">
+            <div [ngClass]="(statsHasData())? 'stats-chart' : 'no-stats'" [id]="'chartDiv' + chartID"></div>
+        </div>
+
+        <div class="w-100" *ngIf="statsHasData()">
+            <div class="stats-table">
+                <table class="w-100">
+                    <thead>
+                        <tr>
+                            <td class="stats-table-header">Opcode</td>    
+                            <td class="stats-table-header">Alias</td>    
+                            <ng-container *ngFor="let stat of getStatKeys(chartData.header)">
+                                <td class="stats-table-header"  [ngClass]="stat" *ngIf="stat !== 'opCodeName'">
+                                    <div class="stats-header-div">
+                                        <span class="rounded-square" [ngClass]="stat"></span>
+                                        <label class="stat w-100 ">{{chartData.header[stat]}}</label>
+                                    </div>
+                                </td>
+                            </ng-container>
+                        </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let body of chartData.body; let i = index">
+                        <tr class="table-row w-100" >
+                            <td class="stats-table-cell">{{body[headerKey]}}</td>
+                            <td class="stats-table-cell">OPC{{i + 1}}</td>
+                            <ng-container *ngFor="let stat of getStatKeys(chartData.header)">
+                                <td class="stats-table-cell small"  *ngIf="stat !== 'opCodeName'">
+                                    <label class="w-100">{{body[stat]}}</label>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="headerKey === 'date'">
+    <ng-container *ngFor="let body of chartData.body">
+        <div class="main-section">
+            <div class="title-section w-50">
+                <app-info-card [title]="'Date'" [subTitle]="body.date"
+                [imageIcon]="'../../../../assets/images/calendar.svg'"></app-info-card>
+
+                <app-info-card [title]="'Total Files'" [subTitle]="body.totalFiles"
+                [imageIcon]="'../../../../assets/images/document-duplicate.svg'"></app-info-card>
+            </div>
+            <div class="cards-container">
+                <div class="cards-section">
+                    <div class="card-col">
+                        <div class="header">
+                            <div class="left left-col">
+                                <img src="../../../assets/images/check-circle green.svg">
+                                <label class="header-text">PROCESSED FILES</label>
+                            </div>
+                            <div class="right">
+                                <label class="col-text">{{totalProcessedFilesCount(body)}}</label>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-content-row">
+                                <div class="left">
+                                    <label>System Processed</label>
+                                </div>
+                                <div class="right">
+                                    <label>{{body.processed}}</label>
+                                </div>
+                            </div>
+                            <div class="card-content-row">
+                                <div class="left">
+                                    <label>OMF Processed</label>
+                                </div>
+                                <div class="right">
+                                    <label>{{body.reProcessed}}</label>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+                <div class="cards-section">
+                    <div class="card-col">
+                        <div class="header right-col">
+                            <div class="left">
+                                <img src="../../../assets/images/x-circle red icon.svg">
+                                <label class="header-text">REJECTED FILES</label>
+                            </div>
+                            <div class="right">
+                                <label class="col-text">{{totalRejectedFilesCount(body)}}</label>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-content-row">
+                                <div class="left">
+                                    <label>Rejected by System</label>
+                                </div>
+                                <div class="right">
+                                    <label>{{body.rejected}}</label>
+                                </div>
+                            </div>
+                            <div class="card-content-row">
+                                <div class="left">
+                                    <label>Rejected After Re-process</label>
+                                </div>
+                                <div class="right">
+                                    <label>{{body.reProRejected}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>
+<ng-container *ngIf="headerKey === 'report'">
+    <ng-container *ngFor="let body of chartData?.body">
+        <div class="report-stat-card" *ngFor="let key of getStatKeys(body)">
+            <app-info-card class="w-100" [title]="chartData?.header[key]" [alignCenter]="true" [subTitle]="body[key]"
+            [imageIcon]="'assets/images/presentation-chart-bar.svg'"></app-info-card>
+        </div>
+    </ng-container>
+</ng-container>
+

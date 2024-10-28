@@ -1,0 +1,37 @@
+<div class="main-container">
+  <div class="view-container">
+    <img [ngClass]="{ 'rotate': loading }" src="../../../../assets/images/cust-service-wheel.svg">
+    <div class="view-header">
+      <div class="header-content">
+        <label class="header-title text-font">Progress</label>
+        <label class="header-subtitle text-font">{{progress}}%</label>
+      </div>
+      <div class="progress-holder w-100">
+        <div class="progress-container">
+          <svg xmlns="http://www.w3.org/2000/svg" width="474" height="4" viewBox="0 0 474 4" fill="none">
+            <path d="M2.03906 2H471.999" stroke="#CBD5E1" stroke-width="3" stroke-linecap="round" />
+          </svg>
+          <div class="progress-bar" [style.width.%]="progress">
+            <svg xmlns="http://www.w3.org/2000/svg" width="298" height="6" viewBox="0 0 298 6" fill="none">
+              <path d="M3 3.18945H294.891" stroke="#82CB15" stroke-width="5" stroke-linecap="round" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section w-100" *ngIf="showStatistics && progressStats">
+    <div class="column">
+      <app-info-card [title]="'Time to Complete'" [subTitle]="progressStats.remainingTime + 's'"
+        [imageIcon]="'../../../../../../assets/images/clock.svg'"></app-info-card>
+      <app-info-card [title]="'Processed Record(s)'" [subTitle]="progressStats.processedRecords"
+        [imageIcon]="'../../../../../../assets/images/doc-check.svg'"></app-info-card>
+    </div>
+    <div class="column">
+      <app-info-card [title]="'Total Record(s)'" [subTitle]="progressStats.totalRecords"
+        [imageIcon]="'../../../../../../assets/images/purple-document-text.svg'"></app-info-card>
+      <app-info-card [title]="'Remaining Record(s)'" [subTitle]="progressStats.remainingRecords"
+        [imageIcon]="'../../../../../../assets/images/document-remove.svg'"></app-info-card>
+    </div>
+  </div>
+</div>

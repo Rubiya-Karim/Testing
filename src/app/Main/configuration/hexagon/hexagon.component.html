@@ -1,0 +1,37 @@
+<div class="hexagon-grid" *ngIf="type === 'CNE';else secondaryTemplate">
+  <div class="hexagon-container" (click)="onHexagonClick()">
+    <svg width="114" height="100" viewBox="0 0 114 100" xmlns="http://www.w3.org/2000/svg" [attr.fill]="hexagonColor">
+      <path id="hexagon"
+        d="M84.634 2.13655L112.268 50L84.634 97.8635L29.366 97.8635L1.73206 50L29.366 2.13655L84.634 2.13655Z"
+        stroke=hexagonColor stroke-width="3" />
+
+      <g *ngFor="let item of textList; let i = index;">
+        <text id="hexagon-text" x="50%" [attr.y]="40  + (i * 15) + '%'" alignment-baseline="middle" text-length="95%"
+          text-rendering="optimizeLegibility" text-anchor="middle" fill="#fff" font-size="60%">{{textList[i]}}</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<ng-template #secondaryTemplate>
+  <div class="hexagon-grid">
+    <div class="hexagon-container" (click)="onHexagonClick()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="150" height="114" viewBox="0 0 150 114" [attr.fill]="hexagonColor">
+        <!-- Rectangle with rounded corners -->
+        <path id="hexagon" d="M10 25 Q10 10 25 10 L125 10 Q140 10 140 25 L140 89 Q140 104 125 104 L25 104 Q10 104 10 89 Z" 
+              stroke=hexagonColor stroke-width="3"/>
+      
+        <!-- Badge (circle) on the top right corner -->
+        <circle cx="135" cy="15" r="14" [attr.fill]="badgeColor" stroke=badgeColor stroke-width="3"/>
+        <!-- Text inside the badge -->
+        <text x="135" y="17" font-size="12" fill="#000" text-anchor="middle" alignment-baseline="middle">{{badgeText}}</text>
+
+        <g *ngFor="let item of textList; let i = index;">
+          <text id="hexagon-text" x="50%" [attr.y]="50  + (i * 15) + '%'" al  ignment-baseline="middle" text-length="95%"
+            text-rendering="optimizeLegibility" text-anchor="middle" fill="#fff" font-size="70%">{{textList[i]}}</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  
+</ng-template>

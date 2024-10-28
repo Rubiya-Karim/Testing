@@ -1,0 +1,19 @@
+.success-message {
+  background-color: rgb(9, 193, 9);
+  color: white;
+  font-weight: 700;
+}
+.error-message {
+  background-color: rgba(197, 7, 7, 0.762);
+  color: white;
+  font-weight: 700;
+}
+div {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+

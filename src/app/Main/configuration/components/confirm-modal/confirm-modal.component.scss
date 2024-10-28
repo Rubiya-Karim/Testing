@@ -1,0 +1,165 @@
+@import "../../../../styles.scss";
+
+.message-window {
+    display: flex;
+    width: 450px;
+    padding: 40px 24px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    border-radius: 20px;
+    background: #FFF;
+
+    /* Elevation / Level 4 */
+    box-shadow: 0px 20px 50px 0px rgba(18, 27, 33, 0.20);
+}
+
+.message {
+    color: var(--neutral-600, #475569);
+    text-align: center;
+    @include text-headline-h4-2xl;
+    font-family: "Poppins";
+}
+
+.information {
+    color: var(--neutral-600, #475569);
+    text-align: center;
+    @include text-small-normal;
+}
+
+.okay-btn {
+    @include primary-button;
+    display: flex;
+    width: 100px;
+    height: 40px;
+    padding: 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.red-bg-btn {
+    background: var(--Status-Danger-600, #981B1B);
+}
+
+.orange-bg-btn {
+    background: var(--Status-Danger-600, #ED7D31);
+}
+
+.cancel-btn {
+    display: flex;
+    width: 97px;
+    height: 40px;
+    padding: 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    color: var(--neutral-900, #0F172A);
+    border-radius: 4px;
+    background: var(--neutral-100, #F1F5F9);
+    font-size: $font-size-base;
+    font-style: normal;
+    font-weight: $font-weight-bold;
+    line-height: 24px; /* 150% */
+}
+
+.proceed-btn {
+    display: flex;
+    width: 115px;
+    height: 40px;
+    padding: 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    color: var(--neutral-900, #ffffff);
+    border-radius: 4px;
+    background: var(--neutral-100, #ED7D31);
+    font-size: $font-size-base;
+    font-style: normal;
+    font-weight: $font-weight-bold;
+    line-height: 24px; /* 150% */
+    font-family: "Poppins";
+}
+
+.icon-size {
+    width: 65px;
+    height: 65px;
+}
+
+// .content{
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     gap: 18px;
+// }
+
+.message-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.information-content {
+    flex-direction: column;
+}
+
+
+.button-spacing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+
+input[type='radio']:after {
+    width: 24px;
+    height: 24px;
+    border-radius: 15px;
+    background-image: url('../../../../assets/images/Radiobutton-default.svg');
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #d1d3d1;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+input[type='radio']:checked:after {
+    width: 24px;
+    height: 24px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+   // background-color: #ffa500;
+   background-image: url('../../../../assets/images/Radiobutton-active.svg');
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+.labelText{
+    color: #0F172A;
+    font-size: 14px;
+    line-height: 20px;
+    font-family: 'Poppins';
+    font-weight: 600;
+    margin-left: 20px;
+}
+
+.activelabelText{
+    color: #ED7D31;
+    font-size: 14px;
+    line-height: 20px;
+    font-family: 'Poppins';
+    font-weight: 600;
+}
+
+.activeRadioButton{
+    background-color: #EEE7DF;border: #ED7D31 1px solid;width: 70%;border-radius: 5px;
+}

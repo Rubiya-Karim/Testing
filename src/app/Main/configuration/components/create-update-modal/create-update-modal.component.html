@@ -1,0 +1,299 @@
+<div>
+    <button class="close-button" [mat-dialog-close]="true">
+        <img src="../../../../assets/images/x.png" />
+    </button>
+
+    <div class="header">{{this.title}}</div>
+    <mat-dialog-content>
+        <form [formGroup]="form">
+            <div class="form-row">
+                <div class="form-group col">
+                    <table class="table table-sm table-borderless">
+                        <tbody>
+                            <tr *ngIf="parentCategory === parentViewComponent.Users">
+                                <td>
+                                    <span class="col-sm sideheading">
+                                        <label>First Name</label>
+                                    </span>
+                                </td>
+                                <td>
+                                    <input type="text" formControlName="firstName" (input)="firstNameChanged($event)"
+                                        maxlength=24 class="form-control" placeholder="John"
+                                        [ngClass]="{ 'is-invalid': submitted && f['firstName'] && f['firstName'].errors }" />
+                                    <div *ngIf="submitted && f['firstName'] && f['firstName'].errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f['firstName'].errors['required']">First Name is required</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="parentCategory === parentViewComponent.Users">
+                                <td>
+                                    <span class="col-sm sideheading">
+                                        <label>Last Name</label>
+                                    </span>
+                                </td>
+                                <td>
+                                    <input type="text" formControlName="lastName" maxlength=24 class="form-control"
+                                        placeholder="Deo"
+                                        [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"
+                                        (input)="lastNameChanged($event)" />
+                                    <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+                                        <div *ngIf="f['lastName'].errors['required']">Last Name is required</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="parentCategory === parentViewComponent.Users">
+                                <td>
+                                    <span class="col-sm sideheading">
+                                        <label>Email ID</label>
+                                    </span>
+                                </td>
+                                <td>
+                                    <input type="email" class="form-control" formControlName="userName"
+                                        placeholder="john@company.com" required>
+                                    <div *ngIf="submitted && ['f.emailId.errors']" class="invalid-feedback">Email is not
+                                        valid</div>
+                                    <div *ngIf="['f.emailId.errors.required']" class="invalid-feedback">Email is
+                                        required</div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="parentCategory === parentViewComponent.Users">
+                                <td>
+                                    <span class="col-sm sideheading">
+                                        <label>User Name</label>
+                                    </span>
+                                </td>
+                                <td>
+                                    <!-- <input type="text" formControlName="userName" maxlength=12 class="form-control"/> -->
+                                    <input type="text" formControlName="displayName" maxlength=12 class="form-control"
+                                        placeholder="JohnDeo21" />
+                                </td>
+                            </tr>
+                            <tr *ngIf="parentCategory === parentViewComponent.Users">
+                                <td>
+                                    <span class="col-sm sideheading">
+                                        <label>Phone Number</label>
+                                    </span>
+                                </td>
+                                <td>
+                                    <input formControlName="phoneNumber" id="mobileNumber" maxlength=10 type="text"
+                                        class="form-control" placeholder="91234 56780">
+                                    <div *ngIf="f['phoneNumber'].invalid && (f['phoneNumber'].dirty || f['phoneNumber'].touched || submitted)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="['f.phoneNumber.errors.required']"><small>Mobile Number is
+                                                required.</small></div>
+                                        <div *ngIf="['f.phoneNumber.errors.pattern']"><small>Please, Enter 10 digit
+                                                Mobile Number.</small></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="parentCategory === parentViewComponent.Users">
+                                <td>
+                                    <span class="col-sm sideheading">
+                                        <label>Role</label>
+                                    </span>
+                                </td>
+                                <td>
+                                    <select class="drop-down" formControlName="roles">
+                                        <option *ngFor="let role of roles" [ngValue]="role">
+                                            {{ role }}
+                                        </option>
+                                    </select>
+                                    <div class="invalid-feedback" *ngIf="submitted && f['roles']?.invalid">
+                                        <sup>*</sup>Please select role name
+                                    </div>
+                                </td>
+                            </tr>
+                            <!------------------- table for security config 
+                                                                                --------------->
+
+                            <tr *ngIf="parentCategory === parentViewComponent.Securityconfig">
+                                <td>
+                                    <span class="col-sm sideheading">
+                                        <label>Config name</label>
+                                    </span>
+                                </td>
+                                <td>
+                                    <input type="text" formControlName="configName" class="form-control" readonly />
+
+                                </td>
+
+                            </tr>
+                            <tr *ngIf="parentCategory === parentViewComponent.Securityconfig">
+                                <td>
+                                    <span class="col-sm sideheading">
+                                        <label>Config Value</label>
+                                    </span>
+                                </td>
+                                <td class="d-flex align-items-baseline ">
+                                    <input type="text" formControlName="configValue" class="form-control" />
+                                    <label> {{entity.configUnit}}</label>
+                                </td>
+                            </tr>
+                            <tr *ngIf="parentCategory === parentViewComponent.Securityconfig">
+                                <td>
+                                    <span class="col-sm sideheading">
+                                        <label>Encryption Flag</label>
+                                    </span>
+                                </td>
+                                <td>
+                                    <input type="text" formControlName="encryptedFlag" class="form-control" readonly />
+
+                                </td>
+                            </tr>
+
+                            <tr *ngIf="parentCategory === parentViewComponent.Securityconfig">
+                                <td>
+                                    <span class="col-sm sideheading">
+                                        <label>Description</label>
+                                    </span>
+                                </td>
+                                <td>
+                                    <input type="text" formControlName="configDesc" class="form-control" readonly />
+
+                                </td>
+                            </tr>
+                            <tr *ngIf="parentCategory === parentViewComponent.Securityconfigdesc">
+                                <!-- <td>
+                                    <textarea type="text" formControlName="configDesc" class="form-control" readonly></textarea>
+                                
+                                </td> -->
+                                <td>
+                                    <label>Config Name</label>
+                                </td>
+                                <td>
+                                    <input type="text" formControlName="configName" class="form-control" readonly>
+                                </td>
+                            </tr>
+                            <tr *ngIf="parentCategory === parentViewComponent.Securityconfigdesc">
+                                <td>
+                                    <label> Config Value </label>
+                                </td>
+                                <td>
+                                    <input type="text" formControlName="configValue" class="form-control" readonly>
+                                </td>
+                            </tr>
+                            <tr *ngIf="parentCategory === parentViewComponent.Securityconfigdesc">
+                                <td>
+                                    <label>Encryption Flag </label>
+                                </td>
+                                <td>
+                                    <input type="text" formControlName="encryptedFlag" class="form-control" readonly>
+                                </td>
+                            </tr>
+                            <tr *ngIf="parentCategory === parentViewComponent.Securityconfigdesc">
+                                <td>
+                                    <label> Description </label>
+                                </td>
+                                <td>
+                                    <!-- <input type="text" formControlName="configDesc" class="form-control" readonly > -->
+                                    <textarea type="text" formControlName="configDesc" class="form-control"
+                                        readonly></textarea>
+                                </td>
+                            </tr>
+
+
+
+                            <!-----------------------------For Trial Bill--------------------->
+                            <tr *ngIf="parentCategory === parentViewComponent.TrialBill">
+                                <td>
+                                    <span class="col-sm sideheading">
+                                        <label>Trial Bill Name</label>
+                                    </span>
+                                </td>
+                                <td>
+                                    <label class="column-value-text">{{entity?.scheduleName}}</label>
+                                </td>
+
+                            <tr *ngIf="parentCategory === parentViewComponent.TrialBill">
+                                <td>
+                                    <span class="col-sm sideheading">
+                                        <label>Job Name</label>
+                                    </span>
+                                </td>
+                                <td>
+                                    <label class="column-value-text">{{entity?.jobName}}</label>
+
+                                </td>
+
+                            </tr>
+
+                            <tr *ngIf="parentCategory === parentViewComponent.TrialBill">
+                                <td class="column-vertical-align">
+                                    <span class="col-sm sideheading">
+                                        <label>Schedule Date</label>
+                                    </span>
+                                </td>
+                                <td>
+                                    <input type="date" placeholder="Date" [min]="getToday()" class="date-picker p-2"
+                                        formControlName="dayOfExecution" />
+                                </td>
+                            </tr>
+
+                            <tr *ngIf="parentCategory === parentViewComponent.TrialBill">
+                                <td class="column-vertical-align">
+                                    <span class="col-sm sideheading">
+                                        <label>Schedule Time</label>
+                                    </span>
+                                </td>
+                                <td>
+                                    <timepicker formControlName="jobExecuteTime" [minuteStep]=1 id="timePicker">
+                                    </timepicker>
+                                </td>
+                            </tr>
+                            <tr *ngIf="parentCategory === parentViewComponent.TrialBill && errorMessage" class="error-message">
+                                <td [colSpan]="2"><small>{{ errorMessage }}</small></td>
+                            </tr>
+
+                            <!-------------------------------- for Mbean -------------------->
+
+                            <tr *ngIf="parentCategory === parentViewComponent.MbeanAttribute">
+                                <td>
+                                    <div class="form-layout">
+                                        <div class="form-row">
+                                            <label class="form-row-label">Mbean Name</label>
+                                            <textarea type="text" formControlName="mbeanName" class="form-row-input noborder" readonly ></textarea>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <label class="form-row-label">Attribute Name</label>
+                                            <input type="text" formControlName="name" class="form-row-input noborder" readonly />
+                                        </div>
+
+                                        <div class="form-row">
+                                            <label class="form-row-label">Attribute Value</label>
+                                            <input type="text" formControlName="value" class="form-row-input" />
+                                        </div>
+                                    </div>
+                                </td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <span *ngIf="parentCategory === parentViewComponent.Notification">
+                <label>Phone Number</label>
+
+                <input formControlName="phone_Number" id="phone_Number" minlength="10" type="text" class="form-control"
+                    required>
+                <div *ngIf="f['phone_Number'].invalid && (f['phone_Number'].dirty || f['phone_Number'].touched || submitted)"
+                    class="alert alert-danger">
+
+                    <div *ngIf="['f.phone_Number.errors.required']"><small>Mobile Number is required.</small></div>
+                    <div *ngIf="['f.phone_Number.errors.pattern']"><small>Please, Enter 10 digit Mobile Number.</small>
+                    </div>
+                    <div *ngIf="['f.phone_Number.errors.minlength !=10']"><small>Expected 10 digit number.</small></div>
+                </div>
+            </span>
+
+            <button class="primaryActionBtn" *ngIf="isView" (click)="yes()"> Okay</button>
+
+            <mat-dialog-actions class="actionBtnGroup"
+                *ngIf="parentCategory !== parentViewComponent.Securityconfigdesc">
+                <button class="cancelBtn" (click)="yes()">Cancel</button>
+                <button class="primaryActionBtn" *ngIf="!shouldShowSubmit()" [disabled]="this.isTrialModule() && this.errorMessage" (click)="onSubmit()">{{this.isNew?
+                    "Create": this.isTrialModule() ? "Reschedule Trial Bill" : "Update"}}</button>
+                <button class="primaryActionBtn" *ngIf="shouldShowSubmit()" (click)="onSubmit()">Submit</button>
+            </mat-dialog-actions>
+        </form>
+    </mat-dialog-content>
+</div>

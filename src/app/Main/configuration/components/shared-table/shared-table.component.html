@@ -1,0 +1,207 @@
+<div class="table-container">
+    <div class="header-align" >
+        <div class="left-header">
+            <ng-container *ngIf="(dataSource && dataSource.data && dataSource.data.length) || isServerSearch">
+                <div class="search-filter"  *ngIf="isSearchFilter">
+                    <label *ngIf="showFilterLabel" class="filter-label">Filter by</label>
+                    <select class="dropdown" [(ngModel)]="selectedFilterCategory" (change)="changeFilterType($event)" >
+                        <option *ngFor="let category of filterCategoryList" >
+                            {{category}}
+                            <!-- {{ displayLable(category)?.label }} -->
+                        </option>
+                    </select>  
+                    <select *ngIf="showDropdown" class="dropdown" (change)="applyFilter($event, true)">
+                        <option value="">Select...</option>
+            
+                        <option *ngFor="let option of filterCategoryDropdownData[selectedFilterCategory]" [ngValue]="option">
+                            {{option}}
+                        </option>
+                    </select>  
+                    <input *ngIf="shouldShowFilterCalender" type="date" class="form-control dropdown calendarInput"  (focus)="setupFilter(selectedFilterCategory)" (change)="applyFilter($event, true)"
+                    placeholder="Date">
+                    <input *ngIf="shouldShowFilterCalenderPeriod"  type="date" class="form-control calendarInput" [(ngModel)]="startDate"  (focus)="setupFilter(selectedFilterCategory)" (change)="applyFilter($event, false)"
+                    placeholder="Date">
+                    <div>
+                        <input *ngIf="shouldShowFilterCalenderPeriod"   type="date" class="form-control calendarInput" [(ngModel)]="endDate" (focus)="setupFilter(selectedFilterCategory)" (change)="applyFilter($event, false)"
+                        placeholder="Date" [disabled]="!startDate">
+                        <span *ngIf="endDateBeforeStartDateValidator()" class="validator-msg"><small><small><small>End date must be after the start date</small></small></small> </span>
+                    </div>
+    
+                </div>
+                <!-- [hidden]="hideSearchbox" -->
+                <div class="grid-search d-flex " *ngIf="isSearch &&  !hideSearchbox">
+                    <input type="search" class="form-control filter-searchbar" (keydown.backspace)="onBackspace($event)" (keydown.enter)="onEnter($event)" (keyup)="onKeyUpEvent($event)"  (search)="onSearchClear()" [(ngModel)]="serverSearchText" (focus)="setupFilter(selectedFilterCategory)" (keyup)="applyFilter($event)"
+                    placeholder="Search">
+                </div>
+            </ng-container>
+            <div class="grid-search d-flex " *ngIf="isServerSearch && !showDropdown && !shouldShowFilterCalender">
+                <button class="header-button-text" [disabled]="(!shouldShowFilterCalenderPeriod && (!serverSearchText || serverSearchText.length == 0)) || (shouldShowFilterCalenderPeriod && !(startDate && endDate))" (click)="onServerSearch($event)">Search</button>
+            </div>
+        
+        </div>
+    
+        <div class="right-header">
+            <div *ngIf="RelCustomButton">
+                <button class="btnWithLeftIcon assignBtn" (click)="RelCustombtn($event)"><img src="../../../assets/images/REL icon.svg">{{RelcustomButtonTitle}}</button>
+            </div>
+            <div *ngIf="isAssignPrivilege">
+                <button class="btnWithLeftIcon assignBtn" (click)="assignPrivileges($event)"><img src="../../../../assets/images/arrow-circle-right.png">{{accessoryBtnTitle}}</button>
+            </div>
+            <div *ngIf="isSecondaryHeaderButton">
+                <button class="btnWithLeftIcon header-button-text" [ngClass]="isSecHeaderBtnRed ? 'button-red' : 'sec-header-button'" [disabled]="disableSecHeaderBtn" (click)="secondaryBtnEvent($event)"><img [src]="disableSecHeaderBtn ? secHeaderBtnIconDisabled :secHeaderBtnIcon">{{secHeaderButtonTitle}}</button>
+            </div>
+            <div *ngIf="isAddEnabled">
+                <button class="btnWithLeftIcon header-button-text" (click)="buttonEvent($event)"><img src="../../../../assets/images/plus-circle-outline.png">{{headerButtonTitle}}</button>
+            </div>  
+            <div *ngIf="isCustomHeaderButton">
+                <button class=" btnWithLeftIcon customRightButton" [disabled]="disableCustomHeaderBtn" (click)="rightBtnEvent($event)"><img [src]="customHeaderBtnIcon">{{customHeaderBtnTitle}}</button>
+            </div>
+        </div>
+    </div>
+    
+    <h1 *ngIf="tableHeader">{{tableHeader}}</h1>
+    <div class="manage-grid mb-3 p-0">
+        <div>
+                <div class="table w-100 overflow-auto slim-scroll" [ngClass]="{'add-border-bottom': (dataSource && dataSource.data && dataSource.data.length)}">
+                    <table class="w-100" id="common-table" mat-table [dataSource]="dataSource"
+                        matSort [matSortActive]="sortListBy" [matSortDirection]="sortDirec" [multiTemplateDataRows]="isExpandable" #mytable>
+                        <ng-container *ngFor="let column of getDisplayedColumns(); let i = index;" [matColumnDef]="column">
+                            <th class="head" mat-header-cell *matHeaderCellDef [mat-sort-header]="displayLable(column).def" [disabled]="(displayLable(column).type == 'action' || displayLable(column).type == 'checkbox')"
+                            [ngStyle]="{'width': (displayLable(column).width) }"
+                            [ngClass]="[ (displayLable(column).type == 'checkbox') ? 'checkbox-width' : '' , displayLable(column).class ? displayLable(column).class : '' ]" disableClear>
+                            <div *ngIf="showCheckAll && i == 0">
+                                <input type="checkbox" class="form-check-input" [checked]="allChecked" id="exampleCheck"
+                                    (click)="checkAll($event)">
+                            </div>
+                            {{ displayLable(column).label }}
+                        </th>
+                            <td mat-cell *matCellDef="let element; let j = index" [ngClass]="[ displayLable(column).class ? displayLable(column).class : '', (displayLable(column).class == 'custom-status') ? commonService.checkNullOrUndefined(element[column]) ? '' : element[column] : '']">
+                                <div [ngSwitch]="displayLable(column).type"
+                                    [ngClass]="{ 'text-ellipsis' : displayLable(column).dots }">
+                                    <div *ngSwitchDefault
+                                        [ngClass]="[ displayLable(column).class ? displayLable(column).class : '', (displayLable(column).class == 'custom-status') ? commonService.checkNullOrUndefined(element[column]) ? '' : element[column]: '', (showMatToolip(element[column] && !displayLable(column).hideTooltip)) ? 'showTooltip' : '' , getCellClass(element[column]), ((displayLable(column).def.toLowerCase().includes('status') || displayLable(column).format === 'status') ? 'custom-bgColor-text color-code '+ getStatusColorCode(element[displayLable(column).def]) :'') ]"
+                                        [matTooltip]="showMatToolip(element[column], element[displayLable(column).customTooltip])">
+                                        {{ displayLable(column).format == 'date' ? (element[column] | date: 'dd/MM/yyyy HH:mm' ) :
+                                        element[column] }} </div>
+                                    <div *ngSwitchCase="'sno'">{{ j + 1 }}</div>
+                                    <div *ngSwitchCase="'text'">
+                                        <span class="grid-text"
+                                            [ngClass]="[ displayLable(column).class ? displayLable(column).class : '', (showMatToolip(element[column] && !displayLable(column).hideTooltip)) ? 'showTooltip' : '' ]"
+                                            [matTooltip]="showMatToolip(element[column])">
+                                            {{ element[column] }} </span>
+                                    </div>
+                                    <div *ngSwitchCase="'checkbox'" class="checkbox-cell">
+                                        <label class="custom_checkbox">
+                                            <input type="checkbox"  [disabled]="graycheckBox(element)" [checked]="allChecked || selectedRowIndex === j || element.checked"
+                                            (click)="checkboxClick($event, element, j)"><p></p>
+                                        </label>
+                                    </div>
+
+                                    <div class="action" *ngSwitchCase="'action'">
+                                        <span *ngIf="displayLable(column).customIcon">
+                                            <button class="btn btn-icon" [matTooltip]="displayLable(column).customIconTooltip" [disabled]="element.customIconDisabled || element.status === 'Disabled'" (click)="onClickCustomIcon(element)">
+                                                <img class="customIconBtn" [ngClass]="displayLable(column).customIconName" [src]="'assets/images/' + displayLable(column).customIconName + '.svg'"/></button>
+                                                {{ element[column] }}
+                                        </span>
+                                        <span *ngIf="displayLable(column).view">
+                                            <button class="btn btn-icon" [matTooltip]="viewTooltip" (click)="onViewRow(element)"><img class="viewImgBtn" src="../../../../assets/images/information-circle.svg"/></button>
+                                            {{ element[column] }}
+                                        </span>
+                                        <span *ngIf="displayLable(column).edit && !element.hideEdit">
+                                            <button *ngIf="element.status !== 'Locked'" class="btn btn-icon" [matTooltip]="editTooltip" [disabled]="element.status === 'Disabled' || element.status === 'Inactive' || (element.permission && element.permission !== 'read/write')" (click)="onEditRow(element)"><img class="editImgBtn" src="../../../../assets/images/pencil.svg"/></button>
+                                            <button *ngIf="element.status === 'Locked'" class="btn btn-icon btn-locked" [disabled]=true
+                                                ><img src="assets/images/lock-closed.svg"/></button>
+                                                {{ element[column] }}
+                                        </span>
+                                        <ng-container *ngIf="displayLable(column).multipleBtns">
+                                            <span *ngFor="let aBtn of displayLable(column).buttons">
+                                                <button [ngClass]="aBtn.buttonTitle ? 'btn-redirect' : 'btn btn-icon'" [hidden]="element?.hasOwnProperty(aBtn.btnId) && !element[aBtn.btnId]" (click)="onButtonClickRow(element, aBtn)" [disabled]="aBtn.buttonDisabled || element.status === 'Disabled'" [matTooltip]="aBtn.tooltipTitle">
+                                                    <img *ngIf="aBtn.buttonIconImg" [ngClass]="aBtn.btnIconClassName" [src]="aBtn.buttonIconImg"/>{{aBtn.buttonTitle ? aBtn.buttonTitle : " "}}</button>
+                                                {{ element[column] }}
+                                            </span>
+                                        </ng-container>
+                                        <span *ngIf="displayLable(column).delete">
+                                            <button class="btn btn-icon" [matTooltip]="deleteTooltip" (click)="onDeleteRow(element)" [disabled]="element.status === 'Disabled' || element.deleteBtnDisabled"><img class="trashImgBtn" src="../../../../assets/images/trash-red.svg"/></button>
+                                            {{ element[column] }}
+                                        </span>
+                                        <span *ngIf="displayLable(column).externalLink">
+                                            <img src="../../../../assets/images/external-link.png " (click)="onExtLinkClick(element)"/>
+                                        </span>
+                                        <span *ngIf="displayLable(column).externalLinkText" [hidden]="element.extLinkTextHidden">
+                                            <button class="btn" (click)="onExtLinkClick(element)">{{displayLable(column).externalLinkText}}</button>
+                                        </span>
+                                        
+                                        <span *ngIf="displayLable(column).testSms">
+                                            <button name="test-sms" type="button" (click)="sendTestSms(element)" *ngIf="element.status !== 'Locked'"  class="test-button"> 
+                                                <img src="../../../../assets/images/T-Letter-PNG-Image-HD.png " class="t-button-image"> 
+                                            </button>
+                                        </span>  
+                                        
+                                        <span *ngIf="displayLable(column).testEmail ">
+         
+                                            <button name="test-email" type="button" (click)="sendTestEmail(element)" *ngIf="element.status !=='Locked'"  class="test-button"><img src="../../../../assets/images/T-Letter-PNG-Image-HD.png " class="t-button-image">
+                                            </button>
+                                            </span> 
+                                            <span *ngIf="displayLable(column).testTeams ">
+        
+                                            <button name="test-teams" type="button" (click)="sendTestTeams(element)" *ngIf="element.status !== 'Locked'"  class="test-button"> <img src="../../../../assets/images/Property 1=Default.svg " class="t-button-image">
+                                            </button>
+                                            
+                                        </span> 
+                                        <span *ngIf="displayLable(column).button" [ngClass]="{'hide-action-btn': element.buttonHidden}">
+                                            <button class="btn-redirect" [disabled]="element.buttonDisabled"
+                                                (click)="onRedirectRow(element)"><img *ngIf="displayLable(column).buttonIconImg" [src]="displayLable(column).buttonIconImg"/>{{displayLable(column).buttonTitle ? displayLable(column).buttonTitle : "View Results"}}</button>
+                                            {{ element[column] }}
+                                        </span>
+
+                                        <span *ngIf="displayLable(column).download">
+                                            <button class="btn btn-result" [disabled]="element.hideDownloadBtn"
+                                                (click)="onDownloadRow(element)"><mat-icon>download</mat-icon></button>
+                                            {{ element[column] }}
+                                        </span>
+                                        <span *ngIf="displayLable(column).toggleIcon">
+                                            <button class="btn btn-icon" [matTooltip]="(expandedElement === element ? 'Hide ' : 'Show ') + displayLable(column).toggleIconTooltip" [hidden]="element.toggleIconDisabled" 
+                                            (click)="expandedElement = (isExpandable ? (expandedElement === element ? null : element) : null)"><img [src]="'../../../../assets/images/' +  (expandedElement === element ? 'chevron-up' : 'chevron-down') + '.svg'"/></button>                
+                                            {{ element[column] }}
+                                        </span>
+                                        <!-- <span *ngIf="displayLable(column).details">
+                                            <button mat-raised-button class="btn btn-result" [disabled]="disable"
+                                                (click)="onViewDetails(element)"><mat-icon>download</mat-icon></button>
+                                            {{ element[column] }}
+                                        </span> -->
+                                    </div>
+                                    <div *ngSwitchCase="'password'"><input type="password" class="form-control pwdInputBackground" value="element[column]"/></div>
+
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="expandedDetail">
+                            <td mat-cell *matCellDef="let element" [attr.colspan]="getDisplayedColumns().length">
+                              <div class="element-detail"
+                                   [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                            <app-expanded-row *ngIf="element.statistics" [headerKey]="statsHeaderKey" [chartData]="element.statistics" [chartID]="element.id "></app-expanded-row>                                
+                        </div>
+                            </td>
+                          </ng-container>
+                          <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+                          <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();" class="element-row"
+                          [class.expanded-row]="expandedElement === row" [ngClass]="graycheckBoxrow(row) ? 'grayClass' : ''" (click)="onRowClick(row)"></tr>
+                          <ng-container *ngIf="isExpandable">
+                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+                          </ng-container>
+                    </table>
+                </div>
+                <div *ngIf="isAddConnection">
+                    <button class="btnWithLeftIcon header-button-text mt-3" (click)="buttonAddConnection($event)"><img src="../../../../assets/images/plus-circle-outline.png">{{connectionButton}}</button>
+                </div> 
+                <div *ngIf="!(dataSource && dataSource.data && dataSource.data.length)"
+                class="no_data_found d-flex justify-content-center mt-5 mb-5 align-items-center flex-column">
+                <h5>{{noDataFoundMessage ? noDataFoundMessage : "No Data Found"}}</h5>
+                </div>
+                
+            <mat-paginator [pageSizeOptions]="[1,10,15 ,25, 50, 100,200,300,400,500]" showFirstLastButtons
+              [length]="totalRecords" [pageSize]="pageSize" [pageIndex]="pageIndex-1" [disabled]="!(dataSource && dataSource.data && dataSource.data.length)" (page)="getPaginationData($event.pageIndex , $event.pageSize)"></mat-paginator>
+    
+        </div>
+    </div>
+</div>

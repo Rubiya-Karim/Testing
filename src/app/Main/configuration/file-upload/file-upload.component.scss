@@ -1,0 +1,65 @@
+  @import "../../../styles.scss";
+
+  input::file-selector-button {
+    @include text-small-semibold;
+    border-radius: 8px;
+    background: var(--brand-700, #D65022);
+    color: #fff;
+  }
+
+  .control-width {
+    width : 80%; 
+  }
+
+  .link-text {
+    display: flex;
+    height: 16px;
+    justify-content: flex-start;
+    align-items: center;
+    color: #000;
+    @include text-xs-normal;
+  }
+
+  .text-input {
+    display: flex;
+    height: 36px;
+    padding: 8px 12px 8px 12px;
+    align-items: center;
+    flex: 1 0 0;
+    border-radius: 4px;
+    border: 1px solid var(--Neutral-400, #94A3B8);
+    background: var(--Basic-White, #FFF);
+    color: var(--Neutral-400, #94A3B8);
+    @include text-small-normal;
+  }
+
+  .main {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    align-self: stretch;
+  }
+
+  .custom-file-input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px; /* Adjust the font size as needed */
+    cursor: pointer;
+    opacity: 0;
+  }
+
+  .custom-file-button {
+    display: flex;
+    height: 36px;
+    padding: 6px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border-radius: 4px;
+    border-color:transparent;
+    background: var(--Brand-400, #F79D26);
+    cursor: pointer;
+  }

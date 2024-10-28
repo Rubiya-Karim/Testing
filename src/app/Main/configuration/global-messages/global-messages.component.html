@@ -1,0 +1,3 @@
+<div *ngIf="message$ | async as message" [ngClass]="getMessageClass(message)">
+    {{ message.message }} 
+</div>

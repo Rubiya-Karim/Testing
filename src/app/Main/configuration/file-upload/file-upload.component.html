@@ -1,0 +1,9 @@
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <div class="main">
+        <input type="file" name="myFileInput" [multiple]="multiple" accept="txt" #myFileInput class="control-width" [id]="'Image'+ viewID" title=" " style="display: none;"  (change)="handleFileInput($event)">
+        <input type="text" class="control-width text-input" readonly placeholder="Choose file" style="pointer-events: none;" [value]="property?.paramValue">
+        <button class="custom-file-button" (click)="onClickIcon(viewID)"><img src="../../../assets/images/file-icon.png"></button>
+    </div>
+    <a *ngIf="sampleFileProp?.paramDesc" class="link-text" [href]="getLinkWithToken()">{{sampleFileProp?.paramDesc}}</a>
+
+</form>

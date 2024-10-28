@@ -1,0 +1,62 @@
+<div class="message-window" >
+    <div class="message-content" *ngIf="!data?.information && !data?.siteList">
+        <div>
+            <img class="icon-size" src="{{ data?.image ? data.image : 'assets/images/check-circle.png' }}"/>
+        </div>
+        <div class="message" [innerHTML]="data?.description">
+        </div>
+
+    </div>
+
+    <div *ngIf="data?.siteList">
+        
+        <div class="message" [innerHTML]="data?.description" style="padding-bottom: 20px;">
+        </div>
+        <select (change)="siteValue($event)" id="country" class="form-control" formControlName="country" required>
+            <option [ngValue]="null" [disabled]="true" >Select</option>
+            <option *ngFor="let country of data.siteList" [value]="country">
+              {{ country }}
+            </option>
+          </select>
+
+    </div>
+
+    <div class="message-content information-content"  *ngIf="data?.information">
+        <div class="message" [innerHTML]="data?.description">
+        </div>
+        <div class="information" [innerHTML]="data?.information">
+    </div>
+</div>
+<div *ngIf="data.radioButton">
+    <form  [formGroup]="asPrimaryForm" style="width: 100%;">
+       
+        <div>
+         
+          <div style="display: flex; flex-direction: row;">
+            <div  style="margin-right: 20px;">
+            <div style="padding: 6px 12px 6px 12px;">
+            <input   type="radio"  id="Failover" name="type" value="asPrimary" formControlName="type" style="margin-right: 5px;">
+            <label  class="labelText" >Mark as Primary</label></div>
+            </div>
+            <div >
+            <div style="padding:6px 12px 6px 12px;">
+            <input  type="radio"  id="Recover" name="type" value="notasPrimary" formControlName="type" style="margin-right: 5px;">
+            <label class="labelText">Not as Primary</label></div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+</div>
+
+
+    <div>
+        <div class="button-spacing">
+            <button class="btn btn-block mt-2 cancel-btn" *ngIf="data?.showNoButton" (click)="dialogRef.close(false)">{{ data?.noButton ? data.noButton : 'Cancel' }}</button>
+            <div ><button  class="btn btn-block mt-2 okay-btn" [ngClass]="{'red-bg-btn': data.image === 'assets/images/x-circle-red.svg' || 'assets/images/trash-red-outline.svg'} || {'orange-bg-btn' : 'data.siteList'}" (click)="yes()">{{ data?.yesButton ? data.yesButton : 'Okay' }}</button></div>
+           <!-- <div *ngIf="data?.siteList"> <button  class="btn btn-block mt-2 proceed-btn" *ngIf="data?.showNoButton" (click)="dialogRef.close(false)">Proceed ></button></div> -->
+        </div>
+    </div>
+
+  
+  

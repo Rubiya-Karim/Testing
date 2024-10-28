@@ -1,0 +1,95 @@
+@import "../../../../styles.scss";
+
+  .main-container {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+  }
+
+  .progress-container {
+    position: relative;
+    height: 6px;
+    background-color: #ddd;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+  .progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    background-color: var(--Status-Lime-400, #82CB15);
+    border-radius: 25px;
+    transition: width 0.5s ease-in-out;
+  }
+  
+  .view-container {
+    display: flex;
+    padding: 8px;
+    align-items: center;
+    gap: 12px;
+    border-radius: 8px;
+    background: var(--Color, #FFF);
+  }
+
+  .view-header {
+    display: flex;
+    height: 42px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    flex: 1 0 0;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    gap: 10px;
+  }
+
+
+  .header-title {
+    color: var(--Neutral-900, #0F172A);
+  }
+
+  .header-subtitle {
+    color: var(--Status-Lime-400, #82CB15);
+  }
+
+  .text-font {
+    text-align: center;
+    @include text-small-semibold;
+  }
+
+  .progress-holder {
+    stroke-width: 3px;
+    stroke: var(--Neutral-300, #CBD5E1);
+  }
+
+  .section {
+    display: flex;
+    align-items: flex-start;
+    gap: 151px;
+    .column {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      gap: 24px;
+    }
+  }
+
+  .rotate {
+    animation: rotation 2s infinite linear;
+  }
+  
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }

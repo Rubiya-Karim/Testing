@@ -1,0 +1,19 @@
+.hexagon-grid {
+  display: inline-block;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.hexagon-container {
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+#hexagon {
+  cursor: pointer;
+}
+
+#hexagon-text {
+  cursor: pointer;
+}

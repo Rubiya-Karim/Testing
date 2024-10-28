@@ -1,0 +1,69 @@
+@import"../../../../styles.scss";
+
+.pod-button {
+    display: flex;
+    width: 97px;
+    height: 32px;
+    padding: 6px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    margin-right: 5px;
+    border:none;
+   }
+
+   .pod-button-small {
+        height: 20px;
+        width: 20px;
+        padding: 0px;
+        gap: 0px;
+    }
+
+   .start-button.active {
+    background: var(--status-lime-400, #82CB15);
+   }
+
+   .start-button.inactive {
+    background: var(--status-lime-600, #4C7B0F);   
+   }
+
+   .stop-button.active {
+    background: var(--status-danger-400, #EF4343);   
+    }
+
+    .stop-button.inactive {
+        background: var(--status-danger-600, #981B1B);
+    }
+    
+    .restart-button.active {     
+        background: var(--status-amber-400, #FBBF24);
+    }
+
+    .restart-button.inactive {     
+        background: #BA8C16;
+    }
+    
+    .pod-button-disabled-color {
+    background: var(--neutral-300, #CBD5E1);
+    color: $text-color-white;
+    }
+
+    .pod-button-text {
+    //  color: var(--neutral-900, #0F172A);
+     @include text-small-semibold;
+    }
+    .startAll{
+    border: none;
+        border-radius: 5px;
+        background: var(--status-lime-400, #82CB15);
+    }
+    .stopAll{
+        border: none;
+        border-radius: 5px;
+        background: var(--status-danger-400, #EF4343);
+    }
+
+
+    
