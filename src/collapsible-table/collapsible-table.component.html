@@ -1,0 +1,215 @@
+<table  class="table table-borderless table-background-inside" *ngIf="data && data.length > 0; else noDataLayout">
+  <thead>
+    <tr>
+     <th *ngFor="let header of headers" [ngClass]="{'small-font': headers.length > 10}"
+            (mouseenter)="headerHovered[header.key] = true" (mouseleave)="headerHovered[header.key] = false">
+          {{header.label}}
+          <img *ngIf="headerHovered[header.key]" src="../../../assets/images/icons8-up-arrow-16.png"
+               (click)="toggleSorting(header.key)" [ngClass]="{'small-font': headers.length > 10}"/>
+        </th>
+      </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="showOriginalData; else sortedDataBlock">
+    <ng-container *ngFor="let parentItem of data; let i = index">
+      <tr [class.expanded-row]="isRowExpanded(i)">
+        <ng-container *ngFor="let header of headers; let j = index">
+          <td *ngIf="j===0 && isRoutable" class="wrap-text">
+            <a (click)="routeToComponent(parentItem)"><label
+                [ngClass]="[ header.key === 'statusString' ? 'custom-bgColor-text color-code '+statusColorClass(parentItem[header.key]) : '']">{{(header.key
+                === 'creditLimit' && checkForNull(parentItem[header.key])) ? "No Limit" :
+                (chkForDate(parentItem[header.key]) ? "Valid Forever" : header.parentKey ?
+                parentItem[header.parentKey][header.key] : isValidDateTimeString(parentItem[header.key]) ?  (parentItem[header.key] | date: 'dd/MM/yyyy HH:mm'): parentItem[header.key])}}</label></a>
+          </td>
+          <td *ngIf="!isRoutable || j>0 " class="wrap-text"><label
+              [ngClass]="[ header.key === 'statusString' ? 'custom-bgColor-text color-code '+statusColorClass(parentItem[header.key]) : '']">
+
+              {{(header.key === 'creditLimit' && checkForNull(parentItem[header.key])) ? "No Limit" :
+              (chkForDate(parentItem[header.key]) ? "Valid Forever" : header.parentKey ?
+              parentItem[header.parentKey][header.key] :  isValidDateTimeString(parentItem[header.key]) ?  (parentItem[header.key] | date: 'dd/MM/yyyy HH:mm'): parentItem[header.key])}}</label>
+            <button *ngIf="j == headers.length -1 && isExpandable" class="btn icon-button"
+              (click)="toggleRow(i, parentItem)">
+              <img class="icon-button" src="../../../assets/images/chevron-down.svg" alt="Toggle"
+                [@rotate]="isRowExpanded(i) ? 'expanded' : 'collapsed'" />
+            </button>
+          </td>
+        </ng-container>
+      </tr>
+      <tr *ngIf="isRowExpanded(i)" class="highlight-selection">
+        <td [attr.colspan]="headers.length" *ngIf="detailedData?.data">
+          <!-- Additional details content for the selected row -->
+          <div  class="parent w-100">
+            <div class="parent-cont w-100">
+              <ng-container *ngFor="let listItem of detailedData.list; let i = index">
+              <!-- Mapping the parent child data flow-->
+                <ng-container *ngFor="let item of filterData(detailedData, parentItem) ; let j = index">
+                  <!-- <div class="d-flex">
+                    <div class="p-0" *ngIf="listItem.titleKey">
+                      <app-info-card class="border-gap" [title]="listItem.title" [subTitle]="item[listItem.titleKey]"
+                        [imageIcon]="'../../../assets/images/'+listItem.titleImg+'.svg'"></app-info-card>
+                    </div> -->
+  
+                    <div class="parent-cont-col" *ngIf="listItem.dataKeys && listItem.dataKeys.length">
+                    <ng-container *ngFor="let element of listItem.dataKeys">
+                      <ng-container *ngFor="let elementItem of element">
+                        <ng-container *ngIf="!elementItem.objectKey"><app-info-card [title]="elementItem.label"
+                            [subTitle]="chkForDate(item[elementItem.key]) ? 'Valid Forever' : item[elementItem.key]"
+                            [imageIcon]="elementItem.imgPath ? '../../../assets/images/'+elementItem.imgPath+'.svg' : ''"></app-info-card></ng-container>
+                        <ng-container *ngIf="elementItem.objectKey && item[elementItem.objectKey]">
+                          <ng-container *ngFor="let child of item[elementItem.objectKey]"><app-info-card
+                              [title]="elementItem.label" [subTitle]="child[elementItem.key]"
+                              [imageIcon]="elementItem.imgPath ? '../../../assets/images/'+elementItem.imgPath+'.svg': ''"></app-info-card></ng-container>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+  
+                  <!-- </div> -->
+    
+                <div class="data-table-align w-100" *ngIf="listItem.dataTable && listItem.dataTable.length">
+                    <div class="p-0" *ngIf="listItem.titleKey">
+                      <app-info-card class="border-gap" [title]="listItem.title" [subTitle]="item[listItem.titleKey]"
+                        [imageIcon]="'../../../assets/images/'+listItem.titleImg+'.svg'"></app-info-card>
+                    </div>                  
+                    <ng-container *ngFor="let element of listItem.dataTable">
+
+                    <label class="data-table-header w-100">{{element['key']}}</label>
+                    <table class="table table-borderless">
+                      <thead>
+                        <!-- *ngFor="let parentItem of sortedData; let i = index" -->
+                        <tr >
+                          <th  class="subtable-header-color" *ngFor="let aHeader of getKeys(element['header'])" >
+                            {{element['header'][aHeader]}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="key-text" *ngFor="let aHeader of getKeys(element['header'])">
+                            {{isValidDateTimeString(item[aHeader]) ? (item[aHeader] | date: 'dd/MM/yyyy HH:mm') : item[aHeader]}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </ng-container>
+              </div>
+                <hr *ngIf="j>0">
+              </ng-container>
+          </ng-container>
+        </div>
+      
+      </div>
+
+
+          <div *ngIf="detailedData.isNestedTable">
+            <div class="nested-table-title">{{detailedData.subTableTitle}}</div>
+            <app-collapsible-table class="m-2" *ngIf="subTableData" [data]="subTableData[i]?.records"
+              [headers]="subTableHeaders" [isRoutable]="true" (emitPaginationEmit)="refreshSubTableData($event, parentItem,i)"
+              [totalRecords]="subTableData[i]?.totalRecords" [pageSize]="subTablePageSize"
+              [pageIndex]="subTablePageIndex" (navigateToComponent)="pushComponent($event)"
+              [isExpandable]="false"></app-collapsible-table>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+    </ng-container>
+    <ng-template #sortedDataBlock>
+      <ng-container *ngFor="let parentItem of sortedData; let i = index">
+        <tr [class.expanded-row]="isRowExpanded(i)">
+          <ng-container *ngFor="let header of headers; let j = index">
+            <td *ngIf="j===0 && isRoutable" class="wrap-text">
+              <a (click)="routeToComponent(parentItem)"><label
+                  [ngClass]="[ header.key === 'statusString' ? 'custom-bgColor-text color-code '+statusColorClass(parentItem[header.key]) : '']">{{(header.key
+                  === 'creditLimit' && checkForNull(parentItem[header.key])) ? "No Limit" :
+                  (chkForDate(parentItem[header.key]) ? "Valid Forever" : header.parentKey ?
+                  parentItem[header.parentKey][header.key] : isValidDateTimeString(parentItem[header.key]) ?  (parentItem[header.key] | date: 'dd/MM/yyyy HH:mm'): parentItem[header.key])}}</label></a>
+            </td>
+            <td *ngIf="!isRoutable || j>0 " class="wrap-text"><label
+                [ngClass]="[ header.key === 'statusString' ? 'custom-bgColor-text color-code '+statusColorClass(parentItem[header.key]) : '']">
+  
+                {{(header.key === 'creditLimit' && checkForNull(parentItem[header.key])) ? "No Limit" :
+                (chkForDate(parentItem[header.key]) ? "Valid Forever" : header.parentKey ?
+                parentItem[header.parentKey][header.key] :  isValidDateTimeString(parentItem[header.key]) ?  (parentItem[header.key] | date: 'dd/MM/yyyy HH:mm'): parentItem[header.key])}}</label>
+              <button *ngIf="j == headers.length -1 && isExpandable" class="btn icon-button"
+                (click)="toggleRow(i, parentItem)">
+                <img class="icon-button" src="../../../assets/images/chevron-down.svg" alt="Toggle"
+                  [@rotate]="isRowExpanded(i) ? 'expanded' : 'collapsed'" />
+              </button>
+            </td>
+          </ng-container>
+        </tr>
+        <tr *ngIf="isRowExpanded(i)" class="highlight-selection">
+          <td [attr.colspan]="headers.length" *ngIf="detailedData?.data">
+            <!-- Additional details content for the selected row -->
+            <ng-container *ngFor="let listItem of detailedData.list; let i = index">
+              <!-- Mapping the parent child data flow-->
+              <ng-container *ngFor="let item of filterData(detailedData, parentItem) ; let j = index">
+                <div class="grid-container column-2">
+                  <div class="grid-container p-0" *ngIf="listItem.titleKey">
+                    <app-info-card class="border-gap" [title]="listItem.title" [subTitle]="item[listItem.titleKey]"
+                      [imageIcon]="'../../../assets/images/'+listItem.titleImg+'.svg'"></app-info-card>
+                  </div>
+                  <div class="grid-container " *ngIf="listItem.dataKeys && listItem.dataKeys.length"
+                    [ngClass]="getGridColumnClass(listItem.dataKeys.length)">
+                    <ng-container *ngFor="let element of listItem.dataKeys">
+                      <ng-container *ngFor="let elementItem of element">
+                        <ng-container *ngIf="!elementItem.objectKey"><app-info-card [title]="elementItem.label"
+                            [subTitle]="chkForDate(item[elementItem.key]) ? 'Valid Forever' : item[elementItem.key]"
+                            [imageIcon]="'../../../assets/images/'+elementItem.imgPath+'.svg'"></app-info-card></ng-container>
+                        <ng-container *ngIf="elementItem.objectKey && item[elementItem.objectKey]">
+                          <ng-container *ngFor="let child of item[elementItem.objectKey]"><app-info-card
+                              [title]="elementItem.label" [subTitle]="child[elementItem.key]"
+                              [imageIcon]="'../../../assets/images/'+elementItem.imgPath+'.svg'"></app-info-card></ng-container>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+  
+                <div class="data-table-align w-100" *ngIf="listItem.dataTable && listItem.dataTable.length">
+                  <ng-container *ngFor="let element of listItem.dataTable">
+                    <label class="data-table-header w-100">{{element['key']}}</label>
+                    <table class="table table-borderless">
+                      <thead>
+                        <tr *ngFor="let parentItem of sortedData; let i = index">
+                          <th  class="subtable-header-color" *ngFor="let aHeader of getKeys(element['header'])" >
+                            {{element['header'][aHeader]}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="key-text" *ngFor="let aHeader of getKeys(element['header'])">
+                            {{isValidDateTimeString(item[aHeader]) ? (item[aHeader] | date: 'dd/MM/yyyy HH:mm') : item[aHeader]}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </ng-container>
+                </div>
+                <hr *ngIf="j>0">
+              </ng-container>
+            </ng-container>
+            <div *ngIf="detailedData.isNestedTable">
+              <div class="nested-table-title">{{detailedData.subTableTitle}}</div>
+              <app-collapsible-table class="m-2" *ngIf="subTableData" [data]="subTableData[i]?.records"
+                [headers]="subTableHeaders" [isRoutable]="true" (emitPaginationEmit)="refreshSubTableData($event, parentItem,i)"
+                [totalRecords]="subTableData[i]?.totalRecords" [pageSize]="subTablePageSize"
+                [pageIndex]="subTablePageIndex" (navigateToComponent)="pushComponent($event)"
+                [isExpandable]="false"></app-collapsible-table>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-template>
+  
+  </tbody>
+</table>
+<div [ngClass]="totalRecords < 1 ? 'hide_content' : ''">
+  <mat-paginator [pageSizeOptions]="[1,10,15 ,25, 50, 100,200,300,400,500]" showFirstLastButtons
+    (page)="getPaginationData($event.pageIndex ,$event.pageSize)" [length]="totalRecords" [pageSize]="pageSize"
+    [pageIndex]="pageIndex-1"></mat-paginator>
+</div>
+<ng-template #noDataLayout>
+  <div class="d-flex justify-content-center align-items-center flex-column">
+    <h5 class="no_data_found">{{noDataFoundMessage ? noDataFoundMessage : "No Data Found"}}</h5>
+  </div>
+</ng-template>
