@@ -1,0 +1,128 @@
+@import "../../../../styles.scss";
+.cache-view {
+    margin: 25px 2%;
+}
+
+.cache-card {
+    padding: 24px 0px;
+    gap: 34px;
+    border-radius: 16px;
+    background: var(--Neutral-100, #F1F5F9);
+    text-align: center;
+    width: 100%;
+}
+p{
+    @include text-headline-h4-2xl;
+    color:#FA7A55;
+} 
+.radio-container{
+    display: flex;
+    justify-content: space-between;
+}
+.radio-input{
+    display: flex;
+    align-items: flex-end;
+    padding: 6px 8px 6px 8px;
+    border: 1px solid #94A3B8;
+    border-radius: 4px;
+    margin-right: 15px;
+    &.add_opacity{
+        opacity: 0.3;
+        pointer-events:none;
+        .radio-txt {
+            color: var(--Neutral-400, #94A3B8);
+        }
+    }
+    &.active_border{
+        border: 1px solid #ED7D31;
+        border-radius: 4px;
+        background-color: #EEE7DF;
+        .radio-txt {
+            color: var(--Brand-600---main, #ED7D31);
+        }
+    }
+}
+
+.btn-view{
+    margin-top: 20px;
+    margin-right: 3%;
+}
+.submit-btn{
+    @include primary-button;
+    background-color: var(--brand-600-main, #ED7D31);
+color: var(--basic-white, #FFF);
+border-radius: 4px;
+font-size: 16px;
+font-family: "Poppins";
+font-weight: 600;
+word-wrap: break-word;
+border: none;
+padding: 6px 12px;
+}
+.radio-txt{
+    margin-left: 10px;
+    font-size: 14px;
+    color: var(--neutral-900, #0F172A);
+    font-weight: 600;
+}
+
+    .form-check-input:checked {
+    background-color: var(--brand-500, #D68422);
+    border-color: var(--brand-500, #D68422);
+    border-color: #FA7A55;
+    
+}
+
+.cancel-btn{
+    background: var(--Neutral-100, #F1F5F9);  
+    padding: 6px 12px;
+    border: none;
+    color: var(--Neutral-900, $base-text-color);
+    @include text-small-semibold;
+    display: flex;
+    justify-content: left;
+  }
+
+  .btn:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+
+  .cache-header{
+    display: flex;
+    font-size: $font-size-xmedium;
+    font-weight: $font-weight-bold;
+   color: $text-form-label-color;
+   flex-direction: row;
+  justify-content: space-between;
+ //   margin-right: 43%;
+      }
+
+.cache-heading {
+    display: flex;
+    // padding-left: 535px;
+    justify-content: center;
+}
+
+.cache-heading2 {
+    display: flex;
+    // padding-left: 443px;
+    justify-content: center;
+}
+
+.disableForm{
+    opacity: 0.4;
+}
+
+.radio-btn-list{
+display: flex;
+flex-direction: row;
+justify-content: center;
+
+}
+
+.radio-btn{
+    width: 200px;
+}
+

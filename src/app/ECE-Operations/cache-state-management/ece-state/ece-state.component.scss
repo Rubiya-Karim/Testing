@@ -1,0 +1,36 @@
+@import "../../../../../styles.scss";
+
+.ece-value {
+    display: flex;
+    justify-content: center;
+}
+
+.ece-cache-body {
+    display: flex;
+    flex-direction: row;
+    gap: 2vw 
+}
+
+.heading {
+    @include text-headline-h5-xl;
+    color: var(--Headline-Orange-600, #FA7A55);
+}
+
+.ecevalue {
+    gap: 88px;
+    display: flex;
+    margin-top: 20px;
+    margin: 27px;
+    padding: 24px 16px;
+    flex-direction: row;
+    border-radius: 16px;
+    background: var(--Neutral-200, #E2E8F0);
+}
+
+.label-data {
+    padding-top: 24px;
+}
+
+.column {
+    float: left;
+}

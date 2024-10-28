@@ -1,0 +1,99 @@
+@import "../../../../../styles.scss";
+
+.table-border {
+  background: #E2E8F0;
+  border-radius: 16px;
+  overflow: auto;
+}
+
+.card-table{
+    padding: 24px 20px;
+    margin: 24px;
+    border-radius: 16px;
+    background: var(--Neutral-200, #E2E8F0);
+}
+
+th {
+  @include text-xs-semibold;
+  color: var(--Brand-900, #2C121B);
+  text-align: center;
+  border-right: 0.5px solid var(--Neutral-400, #94A3B8);
+  border-bottom: 0.5px solid var(--Neutral-400, #94A3B8);
+}
+
+td {
+  @include text-xs-normal;
+  color: var(--Neutral-900, #0F172A);
+  text-align: center;
+  border-right: 0.5px solid var(--Neutral-400, #94A3B8);
+  border-bottom: 0.5px solid var(--Neutral-400, #94A3B8);
+}
+
+td,th{
+   // border: 1px solid #94A3B8;
+    padding: 10px;
+}
+
+.table-dataValue{
+        background-color: #F1F5F9;
+}   
+
+table{
+    padding: 15px 35px;
+    border-style: hidden;
+    border-radius: 8px;
+    background-color: #E2E8F0;
+    border-collapse: collapse; 
+    overflow: hidden;
+    // font-size: 12px;
+    // font-weight: 400;
+}
+.table-heading{
+    background: #FBD3B7;
+}
+.table-sub-heading{
+    background: #FDE2AC;
+
+}
+
+.status-badge {
+  border-radius: 360px; 
+  width: 53px; 
+  font-weight: $font-weight-bold;
+}
+
+.status-ok {
+    background: var(--status-lime-50, #D9F99F);
+    color: var(--status-lime-600, #4C7B0F);
+  }
+  
+  .status-not-ok {
+    background: var(--status-danger-50, #FEC8C8);
+    color: var(--Status-Danger-600, #981B1B);
+  }
+  
+  .status-na {
+    background: #bec6d2;
+  }
+
+  .filter-label {
+    color: var(--neutral-600, #475569);
+    @include text-small-semibold
+  }
+  .dropdown {
+    padding: 6px 30px 6px 12px;
+    background: var(--basic-white, #FFF);
+    border-radius: 4px;
+    border: 1px solid #94A3B8;
+    height: 36px;
+    background-size: 12px;
+    min-width: 120px;
+   @include text-small-normal
+  }
+  .filter-header{
+    display: flex;
+    padding-bottom: 15px;
+    gap: 10px;
+    align-items: center;
+  }
+  

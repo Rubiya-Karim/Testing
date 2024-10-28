@@ -1,0 +1,45 @@
+<div class="cache-view">
+    <div class="cache-card">
+        <div class="cache-header">
+            <div>
+                <button (click)="back()" class="btn back-button back-button-text" *ngIf="backbtn"><img
+                    src="../../../../assets/images/arrow-sm-left.png">Back</button>
+            </div>
+            <div class="w-100">
+                <p class="cache-heading">Cache/ECE State</p>
+            </div>
+        </div>
+    
+        <div>
+            <div>
+                <form [formGroup]="radioForm">
+                    <div class="radio-btn-list">
+                        <div class="radio-btn" disabled="true">
+                            <div class="radio-input" [ngClass]="{'active_border': (radioForm && radioForm.value && radioForm.value.option =='cache'),'add_opacity':!btnStatus && (radioForm && radioForm.value && radioForm.value.option =='ece')}">
+                                <input class="form-check-input" type="radio" name="option" value="cache"
+                                    formControlName="option" >
+                                <label class="radio-txt">Cache </label>
+                            </div>
+                        </div>
+                        <div class="radio-btn">
+    
+                            <div class="radio-input" [ngClass]="{'active_border': (radioForm && radioForm.value && radioForm.value.option =='ece'),'add_opacity':!btnStatus && (radioForm && radioForm.value && radioForm.value.option =='cache')}">
+                                <input class="form-check-input" type="radio" name="option" value="ece"
+                                    formControlName="option" >
+                                <label class="radio-txt">ECE State</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="btn-view">
+                        <button class="submit-btn" (click)="onSubmit()">View</button>
+                    </div>
+    
+                </form>
+            </div>
+
+            <router-outlet *ngIf="formHasValue()"></router-outlet>
+    
+        </div>
+    </div>
+</div>

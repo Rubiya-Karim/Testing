@@ -1,0 +1,64 @@
+<div class="card-table">
+  <div class="filter-header">
+    <label class="filter-label"> Filter by</label>
+    <select class="dropdown" [(ngModel)]="selectedStatus" (change)="applyStatusFilter()">
+      <option value="">All</option>
+      <option value="OK">OK</option>
+      <option value="NOT OK">NOT OK</option>
+      <option value="NA">NA</option>
+    </select>
+  </div>
+<div class="table-border">
+  <table class=" w-100">
+    <thead>
+      <tr class="table-heading">
+        <th></th>
+        <th [attr.colspan]="siteCount + 1"> Cache Data </th>
+        <th [attr.colspan]="siteCount + 1"> DB Data </th>
+        <th [attr.colspan]="siteCount + 1">Cache vs DB</th>
+      </tr>
+      <tr class="table-sub-heading">
+        <th>Cache Name</th>
+        <th *ngFor="let num of generateArray(siteCount)">Site {{num}}</th>
+      
+        <th>Status</th>
+        <th *ngFor="let num of generateArray(siteCount)">Site {{num}}</th>
+
+
+        <th>Status</th>
+        <th *ngFor="let num of generateArray(siteCount)">Site {{num}}</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let cache of filteredCacheData">
+        <tr>
+          <td class="table-dataValue">{{ cache.cacheName }}</td>
+          <!-- Cache Data -->
+          <ng-container *ngFor="let num of generateArray(siteCount)">
+            <td class="table-dataValue"><label [ngClass]="getStatusClass(getCellData(cache.statusData.cacheData.counts, num))">{{ getCellData(cache.statusData.cacheData.counts, num) }}</label></td>
+          </ng-container>
+          <td class="table-dataValue"><label [ngClass]="getStatusClass(cache.statusData.cacheData.status)">
+            {{ cache.statusData.cacheData.status }}
+          </label></td>
+          
+          <!-- DB Data -->
+          <ng-container *ngFor="let num of generateArray(siteCount)">
+            <td class="table-dataValue"><label [ngClass]="getStatusClass(getCellData(cache.statusData.dbData.counts, num))">{{ getCellData(cache.statusData.dbData.counts, num) }}</label></td>
+          </ng-container>
+          <td class="table-dataValue"><label [ngClass]="getStatusClass(cache.statusData.dbData.status)">{{ cache.statusData.dbData.status }}</label></td>
+          
+          <!-- Cache vs DB -->
+          <ng-container *ngFor="let num of generateArray(siteCount)">
+            <td class="table-dataValue"><label [ngClass]="getStatusClass(getCellData(cache.statusData.cacheVsDb.counts, num))">{{ getCellData(cache.statusData.cacheVsDb.counts, num) }}</label></td>
+          </ng-container>
+          <td class="table-dataValue"><label [ngClass]="getStatusClass(cache.statusData.cacheVsDb.status)">{{ cache.statusData.cacheVsDb.status }}</label></td>
+        </tr>
+      </ng-container>
+      
+    </tbody>
+</table>
+</div>
+
+</div>
+  

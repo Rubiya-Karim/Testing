@@ -1,0 +1,122 @@
+<div class="main-tabs" *ngIf="!this.isSubscriberLogView()">
+    <div class="tab" [class.active]="isTraceView()">
+        <button (click)="selectTemplate('trace')" class="button section-one"
+            [class.active]="isTraceView()"><span
+                class="section-one-span">Subscriber Trace</span></button>
+    </div>
+    <div class="tab" [class.active]="isLogView()">
+        <button (click)="selectTemplate('allLogs')" class="button section-two"
+            [class.active]="isLogView() || isSubscriberLogView()"><span class="section-two-span">Subscriber Logs</span>
+        </button>
+    </div>
+</div>
+<!-- <hr class="w-100 mt-0"> -->
+<div class="border-line w-100" *ngIf="!this.isSubscriberLogView()"></div>
+
+<div class="view-container">
+    <div class="input-grp w-100"  *ngIf="!this.isSubscriberLogView()">
+        <div class="input-with-label w-50">
+            <label class="label-text">Cluster</label>
+            <div class="input-with-validation w-100">
+                <select class="value-dropdown w-100" name="cluster" [(ngModel)]="selectedCluster" (change)="clusterSelectionChanged($event)">
+                    <option value="" selected disabled>Select...</option>
+                    <option class="sub-text" *ngFor="let cluster of clusterList"
+                        [ngValue]="cluster">
+                        {{ cluster.clusterName }}
+                    </option>
+                </select>
+                <!-- <div class="error-message" *ngIf="jobDetail.get('jobName')?.touched && jobDetail.get('jobName')?.hasError('required')">
+                    <small>Please select a Job Name</small>
+                  </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="main-container w-100">
+        <div class="top-section w-100">
+            <button *ngIf="isSubscriberLogView()" class="btn back-button back-button-text" (click)="back()"><img src="../../../../../../assets/images/arrow-sm-left.png">Back</button>
+            <div class="title text-color w-100">{{isTraceView() ? "Subscriber Trace" : "Subscriber Logs"}}</div>
+        </div>
+        <div class="content w-100">
+            <ng-container *ngIf="isTraceView()">
+                <div class="btn-grp w-75 "> 
+                    <div class="input-with-label w-50">
+                        <label class="label-text">Add Subscriber</label>
+                        <input type="text" class="content-input w-100" [(ngModel)]="subscriberMSISDN"
+                            placeholder="MSISDN Number" (keypress)="onKeyPress($event)"/>
+
+                        <!-- <div *ngIf="opcodeForm.get('opcodeName')?.invalid && (opcodeForm.get('opcodeName')?.touched ||opcodeForm.get('opcodeName')?.dirty)">
+                            <span class="error-message"><small><small><small>Opcode name is required.</small></small></small></span>
+                        </div> -->
+                    </div>
+                    <button class="primaryActionBtn" [disabled]="!subscriberMSISDN" (click)="addSubscriber()">Add Subscriber</button>
+                </div>
+
+                <!-- <div class="d-flex w-100 justify-content-center btn-grp"> -->
+                    <!-- <button class="cancelBtn" (click)="reset()">Reset</button> -->
+                    <!-- <button class="primaryActionBtn" [disabled]="!subscriberMSISDN" (click)="addSubscriber()">Add Subscriber</button> -->
+                <!-- </div> -->
+                <div>
+                    <app-shared-table class="w-100" [isDatasourcePaginator]="true" [showCheckAll]="true" [tableData]="subscribersData"
+                        [showFilterLabel]="true" [isSearchFilter]=true [isServerSearch]=false
+                        [isSearch]="true" [isAddEnabled]="false"
+                        (onButtonClickRowEmit)="onClickTableIcons($event)"
+                        (onCheckboxClickEmit)="checkboxClicked($event)"
+                        (onCustomHeaderButttonEmit)="refreshSubscriberList($event)" [isCustomHeaderButton]="true" [isSecHeaderBtnRed]="true"
+                        [isSecondaryHeaderButton]="true" [disableSecHeaderBtn] = "disableHeaderBtn()" [secHeaderBtnIcon]="'assets/images/x-circle-white.svg'" [secHeaderBtnIconDisabled]="'assets/images/x-circle-disabled.svg'" [secHeaderButtonTitle]="'Stop Tracing'" (onSecHeaderButtonEmit)="disableTraceForAll()"
+                        [customHeaderBtnTitle]="refreshBtnTitle" [customHeaderBtnIcon]="refreshBtnIcon"
+                        [filterCategoryList]="traceFilterCategory" 
+                        [filterCategoryDropdownData]="tracefilterDropdownValues" [selectedFilterCategory]="traceSelectedFilterCategory" [filterCategoryCalendarType]="traceCalendarTypeKeys">
+                    </app-shared-table>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="isLogView()">
+                <app-shared-table class="w-100" [isDatasourcePaginator]="true" [tableData]="logsData"
+                [showFilterLabel]="true" [isSearchFilter]=true [showCheckAll]="true" 
+                (onCustomHeaderButttonEmit)="downloadAll($event)" [isCustomHeaderButton]="true" [disableCustomHeaderBtn]="disableHeaderBtn()" (onCheckboxClickEmit)="checkboxClicked($event)"
+                [customHeaderBtnTitle]="logsRefreshBtnTitle" [customHeaderBtnIcon]="logsRefreshBtnIcon"
+                [isSearch]="true" [isAddEnabled]="false" (onRedirectRowEmit)="downloadLogs($event)" 
+                [filterCategoryList]="logsFilterCategory" [selectedFilterCategory]="logsSelectedFilterCategory" [filterCategoryCalendarType]="logsCalendarTypeKeys">
+                </app-shared-table>
+            </ng-container>
+
+            <ng-container *ngIf="isSubscriberLogView()">
+                <div class="header-sec w-100">
+                    <div class="header-image">
+                        <img src="assets/images/trace-header.svg"/>
+                    </div>
+                    <div class="header-details w-100">
+                        <div>
+                            <div class="header-title">
+                                Subscriber Details
+                            </div>
+                            <div class="header-title-line w-100"></div>
+                        </div>
+                        <div class="w-100 header-cols">
+                            <div class="col">
+                                <app-info-card [title]="'Subscriber ID'" [subTitle]="selectedSubcriber.msisdn" [imageIcon]="'assets/images/tag.svg'"></app-info-card>
+                                <app-info-card [title]="'Added Date & Time'" [isDateValue]="true" [subTitle]="selectedSubcriber.createDate" [imageIcon]="'assets/images/calendar icon.svg'"></app-info-card>
+                            </div>
+                            <div class="col">
+                                <app-info-card [title]="'Added by'" [subTitle]="selectedSubcriber.addedBy" [imageIcon]="'assets/images/plus.svg'"></app-info-card>
+                                <app-info-card [title]="'Tracing Status'" [isStatusType]="true" [subTitle]="selectedSubcriber.displayTraceFlag" [imageIcon]="'assets/images/status icon.svg'"></app-info-card>
+                            </div>                        
+                        </div>
+                        <div class="header-btn">
+                            <button class="details-card-button"  (click)="disableTrace(selectedSubcriber)"><img src="assets/images/x-circle-white.svg"/>Stop Tracing</button>
+                        </div>
+                    </div>
+
+                </div>
+                <app-shared-table class="w-100" [isDatasourcePaginator]="true" [tableData]="logsData"
+                [showFilterLabel]="true" [isSearchFilter]=true [showCheckAll]="true" 
+                (onCustomHeaderButttonEmit)="downloadAll($event)" [isCustomHeaderButton]="true" [disableCustomHeaderBtn]="disableHeaderBtn()" (onCheckboxClickEmit)="checkboxClicked($event)"
+                [isSecondaryHeaderButton]="true" [disableSecHeaderBtn] = "disableHeaderBtn()" [secHeaderBtnIcon]="'assets/images/get-logs-white.svg'" [secHeaderButtonTitle]="'Get Logs'" (onSecHeaderButtonEmit)="getLogsForAllSelectedSubscribers($event)"
+                [customHeaderBtnTitle]="logsRefreshBtnTitle" [customHeaderBtnIcon]="logsRefreshBtnIcon"
+                [isSearch]="true" [isAddEnabled]="false" (onButtonClickRowEmit)="getLogsForSubscriber($event)" 
+                [filterCategoryList]="logsFilterCategory" [selectedFilterCategory]="logsSelectedFilterCategory" [filterCategoryCalendarType]="logsCalendarTypeKeys">
+                </app-shared-table>
+            </ng-container>
+        </div>
+    </div>
+
+</div>

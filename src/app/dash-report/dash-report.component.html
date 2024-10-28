@@ -1,0 +1,79 @@
+<div class="main-tabs">
+    <div class="tab" [class.active]="isFirstTabSelected()">
+        <button (click)="selectTemplate('first')" class="button section-one"
+            [class.active]="isFirstTabSelected()"><span
+                class="section-one-span">CNE</span></button>
+    </div>
+    <div class="tab" [class.active]="isSecondTabSelected()">
+        <button (click)="selectTemplate('second')" class="button section-two"
+            [class.active]="isSecondTabSelected()"><span class="section-two-span">OnPrem</span>
+        </button>
+    </div>
+</div>
+<div class="border-line w-100"></div>
+
+<div class="view-container">
+    <div class="input-container w-100">
+        <div class="input-grp w-100">
+            <div class="input-with-label w-50">
+                <label class="label-text">Cluster</label>
+                <div class="input-with-validation w-100">
+                    <select class="value-dropdown w-100" name="parameter" [(ngModel)]="selectedParameter" (change)="parameterSelectionChanged($event)">
+                        <option value="" selected disabled>Select...</option>
+                        <option class="sub-text" *ngFor="let parameter of parameterList"
+                            [ngValue]="parameter">
+                            {{ parameter.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="input-grp w-100" *ngIf="isSecondTabSelected()">
+            <div class="input-with-label w-50">
+                <label class="label-text">Application Name</label>
+                <div class="input-with-validation w-100">
+                    <select class="value-dropdown w-100" name="appName" [(ngModel)]="selectedApplicationName" (change)="secondaryParamSelectionChanged($event)">
+                        <option value="All" selected>All</option>
+                        <option class="sub-text" *ngFor="let obj of applications"
+                            [value]="obj.name">
+                            {{ obj.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    
+        <div class="input-grp w-100" *ngIf="isSecondTabSelected() && selectedApplicationName">
+            <div class="input-with-label w-50">
+                <label class="label-text">Host Name</label>
+                <div class="input-with-validation w-100">
+                    <select class="value-dropdown w-100" name="hostName" [(ngModel)]="selectedHostName" (change)="tertiaryParamSelectionChanged($event)">
+                        <option value="All" selected>All</option>
+                        <option class="sub-text" *ngFor="let hostName of hosts"
+                            [ngValue]="hostName.value">
+                            {{ hostName.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>    
+    </div>
+    
+
+    <div class="main-container w-100">
+        <div class="top-section w-100">
+        <div class="title text-color w-100">{{isFirstTabSelected() ? "CNE" : "OnPrem"}}</div>
+            <div class="title-container">
+                <button title="Refresh" class="refresh-button" (click)="loadData()"><img src="assets/images/refresh.svg"/></button>
+            </div>
+        </div>
+        <div class="content w-100">
+            <div class="flex-container w-100" id="flex-container" *ngIf="shouldLoadFrames">
+                <div class="iframe-card" [ngClass]="{'iframe-card-flex': isSmallCard(aFrame)}" *ngFor="let aFrame of data">
+                    <iframe *ngIf="aFrame.enabled" [src]="aFrame.url" [height]="aFrame.height ? aFrame.height : globalHeight" [width]="aFrame.width? aFrame.width : globalWidth" frameborder="0"></iframe>
+                </div>
+            </div>  
+        </div>
+    </div>
+
+</div>

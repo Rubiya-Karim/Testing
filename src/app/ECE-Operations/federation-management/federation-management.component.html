@@ -1,0 +1,379 @@
+<div class="view-container">
+    <div class="select w-100">
+        <div class="main-container">
+            <div class="top-section w-100">
+                <div class="title text-color w-100">Federation Management</div>
+                <button title="Refresh" class="refresh-button" (click)="refreshView()"><img src="assets/images/refresh.svg"/></button>
+    
+            </div>
+
+        <!-- <div>
+            <div style="font-size: 24px; font-weight: 600; line-height: 32px; color: #FA7A55; display: flex;
+            justify-content: center;padding-bottom: 3%;">Federation Management</div>
+
+            </div> -->
+
+ 
+        <div style="display: flex; flex-direction: row;" *ngIf="federationResponse">
+
+
+            <div style="display: flex; flex-direction:  column; width: 380px;">
+                
+            <div style="display: flex; flex-direction: row;  padding: 4px 10px;
+            background-color: #ffffff;
+            border-radius: 20px 0px 0px 20px;" >
+            <div><img src="../../../../assets/images/globe-alt.svg"></div>
+                <div class="siteText">&nbsp;{{federationResponseArray[0]?.fromSiteName}}<br/>
+                    <span class="siteNameLocation">{{federationResponseArray[0]?.country}}</span><br/>
+                    <span class="coOrdinates">  {{federationResponseArray[0]?.geoLocation}}</span>
+                </div>
+                <div style="flex-grow: 1;"></div>
+                <div [ngClass]="federationResponseArray[0]?.isPrimary ? 'ecewithoutPadding' : 'eceCluster'" >{{federationResponseArray[0]?.fromClusterName}}<br/>
+                    <span *ngIf="federationResponseArray[0]?.isPrimary" class="isPrimary">Primary</span>
+                    </div>
+            </div>
+            <div *ngIf="enableSiteThree" style="display: flex; flex-direction: row;    padding: 4px 10px;
+            background-color: #ffffff;
+            border-radius: 20px 0px 0px 20px; margin-top:54%;">
+            <div><img src="../../../../assets/images/globe-alt.svg"></div>
+            <div class="siteText">&nbsp;{{federationResponseArray[2]?.fromSiteName}}<br/>
+                <span class="siteNameLocation">{{federationResponseArray[2]?.country}}</span><br/>
+                <span class="coOrdinates">  {{federationResponseArray[2]?.geoLocation}}</span></div>
+                <div style="flex-grow: 1;"></div>
+                <div [ngClass]="federationResponseArray[2]?.isPrimary ? 'ecewithoutPadding' : 'eceCluster'">{{federationResponseArray[2]?.fromClusterName}}<br/>
+                    <span *ngIf="federationResponseArray[2]?.isPrimary" class="isPrimary">Primary</span>
+                    </div>
+            </div>
+         
+            <!-- <ng-container *ngFor="let detail of federationResponse?.fedDetails; let i = index">
+            <div *ngIf="enableSiteThree && i===2" style="display: flex; flex-direction: row;    padding: 20px;
+            background-color: #ffffff;
+            border-radius: 20px; margin-top:48%;">
+            <div><img src="../../../../assets/images/globe-alt.svg"></div>
+                <div class="siteText">{{ detail.siteName }}</div>
+                <div style="flex-grow: 1;"></div>
+                <div class="eceCluster">{{ detail.clusterName }}</div>
+            
+            </div>
+        </ng-container> -->
+
+            </div>
+            <div style="margin: 0 auto;"><div [ngClass]="enableSiteThree ? 'clusterHeight' : 'clusterwithoutHeight'" class="clusterHeight">
+                <!-- <div><img src="../../../../assets/images/Primary.svg"></div>
+                <div><img src="../../../../assets/images/Green-Arrow-head.svg">
+                    <img src="../../../../assets/images/Green-tick.svg">
+                    <img src="../../../../assets/images/Green-Arrow-end.svg">
+                </div>
+                <div style="right: 0px;top:0px; position: absolute;"><img src="../../../../assets/images/Secondary.svg"></div>
+                <div style="left: 0px;bottom:0px; position: absolute;"><img src="../../../../assets/images/Secondary.svg"></div>
+                <div style="right: 0px;bottom:0px; position: absolute;"><img src="../../../../assets/images/Secondary.svg"></div> -->
+
+              <div style="display: flex;flex-direction: row;" >
+              
+                <ng-container >
+                    <div *ngIf="federationResponseArray[0]?.isPrimary === true">
+                        <img src="../../../../assets/images/Primary.svg">
+                    </div>
+                    <div *ngIf="federationResponseArray[0]?.isPrimary === false" >
+                        <img src="../../../../assets/images/Secondary.svg">
+                      </div>
+                </ng-container>
+                
+             
+                    <!-- <div >
+                      <img src="../../../../assets/images/Primary.svg">
+                    </div> -->
+                    
+              
+                
+                
+                <div style="display: flex; flex-direction: column;">
+                    <!-- {{clusterOneToTwo}} -->
+                    <div style="display: flex;flex-direction: row;" *ngIf="clusterOneToTwo">
+                        <!-- {{federationResponseArray[0]?.fromClusterName}}
+                      {{federationResponseArray[0]?.fedDetails[0]?.status}} -->
+                        <div *ngIf="federationResponseArray[0]?.fedDetails[0]?.status === 'Success'; else cluster1">
+                            <img src="../../../../assets/images/space.gif" style="width: 136px;height: 2px;background-color: #82CB15;">
+                            <img src="../../../../assets/images/Green-tick.svg" >
+                            <img src="../../../../assets/images/Green-Arrow-head.svg" >
+                        </div>
+                        <ng-template #cluster1>
+                        <div *ngIf="federationResponseArray[0]?.fedDetails[0]?.status === 'Failure'" style="display: flex;flex-direction: row;">
+                            <div >
+                                <img src="../../../../assets/images/space.gif" style="width: 136px;height: 2px;background-color: #981B1B;">
+                            </div>
+                            <div>
+                                <img src="../../../../assets/images/Red-X.svg" >
+                            </div>
+                            <div >
+                                <img src="../../../../assets/images/Red-Arrow-head.svg" style="transform: rotate(180deg);">
+                            </div>
+                        </div>
+                        </ng-template>
+                    </div>
+                    <div style="display: flex;flex-direction: row;" *ngIf="clusterTwoToOne">
+                        <!-- {{federationResponseArray[1]?.fedDetails[0]?.status}} -->
+                        <div *ngIf="federationResponseArray[1]?.fedDetails[0]?.status === 'Success'; else templateName">
+                                      <img src="../../../../assets/images/Green-Arrow-head.svg" style="transform: rotate(180deg);" >
+                                       <img src="../../../../assets/images/Green-tick.svg" >
+                                         <img src="../../../../assets/images/space.gif" style="width: 136px;height: 2px;background-color: #82CB15;">
+                                       </div> 
+                                       <ng-template #templateName>
+                                        <div style="display: flex;flex-direction: row;">
+                                            <!-- {{federationResponseArray[1]?.fedDetails[0]?.status}} -->
+                                           <div *ngIf="federationResponseArray[1]?.fedDetails[0]?.status === 'Failure'"></div>
+                   
+                                           <div ><img src="../../../../assets/images/Red-Arrow-head.svg" ></div>
+                                           <div><img src="../../../../assets/images/Red-X.svg" ></div>
+                                               <div ><img src="../../../../assets/images/space.gif" style="width: 136px;height: 2px;background-color: #981B1B;"></div>
+                                           </div>
+                                           </ng-template>
+                                   </div>
+                <!-- <div *ngFor="let detail of federationResponse?.fedDetails">
+                <div style="display: flex;flex-direction: row;">
+                    {{detail.status}}
+                    <div *ngIf="detail.status === 'Success'">
+                        <img src="../../../../assets/images/space.gif" style="width: 138px;height: 2px;background-color: #82CB15;">
+                        <img src="../../../../assets/images/Green-tick.svg" >
+                        <img src="../../../../assets/images/Green-Arrow-head.svg" >
+                    </div>
+                    <div *ngIf="detail.status === 'Failure'" style="display: flex;flex-direction: row;">
+                        <div >
+                            <img src="../../../../assets/images/space.gif" style="width: 138px;height: 2px;background-color: #981B1B;">
+                        </div>
+                        <div>
+                            <img src="../../../../assets/images/Red-X.svg" >
+                        </div>
+                        <div >
+                            <img src="../../../../assets/images/Red-Arrow-head.svg" style="transform: rotate(180deg);">
+                        </div>
+                    </div>
+                </div>
+                
+            </div> 
+            <div *ngFor="let detail of federationResponse?.fedDetails">
+
+                <div style="display: flex;flex-direction: row;" >
+	 <div *ngIf="detail.status === 'Success'">
+                   <img src="../../../../assets/images/Green-Arrow-head.svg" style="transform: rotate(180deg);" >
+                    <img src="../../../../assets/images/Green-tick.svg" >
+                      <img src="../../../../assets/images/space.gif" style="width: 138px;height: 2px;background-color: #82CB15;">
+                    </div> 
+                     <div style="display: flex;flex-direction: row;">
+                        <div *ngIf="detail.status === 'Failure'"></div>
+
+                        <div ><img src="../../../../assets/images/Red-Arrow-head.svg" ></div>
+                        <div><img src="../../../../assets/images/Red-X.svg" ></div>
+                            <div ><img src="../../../../assets/images/space.gif" style="width: 138px;height: 2px;background-color: #981B1B;"></div>
+                        </div>
+                </div>
+</div> -->
+                </div>
+                <!-- <ng-container *ngFor="let detail of isPrimary"> -->
+                    
+                <div *ngIf="federationResponseArray[1]?.isPrimary === true;" style="right: 0px;top:0px; position: absolute;">
+                    
+                    <img src="../../../../assets/images/Primary.svg">
+                </div>
+                <div *ngIf="federationResponseArray[1]?.isPrimary === false">
+                    
+                    <img src="../../../../assets/images/Secondary.svg">
+                </div>
+            <!-- </ng-container> -->
+
+                </div>
+            
+                <!-- Secondary row -->
+                <div  *ngIf="enableSiteThree" style="display: flex;flex-direction: row;">
+                    
+                    <div style="display: flex; flex-direction: row;">
+                        <div style="display: flex;flex-direction: column;">
+                    <div style="transform: rotate(270deg);margin-left: -54%;"><img src="../../../../assets/images/Green-Arrow-head.svg" ></div>
+                    <div style="margin-top: 40%;"><img src="../../../../assets/images/Green-tick.svg" style="margin-left: 4%;margin-top: -2%;"></div>
+                        <div style="margin-left: 23%;margin-top: -10%;">  <img src="../../../../assets/images/space.gif" style="width:2px;height:140px;background-color: #82CB15;"></div>
+                    </div>
+                    <div style="display: flex;flex-direction: column;margin-left: -11px;">
+                        <div>  <img src="../../../../assets/images/space.gif" style="width:2px;height:146px;background-color: #82CB15;"></div>
+                        <div style="margin-left: -8px; margin-top: -5px;"><img src="../../../../assets/images/Green-tick.svg" ></div>
+                        <div style="transform: rotate(90deg);margin-left: -21px; margin-top: 7px;"><img src="../../../../assets/images/Green-Arrow-head.svg" ></div>
+                        
+                    </div>
+                    <!-- <div style="position: relative;">
+                    <div style="display: flex;flex-direction: column;">
+                        <div>  <img src="../../../../assets/images/Arrow1.svg" ></div>
+                        <div>  <img src="../../../../assets/images/Arrow2.svg" style="margin-top:-167px;"></div>
+                        <div>  <img src="../../../../assets/images/Arrow3.svg" style="margin-top:-242px;"></div>
+                        
+                    </div>
+                    </div> -->
+                    <div style="position: relative;">
+                       
+                            <div *ngIf="enableSiteThree">  <img src="../../../../assets/images/Arrow1.svg" style="margin-left: -20px;" ></div>
+                            <div *ngIf="enableSiteThree">  <img src="../../../../assets/images/Arrow2.svg" style="position: absolute;top: 0px;"></div>
+                            <div *ngIf="enableSiteFour" >  <img src="../../../../assets/images/Arrow3.svg" style="position: absolute;top: 0px;margin-left: -20px;"></div>
+                            <div *ngIf="enableSiteFour" >  <img src="../../../../assets/images/Arrow4.svg" style="position: absolute;top: 0px;"></div>
+                        </div>
+            
+                    </div>
+                    <!-- Last column -->
+                    <div *ngIf="enableSiteFour"  style="display: flex; flex-direction: row;margin-left: 11px;">
+                        <div style="display: flex;flex-direction: column;">
+                    <div style="transform: rotate(270deg);margin-left: -54%;"><img src="../../../../assets/images/Green-Arrow-head.svg" ></div>
+                    <div style="margin-top: 40%;"><img src="../../../../assets/images/Green-tick.svg" style="margin-left: 4%; margin-top: -2%;"></div>
+                        <div style="margin-left: 23%; margin-top: -10%;">  <img src="../../../../assets/images/space.gif" style="width:2px;height:132px;background-color: #82CB15;"></div>
+                    </div>
+                    <div style="display: flex;flex-direction: column;margin-left: -11px;">
+                        <div>  <img src="../../../../assets/images/space.gif" style="width:2px;height:141px;background-color: #82CB15;"></div>
+                        <div style="margin-left: -8px; margin-top: -5px;"><img src="../../../../assets/images/Green-tick.svg" ></div>
+                        <div style="transform: rotate(90deg);margin-left: -21px; margin-top: 7px;"><img src="../../../../assets/images/Green-Arrow-head.svg" ></div>
+                        
+                    </div>
+               
+                    </div>
+            
+                    <!-- <div style="right: 0px;top:0px; position: absolute;"><img src="../../../../assets/images/Secondary.svg"></div> -->
+                    </div>
+            
+                    <!-- Third row -->
+                    <div  *ngIf="enableSiteThree" style="display: flex;flex-direction: row;">
+                        <div><img src="../../../../assets/images/Secondary.svg"></div>
+                        <div *ngIf="enableSiteFour" style="display: flex; flex-direction: column;">
+                           
+                        <div style="display: flex;flex-direction: row;">
+                            <div ><img src="../../../../assets/images/space.gif" style="width: 136px;height: 2px;background-color: #82CB15;"></div>
+                            <div><img src="../../../../assets/images/Green-tick.svg"></div>
+                            <div ><img src="../../../../assets/images/Green-Arrow-head.svg" ></div>
+                            
+                        </div>
+                        <div style="display: flex;flex-direction: row;">
+                            <div ><img src="../../../../assets/images/Red-Arrow-head.svg" ></div>
+                            <div><img src="../../../../assets/images/Red-X.svg" ></div>
+                                <div ><img src="../../../../assets/images/space.gif" style="width: 136px;height: 2px;background-color: #981B1B;"></div>
+                            </div>
+                        </div>
+                        <div *ngIf="enableSiteFour"  style="right: 0px;bottom:0px; position: absolute;"><img src="../../../../assets/images/Secondary.svg"></div>
+                        </div>
+                
+            
+            </div></div>
+
+            <ng-container *ngIf="federationResponse">
+                <div style="display: flex; flex-direction:  column; width: 380px;">
+                <div  style="display: flex; flex-direction: row;    padding:4px 10px ;
+                background-color: #ffffff;
+                border-radius: 0px 20px 20px 0px;">
+                 <div [ngClass]="federationResponseArray[1]?.isPrimary ? 'ecewithoutPadding' : 'eceCluster'">{{federationResponseArray[1]?.fromClusterName }}<br/>
+                    <span *ngIf="federationResponseArray[1]?.isPrimary" class="isPrimary">Primary</span></div>
+               
+                    <div style="flex-grow: 1;"></div>
+                    <div><img src="../../../../assets/images/globe-alt.svg"></div>
+                    <div class="siteText">&nbsp;{{federationResponseArray[1]?.fromSiteName}}<br/>
+                      <span class="siteNameLocation">  {{federationResponseArray[1]?.country}}</span><br/>
+                      <span class="coOrdinates">  {{federationResponseArray[1]?.geoLocation}}</span>
+                    </div>
+                   
+                </div>
+                <div  *ngIf="enableSiteFour" style="display: flex; flex-direction: row;   padding:4px 10px ;
+                background-color: #ffffff;
+                border-radius: 0px 20px 20px 0px; margin-top: 54%;">
+                
+                <div class="eceCluster">{{federationResponseArray[3]?.fromClusterName }}<br/>
+                    <span *ngIf="federationResponseArray[3]?.isPrimary" class="isPrimary">Primary</span></div>
+                    <div style="flex-grow: 1;"></div>
+                    <div><img src="../../../../assets/images/globe-alt.svg"></div>
+                    <div class="siteText">&nbsp;{{federationResponseArray[3]?.fromSiteName}}<br/>
+                        <span class="siteNameLocation">  {{federationResponseArray[3]?.country}}</span>
+                      </div>
+                </div>
+                </div>
+                </ng-container>
+
+            <!-- <ng-container *ngFor="let detail of federationResponse?.fedDetails; let i = index">
+            <div style="display: flex; flex-direction:  column; width: 380px;">
+            <div  style="display: flex; flex-direction: row;    padding: 20px;
+            background-color: #ffffff;
+            border-radius: 20px;">
+            <div><img src="../../../../assets/images/globe-alt.svg"></div>
+                <div class="siteText">{{ detail.siteName }}</div>
+                <div style="flex-grow: 1;"></div>
+                <div class="eceCluster">{{ detail.clusterName }}</div>
+            </div>
+            <div  *ngIf="enableSiteFour && i===3" style="display: flex; flex-direction: row;    padding: 20px;
+            background-color: #ffffff;
+            border-radius: 20px; margin-top: 48%;">
+            <div><img src="../../../../assets/images/globe-alt.svg"></div>
+                <div class="siteText">{{ detail.siteName }}</div>
+                <div style="flex-grow: 1;"></div>
+                <div class="eceCluster">{{ detail.clusterName }}</div>
+            </div>
+            </div>
+            </ng-container> -->
+            </div>
+
+                <div class="content-section w-100">
+                    <div class="view-content w-100" *ngIf="clusterMapping &&  getClusterMapKeys().length > 0 && isFedStatusAvailable() ; else noDataMsg">
+                        <table class="fed-detail-table">
+      <thead>
+                                <tr>
+                                    <th class="head">From Cluster Name</th>
+                                    <th class="head">To Cluster Name</th>
+                                    <th class="head">Cache Name</th>
+                                    <th class="head">Status</th>
+                                    <th class="head">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <ng-container *ngFor="let fromClusterKey of getClusterMapKeys()">
+
+
+                                <ng-container *ngIf="getFedDetailsForCluster(clusterMapping[fromClusterKey])?.length > 0">
+                                    <td [attr.rowspan]="getClusterMapRange(fromClusterKey)" class="list-text-bold">{{ fromClusterKey }}</td>
+                                    <!-- <td class="list-text-bold" >{{ i === 0 ? fedDetail.clusterName : "" }}</td> -->
+                                    <td class="list-text-bold" [attr.rowspan]="getClusterMapRange(fromClusterKey)">{{ getFedDetailsForCluster(clusterMapping[fromClusterKey])[0].clusterName }}</td>
+
+                                    <ng-container *ngFor="let fedDetail of getFedDetailsForCluster(clusterMapping[fromClusterKey])">
+                                      <ng-container *ngFor="let aStatusInfo of fedDetail.statusInfo let i = index">
+                                        <tr>
+                                          <!-- <td rowspan="{{ fedDetail.statusInfo.length }}">{{ clusterMapping[clusterKey].fedStatus.fromSiteId }}</td> -->
+
+                                          <td class="list-text-light">{{ aStatusInfo?.cacheName }}</td>
+                                          <td class="list-text-bold "><label class="custom-bgColor-text color-code" [ngClass]="getStatusColorCode(aStatusInfo.status)">{{aStatusInfo.status}}</label></td>
+                                          <!-- <td class="list-text-bold">{{ fedDetail.invokeRespMap[statusInfoKey].operationResult }}</td> -->
+                                          <td *ngIf="i == 0" [attr.rowspan]=" getFedDetailStatusCount(fedDetail)" >
+                                            <div class="action-btn-group">
+                                                <button class="action-btn" (click)="replicateAll(fedDetail)">Replicate All</button>
+                                                <button class="action-btn" (click)="start(fedDetail)">Start</button>
+                                                <button class="action-btn" (click)="stop(fedDetail)">Stop</button>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      <!-- <ng-template #emptyCells>
+                                        <tr>
+                                          <td class="list-text-light">{{ statusInfoKey }}</td>
+                                          <td class="list-text-bold">{{ fedDetail.invokeRespMap[statusInfoKey].operationResult }}</td>
+                                        </tr>
+                                      </ng-template> -->
+                                    </ng-container>
+                                  </ng-container>                                
+                                </ng-container>
+    </ng-container>                                 
+                          </tbody>                              
+                        </table>
+                    </div>
+
+                    <ng-template #noDataMsg>
+                        <div class="no_data_found d-flex justify-content-center mt-5 mb-5 align-items-center flex-column">
+                        <h5>Federation Status Data Not Available</h5>            
+                        </div>
+                    </ng-template>
+
+            </div>
+            </div>
+
+
+</div>
+
+
+</div>
+
+

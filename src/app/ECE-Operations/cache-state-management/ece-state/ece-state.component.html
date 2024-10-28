@@ -1,0 +1,54 @@
+
+<div *ngFor=" let cluster of clusterList; let i = index">
+    <div >
+        <div class="ecevalue" >
+            <div>
+                <img [src]="i % 2 === 0 ? 'assets/images/ece-cache-state-management-1.svg' : 'assets/images/ece-cache-state-management.svg'" alt="Image">
+            </div>
+            <div class="w-100">
+                <div>
+                    <label class="d-flex heading">{{ getSiteClusterName(cluster) }}</label>
+                    <hr>
+                </div>
+                <div class="ece-cache-body">
+                    <div class="column">
+                        <tbody>
+                        <tr>
+                            <td class="label-data">
+                                <app-info-card [title]="'Location'" [subTitle]="cluster.siteDetails.location "
+                                    [imageIcon]="'assets/images/location-marker icon.svg'"></app-info-card>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-data">
+                                <app-info-card [title]="'Federation Type'" [subTitle]="getDRType(cluster)"
+                                    [imageIcon]="'assets/images/arrows-expand.svg'"></app-info-card>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-data">
+                                <app-info-card [title]="'ECE State'" [subTitle]="cluster.eceStatus" [isStatusType]="true"
+                                    [imageIcon]="'assets/images/flash icon.svg'"></app-info-card>
+                            </td>
+                        </tr>
+                    </div>
+                    <div>
+                        <tr>
+                            <td class="label-data">
+                                <app-info-card [title]="'Co Ordinates'" [subTitle]="cluster.siteDetails.geoLoc"
+                                    [imageIcon]="'assets/images/ece-cache-Icon-1.svg'"></app-info-card>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-data">
+                                <app-info-card [title]="'Network Bandwidth'" [subTitle]="cluster.siteDetails.bandwidth"
+                                    [imageIcon]="'assets/images/Vector-1.svg'"></app-info-card>
+                            </td>
+                        </tr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

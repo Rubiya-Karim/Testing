@@ -1,0 +1,240 @@
+<div class="view-container">
+    <div class="select w-100">
+        <div>
+            <div style="font-size: 24px; font-weight: 600; line-height: 32px; color: #FA7A55; display: flex;
+            justify-content: center;padding-bottom: 3%;">Failover / Recover</div>
+            </div>
+       <div style="margin: 0 auto;display: flex;
+       justify-content: center; width: 800px; flex-direction: column;">
+       <div style="display: flex; flex-direction: row;">
+        <div> <div (click)="onClickSite1()" [ngClass]="[isPrimaryValueSite1 ? 'activesiteCluster':'siteCluster',siteOneSelected ? 'siteSelected' : '']" style="border-right: 0px;">
+            <div style="padding: 10px 0px 0px 10px;"><img src="../../../../assets/images/globe-alt.svg"></div>
+                <div class="siteText"><span class="siteNameText">{{siteOneData?.siteDetails?.siteName}}</span><br/><span class="siteNameLocation">{{siteOneData?.siteDetails?.location}}</span>
+                    <br/><span class="geoLocation">{{siteOneData?.siteDetails?.geoLoc}}</span></div>
+                <div style="flex-grow: 1;"></div>
+                <div class="eceCluster" style="padding: 0px 10px 0px 0px;">{{siteOneData?.clusterName}}<br/><span *ngIf="siteOneData?.isPrimary" class="siteNameLocation">Primary</span></div>
+                <div *ngIf="siteOneData?.isPrimary" ><img src="../../../../assets/images/Primary.svg"></div>
+                <div class="eceCluster" *ngIf="!siteOneData?.isPrimary" ><img src="../../../../assets/images/Secondary.svg"></div>
+            </div></div>
+            <div style="padding-right: 50px;"></div>
+            
+            
+        <div> <div (click)="onClickSite2()" [ngClass]="[isPrimaryValueSite2 ? 'activesiteCluster':'siteCluster', siteTwoSelected ? 'siteSelected' : '']" style="border-left: 0px;">
+            <div *ngIf="siteTwoData?.isPrimary"><img src="../../../../assets/images/Primary.svg"></div>
+                <div class="eceCluster" *ngIf="!siteTwoData?.isPrimary" ><img src="../../../../assets/images/Secondary.svg"></div>
+            
+            <div class="eceCluster" style="padding: 8px 10px 0px 0px;">{{siteTwoData?.clusterName}}<br/><span *ngIf="siteTwoData?.isPrimary" class="siteNameLocation">Primary</span></div>
+            <div style="flex-grow: 1;"></div>
+            <div class="siteText"><span class="siteNameText">{{siteTwoData?.siteDetails?.siteName}}</span><br/><span class="siteNameLocation">{{siteTwoData?.siteDetails?.location}}</span>
+                <br/><span class="geoLocation">{{siteTwoData?.siteDetails?.geoLoc}}</span></div>
+                <div style="padding: 10px 10px 0px 0px;"><img src="../../../../assets/images/globe-alt.svg"></div>
+                
+            </div></div>
+
+        </div>
+        <div style="display: flex; flex-direction: row; height: 50px;"></div>
+        <div style="display: flex; flex-direction: row;" *ngIf="siteThreeData">
+            <div> <div (click)="onClickSite3()" [ngClass]="[isPrimaryValueSite3 ? 'activesiteCluster':'siteCluster',siteThreeSelected ? 'siteSelected' : '']" style="border-right: 0px;">
+                <div style="padding: 10px 0px 0px 10px;"><img src="../../../../assets/images/globe-alt.svg"></div>
+                <div class="siteText"><span class="siteNameText">{{siteThreeData?.siteDetails?.siteName}}</span><br/><span class="siteNameLocation">{{siteThreeData?.siteDetails?.location}}</span></div>
+                    <div style="flex-grow: 1;"></div>
+                    <div class="eceCluster" style="padding: 0px 10px 0px 0px;">{{siteOneData?.clusterName}}<br/><span *ngIf="siteOneData?.isPrimary" class="siteNameLocation">Primary</span></div>
+                    <div *ngIf="siteThreeData?.isPrimary" ><img src="../../../../assets/images/Primary.svg"></div>
+                <div class="eceCluster" *ngIf="!siteThreeData?.isPrimary" ><img src="../../../../assets/images/Secondary.svg"></div>
+                </div></div>
+                <div style="padding-right: 50px;"></div>
+                
+                <div *ngIf="siteFourData"> <div (click)="onClickSite4()" [ngClass]="[isPrimaryValueSite4 ? 'activesiteCluster':'siteCluster',siteFourSelected ? 'siteSelected' : '']" style="border-left: 0px;">
+                    <div *ngIf="siteFourData?.isPrimary" ><img src="../../../../assets/images/Primary.svg"></div>
+                <div class="eceCluster" *ngIf="!siteFourData?.isPrimary" ><img src="../../../../assets/images/Secondary.svg"></div>
+                    
+                    <div class="eceCluster" style="padding: 10px 10px 0px 0px;">{{siteFourData?.clusterName}}<br/><span *ngIf="siteFourData?.isPrimary" class="siteNameLocation">Primary</span></div>
+                    <div style="flex-grow: 1;"></div>
+                    <div class="siteText"><span class="siteNameText">{{siteFourData?.siteDetails?.siteName}}</span><br/><span class="siteNameLocation">{{siteFourData?.siteDetails?.location}}</span></div>
+                        <div style="padding: 10px 10px 0px 0px;"><img src="../../../../assets/images/globe-alt.svg"></div>
+                    </div></div>
+    
+            </div>
+        
+         </div>
+
+         <div style="background-color: #E2E8F0; margin-top: 5%; border-radius: 10px; display: flex; flex-direction: row;">
+            <div><img src="../../../../assets/images/Federation_Graphic.svg" style="margin: 10%;">
+                </div>
+                <div style="display: flex; flex-direction:column; margin-left: 15%;">
+                    <div style="display: flex; flex-direction: row;">
+                    <div style="font-size: 24px; font-weight: 600; line-height: 32px; color: #FA7A55; display: flex;
+                    justify-content: center;padding-bottom: 1%; padding-top: 5%;">{{selectedSiteData?.clusterName}}<span *ngIf="selectedSiteData?.isPrimary" class="isPrimary">Primary</span></div></div>
+                    <div style="display: flex; flex-direction: row; ">
+                    <div style="background-color: #94A3B8; height: 1px; width: 530px;"></div>
+                    </div>
+                    <div style="display: flex; flex-direction: row; margin-top: 20px;">
+                        <div style="flex: 50%;">
+                            <div style="display: flex; flex-direction: row;">
+                               <div> <img src="../../../../assets/images/cluster.svg" style="padding-right: 10px;"></div><div><span class="failoverIcon">Cluster</span><br/><span class="failoverIconBold">{{selectedSiteData?.clusterName}}</span></div>
+                            </div>
+                            </div>
+                            <div style="flex: 50%;">
+                                <div style="display: flex; flex-direction: row;">
+                                   <div> <img src="../../../../assets/images/site1.svg" style="padding-right: 10px;"></div><div><span class="failoverIcon">Site</span><br/><span class="failoverIconBold">{{selectedSiteData?.siteDetails?.siteName}}</span></div>
+                                </div>
+                                </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: row; margin-top: 20px;">
+                            <div style="flex: 50%;">
+                                <div style="display: flex; flex-direction: row;">
+                                   <div> <img src="../../../../assets/images/location.svg" style="padding-right: 10px;"></div><div><span class="failoverIcon">Location</span><br/><span class="failoverIconBold">{{selectedSiteData?.siteDetails?.location}}</span></div>
+                                </div>
+                                </div>
+                                <div style="flex: 50%;">
+                                    <div style="display: flex; flex-direction: row;">
+                                       <div> <img src="../../../../assets/images/Co-Ordinates.svg" style="padding-right: 10px;"></div><div><span class="failoverIcon">Co Ordinates</span><br/><span class="failoverIconBold">{{selectedSiteData?.siteDetails?.geoLoc}}</span></div>
+                                    </div>
+                                    </div>
+                            </div>
+
+                            <div style="display: flex; flex-direction: row; margin-top: 20px;">
+                                <div style="flex: 50%;">
+                                    <div style="display: flex; flex-direction: row;">
+                                       <div> <img src="../../../../assets/images/federation-type.svg" style="padding-right: 10px;"></div><div><span class="failoverIcon">Federation Type</span><br/><span class="failoverIconBold">{{this.federationType}}</span></div>
+                                    </div>
+                                    </div>
+                                    <div style="flex: 50%;">
+                                        <div style="display: flex; flex-direction: row;">
+                                           <div> <img src="../../../../assets/images/bandwidth.svg" style="padding-right: 10px;"></div><div><span class="failoverIcon">Network Bandwidth</span><br/><span class="failoverIconBold">{{selectedSiteData?.siteDetails?.bandwidth}}</span></div>
+                                        </div>
+                                        </div>
+                                </div>
+                                <div style="display: flex; flex-direction: row;margin-top: 20px;">
+                                    <div style="background-color: #94A3B8; height: 1px; width: 530px;"></div>
+                                </div>
+
+                                <div style="display: flex; flex-direction: row;margin-top: 20px;">
+                                    <form  [formGroup]="radioButtonForm" (submit)="processExecute()" style="width: 100%;">
+       
+                                        <div>
+                                         
+                                          <div style="display: flex; flex-direction: row;">
+                                            <div [ngClass]="siteFailoverActive ? 'activeRadioButton' : 'failOverInput'" style="margin-right: 20px;">
+                                            <div style="padding: 6px 12px 6px 12px;">
+                                            <input [disabled]="disableExecute"  type="radio" (click)="failOverOnclick()" id="Failover" name="type" value="Failover" formControlName="type" style="margin-right: 5px;">
+                                            <label  class="labelText" [ngClass]="siteFailoverActive ? 'activelabelText' : 'labelText'">Mark the Site as Failover</label></div>
+                                            </div>
+                                            <div [ngClass]="siteRecoverActive ? 'activeRadioButton' : 'failOverInput'">
+                                            <div style="padding:6px 12px 6px 12px;">
+                                            <input [disabled]="disableExecute" type="radio" (click)="recoveryOnclick()" id="Recover" name="type" value="Recover" formControlName="type" style="margin-right: 5px;">
+                                            <label  class="labelText" [ngClass]="siteRecoverActive ? 'activelabelText' : 'labelText'">Mark the Site to Recover</label></div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div style="display: flex; justify-content: center; margin: 5%;">
+                                        <button type="submit" [disabled]="disableExecute" class="executeButton" >
+                                            Execute
+                                        </button>
+                                        </div>
+                                      </form>
+                                    </div>
+                               
+                </div>
+            </div>
+
+            <div *ngIf ="recoverySucess"  style="margin-top: 5%; border-radius: 10px; display: flex; flex-direction: row;">
+                <div><img src="../../../../assets/images/Recover-graphic.svg">
+                    </div>
+                    <div style="display: flex; flex-direction:column;">
+                        <div style="display: flex; flex-direction: row;">
+                        <div style="font-size: 24px; font-weight: 600; line-height: 32px; color: #FA7A55; display: flex;
+                        justify-content: center;padding-bottom: 3%; padding-top: 5%;">Recovery Status</div></div>
+                        <div style="display: flex; flex-direction: row; ">
+                        <div style="background-color: #94A3B8; height: 1px; width: 530px;"></div>
+                        </div>
+                        <div style="display: flex; flex-direction: row; ">
+                            <div style="background-color: #94A3B8; height: 1px; width: 530px;"></div>
+                            </div>
+                            <div *ngIf="stopClient">
+                                <div [ngClass]="!hideStopClientImage ? 'failoverrecoveryStatus' : 'failoverrecoveryFailedStatus'" ><img *ngIf="!hideStopClientImage" src="../../../../assets/images/check-circle-solid.svg"> Stop Client Processes</div>
+                                <div style="display: flex; flex-direction: row; " *ngFor="let status of stopClientProcess">
+                                    <div *ngIf="(status.orderType == 2 && cmVaidation(status) && status.applicableTo == 1)">
+                                   
+                                   <div *ngIf="status.operationName" class="statusText"><img *ngIf="status.opStatus ==2" src="../../../../assets/images/check-circle-outline.svg">
+                                    <img *ngIf="status.opStatus !==2" src="../../../../assets/images/x-circle-outline.svg"> {{status.operationName}}</div>
+                                </div>
+                                </div>
+                                </div>
+                            
+                                <div *ngIf="disconnectBrm">
+                                <div [ngClass]="!hidedisconnectImage ? 'failoverrecoveryStatus' : 'failoverrecoveryFailedStatus'" ><img *ngIf="!hidedisconnectImage" src="../../../../assets/images/check-circle-solid.svg"> Disconnect BRM and ECE Clusters</div>
+                                <div style="display: flex; flex-direction: row; " *ngFor="let status of disconnectBrmEceCluster">
+                                   <div *ngIf="(status.orderType == 2 && status.operationName === 'cm' && status.applicableTo == 1)">
+                                   <div *ngIf="status.operationName" class="statusText"><img *ngIf="status.opStatus ==2" src="../../../../assets/images/check-circle-outline.svg">
+                                    <img *ngIf="status.opStatus !==2" src="../../../../assets/images/x-circle-outline.svg"> {{status.operationName}}</div>
+                                </div>
+                                </div>
+                                </div>
+                                <div *ngIf="startSingle">
+                                <div [ngClass]="!hidedStartSingleImage ? 'failoverrecoveryStatus' : 'failoverrecoveryFailedStatus'"><img *ngIf="!hidedStartSingleImage" src="../../../../assets/images/check-circle-solid.svg"> Start Singleton Processes in the Primary site</div>
+                                <div style="display: flex; flex-direction: row; " *ngFor="let status of startSingleTonProcess">
+                                   <div *ngIf="(status.orderType == 2 && (status.applicableTo == 2 ||  status.applicableTo ==3) && isPrimaryData)">
+                                   
+                                   <div *ngIf="status.operationName" class="statusText" ><img *ngIf="status.orderType == 2 && status.opStatus ==2 && (status.applicableTo == 2 ||  status.applicableTo ==3)" src="../../../../assets/images/check-circle-outline.svg">
+                                    <img *ngIf="status.opStatus !==2" src="../../../../assets/images/x-circle-outline.svg"> {{status.operationName}}</div>
+                                </div>  
+                                </div>
+                                </div>
+    
+                                   
+                                   
+                    </div>
+                </div>
+
+                <div *ngIf="failOverSucess" style="margin-top: 5%; border-radius: 10px; display: flex; flex-direction: row;">
+                    <div><img src="../../../../assets/images/Failover-graphic.svg">
+                        </div>
+                        <div style="display: flex; flex-direction:column; ">
+                            <div style="display: flex; flex-direction: row;">
+                            <div style="font-size: 24px; font-weight: 600; line-height: 32px; color: #82CB15; display: flex;
+                            justify-content: center;padding-bottom: 3%; padding-top: 5%;">Failover Status</div></div>
+
+<div style="display: flex; flex-direction: row; ">
+    <div style="background-color: #94A3B8; height: 1px; width: 530px;"></div>
+    </div>
+    <div *ngIf="stopClient">
+    <div [ngClass]="!hideStopClientImage ? 'failoverrecoveryStatus' : 'failoverrecoveryFailedStatus'" ><img *ngIf="!hideStopClientImage" src="../../../../assets/images/check-circle-solid.svg"> Stop Client Processes</div>
+    <div style="display: flex; flex-direction: row; " *ngFor="let status of stopClientProcess">
+        <div *ngIf="(status.orderType == 1 && cmVaidation(status) && status.applicableTo == 1)">
+       
+       <div *ngIf="status.operationName" class="statusText"><img *ngIf="status.opStatus ==2" src="../../../../assets/images/check-circle-outline.svg">
+        <img *ngIf="status.opStatus !==2" src="../../../../assets/images/x-circle-outline.svg"> {{status.operationName}}</div>
+    </div>
+    </div>
+    </div>
+
+    <div *ngIf="disconnectBrm">
+    <div [ngClass]="!hidedisconnectImage ? 'failoverrecoveryStatus' : 'failoverrecoveryFailedStatus'" ><img *ngIf="!hidedisconnectImage" src="../../../../assets/images/check-circle-solid.svg"> Disconnect BRM and ECE Clusters</div>
+    <div style="display: flex; flex-direction: row; " *ngFor="let status of disconnectBrmEceCluster">
+       <div *ngIf="(status.orderType == 1 && status.operationName === 'cm' && status.applicableTo == 1)">
+       <div *ngIf="status.operationName" class="statusText"><img *ngIf="status.opStatus ==2" src="../../../../assets/images/check-circle-outline.svg"> 
+        <img *ngIf="status.opStatus !==2" src="../../../../assets/images/x-circle-outline.svg">{{status.operationName}}</div>
+    </div>
+    </div>
+    </div>
+    <div *ngIf="startSingle">
+    <div [ngClass]="!hidedStartSingleImage ? 'failoverrecoveryStatus' : 'failoverrecoveryFailedStatus'"><img *ngIf="!hidedStartSingleImage" src="../../../../assets/images/check-circle-solid.svg"> Start Singleton Processes in the Primary site</div>
+    <div style="display: flex; flex-direction: row; " *ngFor="let status of startSingleTonProcess">
+       <div *ngIf="(status.orderType == 1 && (status.applicableTo == 2 ||  status.applicableTo ==3) && isPrimaryData)">
+       
+       <div *ngIf="status.operationName" class="statusText" ><img *ngIf="status.orderType == 1 && status.opStatus ==2 && (status.applicableTo == 2 ||  status.applicableTo ==3)" src="../../../../assets/images/check-circle-outline.svg">
+        <img *ngIf="status.opStatus !==2" src="../../../../assets/images/x-circle-outline.svg"> {{status.operationName}}</div>
+    </div>  
+    </div>
+    </div>
+                                     
+                        </div>
+                    </div>
+    </div>
+   
+</div>
+
+
+

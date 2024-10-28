@@ -1,0 +1,210 @@
+@import "../../../../styles.scss";
+
+.view-container {
+    margin: 40px 58px auto;
+    background-color: var(--neutral-100, #F1F5F9);
+    border-radius: 16px;
+    display: flex;
+    padding: 24px 36px;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .eceCluster{
+    font-weight: 600; font-size: 14px;
+  }
+  .siteText{
+    font-size: 14px; font-weight: 600px; line-height: 20px;
+  }
+  .failoverIcon{
+    font-size: 12px;
+    line-height: 16px;
+    font-family: Poppins;
+    color:#94A3B8;
+  }
+
+  .failoverRadioButtons{
+    font-size: 14px;
+    line-height: 20px;
+    font-family: Poppins;
+    color:#0F172A;
+  }
+
+  .failoverIconBold{
+    font-size: 14px;
+    line-height: 20px;
+    font-family: Poppins;
+    color:#0F172A;
+    font-weight: 600;
+  }
+  .executeButton{
+    font-size: 14px;
+    line-height: 20px;
+    font-family: 'Poppins';
+    color: #ffffff;
+    padding: 6px 12px 6px 11px;
+    background-color: #ED7D31;
+    border-radius: 5px;
+    border: #ED7D31 1px solid;
+
+  }
+
+  input[type='radio']:after {
+    width: 24px;
+    height: 24px;
+    border-radius: 15px;
+    background-image: url('../../../../assets/images/Radiobutton-default.svg');
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #d1d3d1;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+input[type='radio']:checked:after {
+    width: 24px;
+    height: 24px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+   // background-color: #ffa500;
+   background-image: url('../../../../assets/images/Radiobutton-active.svg');
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+.failOverInput{
+    background-color: #ffffff;border: #94A3B8 1px solid;width: 70%;border-radius: 5px;
+}
+
+.failOverInput:hover{
+    background-color: #E2E8F0;border: #94A3B8 1px solid;width: 70%;border-radius: 5px;
+}
+
+.labelText{
+    color: #0F172A;
+    font-size: 14px;
+    line-height: 20px;
+    font-family: 'Poppins';
+    font-weight: 600;
+    margin-left: 20px;
+}
+
+.activelabelText{
+    color: #ED7D31;
+    font-size: 14px;
+    line-height: 20px;
+    font-family: 'Poppins';
+    font-weight: 600;
+}
+
+.activeRadioButton{
+    background-color: #EEE7DF;border: #ED7D31 1px solid;width: 70%;border-radius: 5px;
+}
+
+.activesiteCluster{
+    width: 375px !important;
+    display: flex; flex-direction: row;
+            background-color: #ffffff;
+    background-color: #EEE7DF !important;border: #ED7D31 1px solid;width: 70%;border-radius: 20px;
+}
+
+.siteCluster{
+    display: flex; flex-direction: row;
+            background-color: #ffffff;
+            border-radius: 20px; width: 375px;
+}
+.siteCluster:hover{
+    display: flex; flex-direction: row;
+            background-color: #EEE7DF !important;
+            border-radius: 20px; width: 375px;
+}
+
+.siteNameText{
+    color:#475569;
+    font-size: 14px;
+    line-height: 20px;
+    font-family: "Poppins";
+    font-weight: 600;
+}
+.siteNameLocation{
+    color:#475569;
+    font-size: 10px;
+    line-height: 10px;
+    font-family: "Poppins";
+    font-weight: 400;
+    display: block;
+    margin-top: 2px;
+}
+
+.geoLocation{
+  color:#475569;
+  font-size: 10px;
+  line-height: 10px;
+  font-family: "Poppins";
+  font-weight: 400;
+  display: block;
+  margin-top:-16px;
+}
+
+.siteSelected{
+  background-color: #ffbb55 !important;
+}
+.siteSelected:hover{
+  background-color: #ffbb55 !important;
+}
+
+.failoverrecoveryStatus{
+  background-color: #82CB15;
+    min-width: 200px;
+    margin-top: 5%;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Poppins';
+    font-weight: 600;
+}
+
+.failoverrecoveryFailedStatus{
+  background-color: #FBD3B7;
+    min-width: 200px;
+    margin-top: 5%;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Poppins';
+    font-weight: 600;
+}
+
+.statusText{
+    min-width: 200px;
+    margin-top: 5%;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Poppins';
+}
+
+.successStatus{
+  background-color: #82CB15;
+}
+
+.inProgressStatus{
+  background-color: #FBD3B7;
+}
+
+.isPrimary{
+  color:#475569;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: "Poppins";
+  font-weight: 400;
+  padding: 10px 0px 0px 10px;
+}
