@@ -1,0 +1,79 @@
+@import '../../../styles';
+
+.login-background {
+    //@include component-view-background;
+    background-color: white;
+}
+
+.view-partition {
+    @include partition-shadow;
+}
+
+.logo {
+    @include logo-position;
+}
+
+.image-size {
+    @include logo-size;
+}
+
+
+.login-text {
+    @include form-title;
+    font-weight: 700;
+    margin-bottom: 10px;
+
+}
+
+.login-form-block {
+    position: relative;
+    top: 20%;
+    width:60%;
+    margin:7%;
+    //box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.14); 
+    border-radius: 12px;
+    
+}
+.form-group{
+    width: 350px;
+    height: 48px;
+}
+
+.error-message {
+    color: $error-message-color;
+}
+.col-md-7{
+    background-color: rgba(255, 249, 239, 1);
+    width: 720px;
+    height: 1024px;
+}
+.login-side-image-text {
+    @include side-image-text;
+    font-size: 96px;
+    line-height: 88px;
+    font-weight: 600;;
+}
+
+.forgot-password-text {
+    color: #333333; 
+    font-size: $font-size-small; 
+    font-weight: $font-weight-regular; 
+    word-wrap: break-word;  
+    text-align: center;
+    width: 350px;
+  
+}
+.forgot-password-text:hover{
+  text-decoration: underline;
+}
+
+.login-button {
+    @include primary-button;
+    width: 350px;
+
+}
+
+a {
+    color: #333333; 
+
+}
