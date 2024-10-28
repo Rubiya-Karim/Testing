@@ -1,0 +1,32 @@
+<div>
+<div *ngIf="!isCustomerModule; else customerModuleHeader" >
+  <div class="cycle-tab-container">
+    <ul class="nav justify-content-center" >
+      <li class="nav-item cycle-tab-item" *ngFor="let route of routeInfo; let i = index" (click)="setActiveTab(i)"  [ngClass]="{'active-tab': activeTabIndex === i}">
+        <a class="nav-link cycle-tab-item"  [routerLink]=route.componentLink   routerLinkActive="active-link"> {{route.title}} </a>
+      </li>
+    </ul>
+  </div>
+  <!-- <ul class="nav flex-row  config-ulist" *ngFor="let route of routeInfo; let i = index">
+    <li>
+      <a [ngClass]=route.componentClass [routerLink]=route.componentLink (click)="selectTab(i)"
+        [routerLinkActive]=route.componentLinkActive><span>{{route.title}}</span></a>
+    </li>
+  </ul> -->
+      <!-- this.routeInfo = [{componentClass: "header-links security-img",
+        componentLink: "['/process-management']",
+        componentLinkActive: "active-link security-img-acive",
+        title: "Process Management", -->
+      <!-- <a class="header-links security-img" routerLink="/process-management" routerLinkActive="active-link security-img-acive"><span>Process Management</span></a> -->
+    </div>
+<ng-template #customerModuleHeader>
+  <div class="cycle-tab-container" *ngIf="!isHidden">
+    <ul class="nav cycle-nav-align" >
+      <li class="nav-item cycle-tab-item" *ngFor="let route of routeInfo; let i = index">
+        <a class="nav-link cycle-tab-item"  [ngClass]="{'active': selectedTabIndex() === i}" [routerLink]=route.componentLink  (click)="tabSelected(i)" routerLinkActive="active"><img *ngIf="route.imgPath?.length" height = "20px" width="20px" [src]="getImgPath(route, i)"> {{route.title}} </a>
+      </li>
+    </ul>
+  </div>
+</ng-template>
+</div>
+

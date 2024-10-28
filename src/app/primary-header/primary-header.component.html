@@ -1,0 +1,55 @@
+<div class="header-container">
+  <button mat-fab type="button" class="avatar"  [matMenuTriggerFor]="menu" (click)="navMenuOpen(menuTriggerNav)"
+                        #menuTriggerNav="matMenuTrigger">
+                        <span class="avatar-text">{{getUserInitials()}}</span>
+  </button>
+ 
+                    <mat-menu #menu="matMenu" direction='left' class="custom_menu" overlayPanelClass="menu_nav">
+                        <div class="arrow_custom"></div>
+                        <div class="avatar-popup-background">
+                          <div class="submenu">
+                            <div class="row user-info">
+                              <div class="col user-info-icon">
+                                <div class="avatar">
+                                  <span class="avatar-text">{{getUserInitials()}}</span>
+                                </div>
+                              </div>
+                              <div class="col user-info-title">
+                                {{getUserFullName()}}
+                              </div>
+                              <div class="col user-info-subtitle pb-2">
+                                {{getUserName()}}
+                              </div>
+                            </div>
+                            <div class="avatar-menu row">
+                              <div class="col avatar-menu-item">
+                                <a href="#" routerLink="/change-password" class="avatar-menu-link">
+                                  <p><img src="assets/images/lock-closed.svg"> Change Password</p>
+                                </a>
+                              </div>
+                               
+                              <div class="col avatar-menu-item">
+                                <a href="#" routerLink="/profile" class="avatar-menu-link">
+                                  <p><img src="../../../../assets/images/user-circle.png"> Profile</p>
+                                </a>
+                              </div>
+                              <div class="col avatar-menu-item">
+                                <a class="avatar-menu-link" (click)="onLogout()">
+                                  <p><img src="../../../../assets/images/logout.png"> Logout</p>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </mat-menu>
+ 
+  <div class="title-container">
+      <div class="config-image">
+        <img src="{{imageSrc}}" >
+      </div>
+      <div class="config-heading">
+        <p class="config-text">{{title}}</p>
+        <p class="config-description">{{subTitle}}</p>
+      </div>
+    </div>
+  </div>  

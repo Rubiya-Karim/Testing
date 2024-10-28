@@ -1,0 +1,82 @@
+@import "../../../styles.scss";
+.header-links{
+    margin-left: 30px;
+    color: #64748B;
+    font-weight: $font-weight-bold;
+}
+
+.nav{
+    border-bottom: 1px solid #94A3B8;
+}
+.active-link{
+    border-bottom: 2px solid #0F172A;
+    //color: $text-color-black;
+    font-weight: $font-weight-bold;
+  }
+.nav-link.active{
+  color: var(--brand-600-main, #ED7D31);
+  border-bottom: solid 3px var(--brand-600-main, #ED7D31); 
+}
+.config-ulist{
+    margin-top: 15px;
+    margin-left: 20%;
+}
+.config-header-images{
+    height: 20px;
+    width: 20px;
+    padding-top: 2px;
+   
+}
+span{
+    margin-left:25px;
+}
+
+.process-management-img {
+    background: url('../../../assets/images/process-management.png');
+    background-repeat: no-repeat;
+    margin-bottom:10px;
+}
+// .process-management-img-active {
+//     background: url('../../../assets/images/process-management-solid.png');
+//     background-repeat: no-repeat;
+// }
+
+// .schedule-job-img {
+//   background: url('../../../assets/images/schedule-job.png');
+//   background-repeat: no-repeat;
+//   margin-bottom:10px;
+// }
+
+// .schedule-job-img-active {
+//   background: url('../../../assets/images/schedule-job-solid.png');
+//   background-repeat: no-repeat;
+// }
+
+
+.cycle-tab-container {
+    margin-top: 8px;
+    width: 100%;
+  }
+  
+  .cycle-tab-container a {
+    text-align: center;
+    //padding-bottom: 0px;
+    
+  }
+  
+  
+  .cycle-tab-item {
+    color: var(--neutral-500, #64748B);
+    @include text-small-semibold;
+  }
+  
+  .cycle-nav-align {
+    justify-content: space-evenly;
+  }
+  .active-tab {
+    color: orange; /* Set the color for the active tab */
+  }
+  
+  li {
+    color: black; /* Inactive tabs */
+  }
